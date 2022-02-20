@@ -96,7 +96,7 @@ int main(void)
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4); // Init PDM mode?
-  //HAL_SAI_Transmit_DMA(&hsai_BlockA4, *pdm_buffer, 1023);
+  HAL_SAI_Transmit_DMA(&hsai_BlockA4, pdm_buffer, 4);
   //HAL_SAI_InitProtocol(&hsai_BlockA4, );
 
   /* USER CODE BEGIN WHILE */

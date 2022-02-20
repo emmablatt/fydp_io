@@ -1683,7 +1683,7 @@ HAL_StatusTypeDef HAL_SAI_Transmit_DMA(SAI_HandleTypeDef *hsai, uint8_t *pData, 
     /* Enable the interrupts for error handling */
     __HAL_SAI_ENABLE_IT(hsai, SAI_InterruptFlag(hsai, SAI_MODE_DMA));
 
-    /* Enable SAI Tx DMA Request */
+    /* Enable SAI Tx DMA Request TODO */
     hsai->Instance->CR1 |= SAI_xCR1_DMAEN;
 
     /* Wait until FIFO is not empty */
