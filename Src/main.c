@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "pdm2pcm.h"
-#include <string.h>
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -48,6 +48,7 @@ DMA_HandleTypeDef hdma_sai4_a;
 
 UART_HandleTypeDef huart3;
 
+DMA_HandleTypeDef hdma_dma_generator0;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -59,6 +60,7 @@ static void MX_BDMA_Init(void);
 static void MX_SAI4_Init(void);
 static void MX_CRC_Init(void);
 static void MX_USART3_UART_Init(void);
+static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -82,29 +84,35 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
   SystemClock_Config();
 
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_BDMA_Init();
   MX_SAI4_Init();
   MX_CRC_Init();
   MX_USART3_UART_Init();
+  MX_DMA_Init();
   MX_PDM2PCM_Init();
+  /* USER CODE BEGIN 2 */
 
-  uint8_t pdm_buffer[15];
+  /* USER CODE END 2 */
 
-  /* INITIALIZE */
-  HAL_SAI_MspInit(&hsai_BlockA4);
-  HAL_SAI_Init(&hsai_BlockA4); // Init PDM mode?
-  HAL_SAI_Transmit_DMA(&hsai_BlockA4, pdm_buffer, 4);
-  //HAL_SAI_InitProtocol(&hsai_BlockA4, );
-
+  /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-	/* need to read data into fifo buffer */
-	  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 4, 1000);
 
     /* USER CODE BEGIN 3 */
   }
@@ -125,7 +133,7 @@ void SystemClock_Config(void)
   HAL_PWREx_ConfigSupply(PWR_DIRECT_SMPS_SUPPLY);
   /** Configure the main internal regulator output voltage
   */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
   /** Initializes the RCC Oscillators according to the specified parameters
@@ -136,10 +144,10 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 5;
-  RCC_OscInitStruct.PLL.PLLN = 15;
-  RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 4;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 24;
+  RCC_OscInitStruct.PLL.PLLP = 1;
+  RCC_OscInitStruct.PLL.PLLQ = 125;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -161,7 +169,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -228,16 +236,16 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 15;
+  hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockA4.SlotInit.SlotNumber = 0;
+  hsai_BlockA4.SlotInit.SlotNumber = 1;
   hsai_BlockA4.SlotInit.SlotActive = 0x00000000;
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
   {
@@ -313,6 +321,38 @@ static void MX_BDMA_Init(void)
   /* BDMA_Channel0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(BDMA_Channel0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(BDMA_Channel0_IRQn);
+
+}
+
+/**
+  * Enable DMA controller clock
+  * Configure DMA for memory to memory transfers
+  *   hdma_dma_generator0
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* Configure DMA request hdma_dma_generator0 on DMA1_Stream0 */
+  hdma_dma_generator0.Instance = DMA1_Stream0;
+  hdma_dma_generator0.Init.Request = DMA_REQUEST_GENERATOR0;
+  hdma_dma_generator0.Init.Direction = DMA_PERIPH_TO_MEMORY;
+  hdma_dma_generator0.Init.PeriphInc = DMA_PINC_DISABLE;
+  hdma_dma_generator0.Init.MemInc = DMA_MINC_ENABLE;
+  hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+  hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+  hdma_dma_generator0.Init.Mode = DMA_CIRCULAR;
+  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_HIGH;
+  hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
+  hdma_dma_generator0.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
+  hdma_dma_generator0.Init.MemBurst = DMA_MBURST_SINGLE;
+  hdma_dma_generator0.Init.PeriphBurst = DMA_PBURST_SINGLE;
+  if (HAL_DMA_Init(&hdma_dma_generator0) != HAL_OK)
+  {
+    Error_Handler( );
+  }
 
 }
 

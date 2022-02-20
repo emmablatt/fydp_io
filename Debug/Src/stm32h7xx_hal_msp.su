@@ -4,4 +4,4 @@ stm32h7xx_hal_msp.c:106:6:HAL_CRC_MspDeInit	16	static
 stm32h7xx_hal_msp.c:128:6:HAL_UART_MspInit	224	static
 stm32h7xx_hal_msp.c:174:6:HAL_UART_MspDeInit	16	static
 stm32h7xx_hal_msp.c:201:6:HAL_SAI_MspInit	240	static
-stm32h7xx_hal_msp.c:282:6:HAL_SAI_MspDeInit	16	static
+stm32h7xx_hal_msp.c:280:6:HAL_SAI_MspDeInit	16	static
