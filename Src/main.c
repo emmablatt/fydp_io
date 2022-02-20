@@ -106,16 +106,14 @@ int main(void)
   MX_PDM2PCM_Init();
   /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
-
   /* Infinite loop */
   uint8_t pdm_buffer[15];
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
-  HAL_SAI_Init(&hsai_BlockA4); // Init PDM mode?
-  HAL_SAI_Transmit_DMA(&hsai_BlockA4, pdm_buffer, 4);
-  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 4, 32);
+  HAL_SAI_Init(&hsai_BlockA4);
+  //HAL_SAI_Transmit_DMA(&hsai_BlockA4, pdm_buffer, 4);
+  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 5, 32);
   /* USER CODE BEGIN WHILE */
 
   while (1)
@@ -240,13 +238,13 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
   hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
+  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
   hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 15;
+  hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
@@ -254,7 +252,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
   hsai_BlockA4.SlotInit.SlotNumber = 1;
-  hsai_BlockA4.SlotInit.SlotActive = 0x00000000;
+  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
   {
     Error_Handler();
@@ -352,7 +350,7 @@ static void MX_DMA_Init(void)
   hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
   hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
   hdma_dma_generator0.Init.Mode = DMA_CIRCULAR;
-  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_HIGH;
+  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_LOW;
   hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
   hdma_dma_generator0.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
   hdma_dma_generator0.Init.MemBurst = DMA_MBURST_SINGLE;
