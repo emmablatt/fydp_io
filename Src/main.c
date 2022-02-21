@@ -107,13 +107,19 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* Infinite loop */
-  uint8_t pdm_buffer[15];
+  uint16_t pdm_buffer[8] = {0};
+  uint16_t pcm_buffer[8] = {0};
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
-  //HAL_SAI_Transmit_DMA(&hsai_BlockA4, pdm_buffer, 4);
-  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 5, 32);
+
+  // polling mode - SIZE = # BYTES
+  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 8, 1000);
+
+  // dma mode
+  //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 8);
+  //PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
   /* USER CODE BEGIN WHILE */
 
   while (1)
