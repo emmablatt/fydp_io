@@ -19393,9 +19393,9 @@ static void MX_SAI4_Init(void)
  80080a4:	4b28      	ldr	r3, [pc, #160]	; (8008148 <MX_SAI4_Init+0xb4>)
  80080a6:	2201      	movs	r2, #1
  80080a8:	605a      	str	r2, [r3, #4]
-  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
+  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
  80080aa:	4b27      	ldr	r3, [pc, #156]	; (8008148 <MX_SAI4_Init+0xb4>)
- 80080ac:	2240      	movs	r2, #64	; 0x40
+ 80080ac:	2280      	movs	r2, #128	; 0x80
  80080ae:	649a      	str	r2, [r3, #72]	; 0x48
   hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
  80080b0:	4b25      	ldr	r3, [pc, #148]	; (8008148 <MX_SAI4_Init+0xb4>)
@@ -19437,17 +19437,17 @@ static void MX_SAI4_Init(void)
  80080e6:	4b18      	ldr	r3, [pc, #96]	; (8008148 <MX_SAI4_Init+0xb4>)
  80080e8:	2201      	movs	r2, #1
  80080ea:	f883 2038 	strb.w	r2, [r3, #56]	; 0x38
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
  80080ee:	4b16      	ldr	r3, [pc, #88]	; (8008148 <MX_SAI4_Init+0xb4>)
- 80080f0:	2202      	movs	r2, #2
+ 80080f0:	2201      	movs	r2, #1
  80080f2:	63da      	str	r2, [r3, #60]	; 0x3c
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
  80080f4:	4b14      	ldr	r3, [pc, #80]	; (8008148 <MX_SAI4_Init+0xb4>)
  80080f6:	f44f 7200 	mov.w	r2, #512	; 0x200
  80080fa:	641a      	str	r2, [r3, #64]	; 0x40
-  hsai_BlockA4.FrameInit.FrameLength = 8;
+  hsai_BlockA4.FrameInit.FrameLength = 15;
  80080fc:	4b12      	ldr	r3, [pc, #72]	; (8008148 <MX_SAI4_Init+0xb4>)
- 80080fe:	2208      	movs	r2, #8
+ 80080fe:	220f      	movs	r2, #15
  8008100:	655a      	str	r2, [r3, #84]	; 0x54
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
  8008102:	4b11      	ldr	r3, [pc, #68]	; (8008148 <MX_SAI4_Init+0xb4>)
@@ -19473,9 +19473,9 @@ static void MX_SAI4_Init(void)
  8008120:	4b09      	ldr	r3, [pc, #36]	; (8008148 <MX_SAI4_Init+0xb4>)
  8008122:	2200      	movs	r2, #0
  8008124:	66da      	str	r2, [r3, #108]	; 0x6c
-  hsai_BlockA4.SlotInit.SlotNumber = 1;
+  hsai_BlockA4.SlotInit.SlotNumber = 0;
  8008126:	4b08      	ldr	r3, [pc, #32]	; (8008148 <MX_SAI4_Init+0xb4>)
- 8008128:	2201      	movs	r2, #1
+ 8008128:	2200      	movs	r2, #0
  800812a:	671a      	str	r2, [r3, #112]	; 0x70
   hsai_BlockA4.SlotInit.SlotActive = 0x00000000;
  800812c:	4b06      	ldr	r3, [pc, #24]	; (8008148 <MX_SAI4_Init+0xb4>)
