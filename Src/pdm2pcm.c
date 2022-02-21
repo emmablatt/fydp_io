@@ -39,7 +39,7 @@ void MX_PDM2PCM_Init(void)
 
    /**
   */
-  PDM1_filter_handler.bit_order = PDM_FILTER_BIT_ORDER_LSB;
+  PDM1_filter_handler.bit_order = PDM_FILTER_BIT_ORDER_MSB; //MSB from data transfer
   PDM1_filter_handler.endianness = PDM_FILTER_ENDIANNESS_BE;
   PDM1_filter_handler.high_pass_tap = 2104533974;
   PDM1_filter_handler.in_ptr_channels = 2;

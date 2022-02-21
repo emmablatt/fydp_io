@@ -119,7 +119,9 @@ int main(void)
 
   // dma mode
   //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 8);
-  //PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+  PDM_Filter_Handler_t PDM1_filter_handler;
+  PDM_Filter_Config_t PDM1_filter_config;
+  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
   /* USER CODE BEGIN WHILE */
 
   while (1)
