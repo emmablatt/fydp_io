@@ -45,6 +45,7 @@ CRC_HandleTypeDef hcrc;
 
 SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai4_a;
+PDM_Filter_Handler_t hpdm_sai4_a;
 
 UART_HandleTypeDef huart3;
 
@@ -106,6 +107,7 @@ int main(void)
   MX_PDM2PCM_Init();
   /* USER CODE BEGIN 2 */
 
+
   /* Infinite loop */
   uint8_t pdm_buffer[8] = {0};
   uint8_t pcm_buffer[8] = {0};
@@ -116,6 +118,8 @@ int main(void)
 
   // polling mode - SIZE = # BYTES
   HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 4, 1000);
+  //PDM_Filter_deInterleave(pdm_buffer, pcm_buffer, &hpdm_sai4_a);  //FOR WHEN THERES 2 CAMERAS (1 per slot)
+  PDM_Filter(pdm_buffer, pcm_buffer, &hpdm_sai4_a);
 
   // dma mode
   //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 8);

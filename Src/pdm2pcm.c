@@ -25,8 +25,6 @@
 /* USER CODE END 0 */
 
 /* Global variables ---------------------------------------------------------*/
-PDM_Filter_Handler_t PDM1_filter_handler;
-PDM_Filter_Config_t PDM1_filter_config;
 
 /* USER CODE BEGIN 1 */
 /* USER CODE END 1 */
