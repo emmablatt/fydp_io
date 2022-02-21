@@ -45,7 +45,7 @@ CRC_HandleTypeDef hcrc;
 
 SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai4_a;
-PDM_Filter_Handler_t hpdm_sai4_a;
+PDM_Filter_Handler_t PDM1_filter_handler;
 
 UART_HandleTypeDef huart3;
 
@@ -107,19 +107,27 @@ int main(void)
   MX_PDM2PCM_Init();
   /* USER CODE BEGIN 2 */
 
-
   /* Infinite loop */
-  uint8_t pdm_buffer[8] = {0};
-  uint8_t pcm_buffer[8] = {0};
+  // output freq (pcm freq) = 48kHz
+  // decimiation factor = 64
+
+  // for pdm: input buffer is uint8
+  // with length >= (48 * 64 * 1/8) = 384
+  uint8_t pdm_buffer[400] = {0};
+
+  // for pdm: output buffer is uint16
+  // with length >= 48
+  uint16_t pcm_buffer[400] = {0};
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
 
   // polling mode - SIZE = # BYTES
-  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 4, 1000);
-  //PDM_Filter_deInterleave(pdm_buffer, pcm_buffer, &hpdm_sai4_a);  //FOR WHEN THERES 2 CAMERAS (1 per slot)
-  PDM_Filter(pdm_buffer, pcm_buffer, &hpdm_sai4_a);
+  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
+  //HAL_CRC_StateTypeDef crc_status = HAL_CRC_GetState(&hcrc);
+  //uint32_t crc = HAL_CRC_Calculate(&hcrc, pdm_buffer[0], 8);
+  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
   // dma mode
   //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 8);
@@ -218,6 +226,9 @@ static void MX_CRC_Init(void)
   __HAL_CRC_DR_RESET(&hcrc);
   /* USER CODE BEGIN CRC_Init 2 */
 
+  __HAL_RCC_CRC_CLK_ENABLE();
+  HAL_CRC_MspInit(&hcrc);
+
   /* USER CODE END CRC_Init 2 */
 
 }
@@ -251,7 +262,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
   hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
