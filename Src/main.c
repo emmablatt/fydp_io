@@ -101,9 +101,9 @@ int main(void)
   MX_GPIO_Init();
   MX_BDMA_Init();
   MX_SAI4_Init();
-  MX_CRC_Init();
   MX_USART3_UART_Init();
   MX_DMA_Init();
+  MX_CRC_Init();
   MX_PDM2PCM_Init();
   /* USER CODE BEGIN 2 */
 
@@ -123,7 +123,6 @@ int main(void)
 
   // dma mode
   //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 8);
-  // PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
   /* USER CODE BEGIN WHILE */
 
   while (1)

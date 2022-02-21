@@ -25,7 +25,8 @@
 /* USER CODE END 0 */
 
 /* Global variables ---------------------------------------------------------*/
-
+PDM_Filter_Handler_t PDM1_filter_handler;
+PDM_Filter_Config_t PDM1_filter_config;
 /* USER CODE BEGIN 1 */
 /* USER CODE END 1 */
 
@@ -50,9 +51,6 @@ void MX_PDM2PCM_Init(void)
   PDM_Filter_setConfig(&PDM1_filter_handler, &PDM1_filter_config);
 
   /* USER CODE BEGIN 3 */
-
-  PDM_Filter_Init(PDM1_filter_handler);
-  PDM_Filter_setConfig(PDM1_filter_handler, PDM1_filter_config);
   /* USER CODE END 3 */
 
 }
