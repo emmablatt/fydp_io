@@ -127,6 +127,8 @@ int main(void)
   //HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
   //uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
+  // do i need to provide clock to the codec (master to SAIB1)
+  // codec
   // dma mode
   HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
 
