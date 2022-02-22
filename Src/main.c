@@ -124,13 +124,12 @@ int main(void)
   HAL_SAI_Init(&hsai_BlockA4);
 
   // polling mode - SIZE = # BYTES
-  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
-  //HAL_CRC_StateTypeDef crc_status = HAL_CRC_GetState(&hcrc);
-  //uint32_t crc = HAL_CRC_Calculate(&hcrc, pdm_buffer[0], 8);
-  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+  //HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
+  //uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
   // dma mode
-  //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 8);
+  HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
+
   /* USER CODE BEGIN WHILE */
 
   while (1)
@@ -370,7 +369,7 @@ static void MX_DMA_Init(void)
   hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
   hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
   hdma_dma_generator0.Init.Mode = DMA_CIRCULAR;
-  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_LOW;
+  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_HIGH;
   hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
   hdma_dma_generator0.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
   hdma_dma_generator0.Init.MemBurst = DMA_MBURST_SINGLE;
