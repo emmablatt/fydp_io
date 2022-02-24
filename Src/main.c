@@ -130,8 +130,11 @@ int main(void)
   MX_DMA_Init();
   MX_PDM2PCM_Init();
   //MX_DFSDM1_Init();
-  MX_SAI1_Init();
+  //MX_SAI1_Init();
+
   /* USER CODE BEGIN 2 */
+
+  HAL_SAI_MspInit(&hdma_sai1_b);
   /* Infinite loop */
   // output freq (pcm freq) = 48kHz
   // decimiation factor = 64
@@ -423,42 +426,141 @@ static void Playback_Init(void)
 //  /* USER CODE END DFSDM1_Init 2 */
 //
 //}
+//
+///**
+//  * @brief SAI1 Initialization Function
+//  * @param None
+//  * @retval None
+//  */
+//static void MX_SAI1_Init(void)
+//{
+//
+//  /* USER CODE BEGIN SAI1_Init 0 */
+//
+//  /* USER CODE END SAI1_Init 0 */
+//
+//  /* USER CODE BEGIN SAI1_Init 1 */
+//
+//  /* USER CODE END SAI1_Init 1 */
+//  hsai_BlockB1.Instance = SAI1_Block_B;
+//  hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
+//  hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
+//  hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+//  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+//  hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+//  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
+//  hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+//  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
+//  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
+//  hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
+//  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN SAI1_Init 2 */
+//
+//  /* USER CODE END SAI1_Init 2 */
+//
+//}
 
 /**
-  * @brief SAI1 Initialization Function
-  * @param None
+  * @brief  SAI MSP Init.
+  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
+  *                the configuration information for SAI module.
   * @retval None
   */
-static void MX_SAI1_Init(void)
-{
+//void HAL_SAI_MspInit(SAI_HandleTypeDef *hsai)
+//{
+//  GPIO_InitTypeDef  GPIO_Init;
+//
+//  /* Enable SAI1 clock */
+//  AUDIO_SAIx_CLK_ENABLE();
+//
+//  /* Configure GPIOs used for SAI1 */
+//  AUDIO_SAIx_MCLK_ENABLE();
+//  AUDIO_SAIx_SCK_ENABLE();
+//  AUDIO_SAIx_FS_ENABLE();
+//  AUDIO_SAIx_SD_ENABLE();
+//
+//  GPIO_Init.Mode      = GPIO_MODE_AF_PP;
+//  GPIO_Init.Pull      = GPIO_NOPULL;
+//  GPIO_Init.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+//
+//  GPIO_Init.Alternate = AUDIO_SAIx_FS_AF;
+//  GPIO_Init.Pin       = AUDIO_SAIx_FS_PIN;
+//  HAL_GPIO_Init(AUDIO_SAIx_FS_GPIO_PORT, &GPIO_Init);
+//
+//  GPIO_Init.Alternate = AUDIO_SAIx_SCK_AF;
+//  GPIO_Init.Pin       = AUDIO_SAIx_SCK_PIN;
+//  HAL_GPIO_Init(AUDIO_SAIx_SCK_GPIO_PORT, &GPIO_Init);
+//
+//  GPIO_Init.Alternate = AUDIO_SAIx_SD_AF;
+//  GPIO_Init.Pin       = AUDIO_SAIx_SD_PIN;
+//  HAL_GPIO_Init(AUDIO_SAIx_SD_GPIO_PORT, &GPIO_Init);
+//
+//  GPIO_Init.Alternate = AUDIO_SAIx_MCLK_AF;
+//  GPIO_Init.Pin       = AUDIO_SAIx_MCLK_PIN;
+//  HAL_GPIO_Init(AUDIO_SAIx_MCLK_GPIO_PORT, &GPIO_Init);
+//
+//  /* Configure DMA used for SAI1 */
+//  __HAL_RCC_DMA2_CLK_ENABLE();
+//
+//  if(hsai->Instance == AUDIO_SAIx)
+//  {
+//    hSaiDma.Init.Request             = DMA_REQUEST_SAI1_B;
+//    hSaiDma.Init.Direction           = DMA_MEMORY_TO_PERIPH;
+//    hSaiDma.Init.PeriphInc           = DMA_PINC_DISABLE;
+//    hSaiDma.Init.MemInc              = DMA_MINC_ENABLE;
+//    hSaiDma.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+//    hSaiDma.Init.MemDataAlignment    = DMA_MDATAALIGN_HALFWORD;
+//    hSaiDma.Init.Mode                = DMA_CIRCULAR;
+//    hSaiDma.Init.Priority            = DMA_PRIORITY_HIGH;
+//    hSaiDma.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+//    hSaiDma.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+//    hSaiDma.Init.MemBurst            = DMA_MBURST_SINGLE;
+//    hSaiDma.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+//
+//    /* Select the DMA instance to be used for the transfer : DMA2_Stream6 */
+//    hSaiDma.Instance                 = DMA2_Stream6;
+//
+//    /* Associate the DMA handle */
+//    __HAL_LINKDMA(hsai, hdmatx, hSaiDma);
+//
+//    /* Deinitialize the Stream for new transfer */
+//    HAL_DMA_DeInit(&hSaiDma);
+//
+//    /* Configure the DMA Stream */
+//    if (HAL_OK != HAL_DMA_Init(&hSaiDma))
+//    {
+//      Error_Handler();
+//    }
+//  }
+//
+//  HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 0x01, 0);
+//  HAL_NVIC_EnableIRQ(DMA2_Stream6_IRQn);
+//}
 
-  /* USER CODE BEGIN SAI1_Init 0 */
+/**
+  * @brief Tx Transfer completed callbacks.
+  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
+  *                the configuration information for SAI module.
+  * @retval None
+  */
+//void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
+//{
+//  UpdatePointer = PLAY_BUFF_SIZE/2;
+//}
 
-  /* USER CODE END SAI1_Init 0 */
-
-  /* USER CODE BEGIN SAI1_Init 1 */
-
-  /* USER CODE END SAI1_Init 1 */
-  hsai_BlockB1.Instance = SAI1_Block_B;
-  hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
-  hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
-  hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SAI1_Init 2 */
-
-  /* USER CODE END SAI1_Init 2 */
-
-}
+/**
+  * @brief Tx Transfer Half completed callbacks
+  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
+  *                the configuration information for SAI module.
+  * @retval None
+  */
+//void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
+//{
+//  UpdatePointer = 0;
+//}
 
 /**
   * @brief SAI4 Initialization Function
