@@ -1,3 +1,8 @@
+"./Drivers/BSP/Components/wm8994/wm8994.o"
+"./Drivers/BSP/Components/wm8994/wm8994_reg.o"
+"./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o"
+"./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o"
+"./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o"

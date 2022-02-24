@@ -1,7 +1,7 @@
 Archive member included to satisfy reference by file (symbol)
 
 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
-                              ./Src/pdm2pcm.o (PDM_Filter_Init)
+                              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o (PDM_Filter_Init)
 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
                               ./Src/syscalls.o (__errno)
 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-exit.o)
@@ -33,17 +33,25 @@ Common symbol       size              file
 hdma_dma_generator0
                     0x78              ./Src/main.o
 huart3              0x90              ./Src/main.o
+haudio_in_dfsdm_channel
+                    0xe0              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
 hcrc                0x24              ./Src/main.o
 uwTick              0x4               ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
 pFlash              0x1c              ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.o
+haudio_in_dfsdm_filter
+                    0x150             ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
 hsai_BlockB1        0x98              ./Src/main.o
 PDM1_filter_config  0x6               ./Src/pdm2pcm.o
 hsai_BlockA4        0x98              ./Src/main.o
+hpb_exti            0x8               ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+Audio_Out_Ctx       0x24              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
 hdma_sai4_a         0x78              ./Src/main.o
 hdfsdm1_channel0    0x38              ./Src/main.o
 PDM1_filter_handler
                     0x4c              ./Src/main.o
+hbus_i2c4           0x4c              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
 hdma_sai1_b         0x78              ./Src/main.o
+Audio_In_Ctx        0x90              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
 
 Discarded input sections
 
@@ -58,6 +66,1493 @@ Discarded input sections
  .ARM.exidx     0x0000000000000000       0x10 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
  .ARM.attributes
                 0x0000000000000000       0x1c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text          0x0000000000000000        0x0 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .data          0x0000000000000000        0x0 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .bss           0x0000000000000000        0x0 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .data.WM8994_Driver
+                0x0000000000000000       0x48 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_Init
+                0x0000000000000000      0xdcc ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_DeInit
+                0x0000000000000000       0x1a ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_ReadID
+                0x0000000000000000       0x34 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_Play
+                0x0000000000000000       0x1a ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_Pause
+                0x0000000000000000       0x50 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_Resume
+                0x0000000000000000       0x1a ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_Stop
+                0x0000000000000000       0xda ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_SetVolume
+                0x0000000000000000      0x1b4 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_GetVolume
+                0x0000000000000000       0xa4 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_SetMute
+                0x0000000000000000       0x96 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_SetOutputMode
+                0x0000000000000000      0x432 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_SetResolution
+                0x0000000000000000       0x34 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_GetResolution
+                0x0000000000000000       0x80 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_SetProtocol
+                0x0000000000000000       0x34 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_GetProtocol
+                0x0000000000000000       0x3e ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_SetFrequency
+                0x0000000000000000      0x168 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_GetFrequency
+                0x0000000000000000       0xc8 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_Reset
+                0x0000000000000000       0x2e ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_RegisterBusIO
+                0x0000000000000000       0x84 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_Delay
+                0x0000000000000000       0x34 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_ReadRegWrap
+                0x0000000000000000       0x32 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .text.WM8994_WriteRegWrap
+                0x0000000000000000       0x32 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .data.ColdStartup.7225
+                0x0000000000000000        0x1 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_info    0x0000000000000000      0xbc4 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_abbrev  0x0000000000000000      0x1b6 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_aranges
+                0x0000000000000000       0xc8 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_ranges  0x0000000000000000       0xb8 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000       0x9d ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000      0xac0 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000       0x51 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000      0x103 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000       0x6a ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000      0x1df ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000      0x101 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000     0x1731 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000      0x174 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_macro   0x0000000000000000      0x116 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_line    0x0000000000000000      0xd4b ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_str     0x0000000000000000     0xe46a ./Drivers/BSP/Components/wm8994/wm8994.o
+ .comment       0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .debug_frame   0x0000000000000000      0x338 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .ARM.attributes
+                0x0000000000000000       0x32 ./Drivers/BSP/Components/wm8994/wm8994.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text          0x0000000000000000        0x0 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .data          0x0000000000000000        0x0 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .bss           0x0000000000000000        0x0 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_read_reg
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_write_reg
+                0x0000000000000000       0x50 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_register_set
+                0x0000000000000000       0x26 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_sw_reset_w
+                0x0000000000000000       0x22 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_sw_reset_r
+                0x0000000000000000       0x20 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_bias_en
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_vmid_sel
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_micb1_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_micb2_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_hpout1r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_hpout1l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_hpout2_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_spkoutl_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_1_spkoutr_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_in1r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_in2r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_in1l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_in2l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_mixinr_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_mixinl_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_opclk_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_tshut_opdis
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_2_tshut_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_mixoutr_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_mixoutl_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_mixoutrvol_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_mixoutlvol_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_spklvol_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_spkrvol_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_lineout2p_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_lineout2n_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_lineout1p_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_3_lineout1n_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_adcr_ena
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_adcl_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_dmic1r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_dmic1l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_dmic2r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_dmic2l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_aif1adc1r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_aif1adc1l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_aif1adc2r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_aif1adc2l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_aif2adcr_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_4_aif2adcl_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_dac1r_ena
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_dac1l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_dac2r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_dac2l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_aif1dac1r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_aif1dac1l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_aif1dac2r_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_aif1dac2l_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_aif2dacr_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_5_aif2dacl_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_6_aif1_dacdat_src
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_6_aif2_dacdat_src
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_6_aif2_adcdat_src
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_6_aif3_adcdat_src
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_pwr_mgmt_6_aif3_tri
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer1_inputs_clamp
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer1_in1lp_mixinl_boost
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer1_in1rp_mixinr_boost
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in1l_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in1l_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in1l_mute
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in1_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in2l_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in2l_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in2l_mute
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lli_in2_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in1r_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in1r_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in1r_mute
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in1_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in2r_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in2r_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in2r_mute
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_rli_in2_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lo_hpout1l_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lo_hpout1l_vol_r
+                0x0000000000000000       0x3e ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lo_hpout1l_mute_n
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lo_hpout1l_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_lo_hpout1l_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_ro_hpout1r_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_ro_hpout1r_mute_n
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_ro_hpout1r_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_ro_hpout1r_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixl_att_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixl_att_dac1_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixl_att_mixoutl_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixl_att_in1lp_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixl_att_mixinl_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixl_att_dac2l_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixl_att_spkab_refsel
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixr_att_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixr_att_dac1_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixr_att_mixoutl_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixr_att_in1rp_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixr_att_mixinl_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixr_att_dac2r_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixr_att_spkout_classab
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_left_vol_spkout_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_left_vol_spkout_mute_n
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_left_vol_spkout_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_left_vol_spkout_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_right_vol_spkout_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_right_vol_spkout_mute_n
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_right_vol_spkout_zc
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spk_right_vol_spkout_vu
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in1rn_to_in1r
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in1rp_to_in1r
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in2rn_to_in2r
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in2rp_to_in2r
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in1ln_to_in1l
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in1lp_to_in1l
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in2ln_to_in2l
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer2_in2lp_to_in2l
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer3_mixoutl_mixinl_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer3_in1l_mixinl_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer3_in1l_to_mixinl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer3_in2l_mixinl_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer3_in2l_to_mixinl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer4_mixoutr_mixinr_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer4_in1r_mixinr_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer4_in1r_to_mixinr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer4_in2r_mixinr_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer4_in2r_to_mixinr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer5_in2lrp_mixinl_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer5_in1lp_mixinl_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer6_in2lrp_mixinr_vol
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_inmixer6_in1rp_mixinr_vol
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_dac1l_to_mixoutl
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_in2lp_to_mixoutl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_in1l_to_mixoutl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_in1r_to_mixoutl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_in2ln_to_mixoutl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_in2rn_to_mixoutl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_mixinl_to_mixoutl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_mixinr_to_mixoutl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer1_dac1l_to_hpout1l
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_dac1r_to_mixoutr
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_in2rp_to_mixoutr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_in1r_to_mixoutr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_in1l_to_mixoutr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_in2rn_to_mixoutr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_in2ln_to_mixoutr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_mixinr_to_mixoutr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_mixinl_to_mixoutr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_outmixer2_dac1r_to_hpout1r
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_dac1r_to_spkmixr
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_dac1l_to_spkmixl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_mixoutr_to_spkmixr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_mixoutl_to_spkmixl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_in1rp_to_spkmixr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_in1lp_to_spkmixl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_mixinr_to_spkmixr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_mixinl_to_spkmixl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_dac2r_to_spkmixr
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_spkmixer_dac2l_to_spkmixl
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_antipop2_vmid_disch
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_antipop2_bias_src
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_antipop2_startup_bias_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_antipop2_vmid_buf_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_antipop2_vmid_ramp
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_antipop2_micb1_disch
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_antipop2_micb2_disch
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_charge_pump1_cp_ena
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_charge_pump2_cp_disch
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_class_w_cp_dyn_pwr
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_class_w_cp_dyn_src_sel
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_ena_chan_0
+                0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_ena_chan_1
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_dac_wr_0
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_dac_wr_1
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_startup_0
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_startup_1
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_series_0
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_series_1
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_single_0
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dc_servo1_dcs_trig_single_1
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_analog_hp_hpout1r_dly
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_analog_hp_hpout1r_outp
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_analog_hp_hpout1r_rmv_short
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_analog_hp_hpout1l_dly
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_analog_hp_hpout1l_outp
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_analog_hp_hpout1l_rmv_short
+                0x0000000000000000       0x5c ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_wseq_ctrl1_start_index
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_wseq_ctrl1_start
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_wseq_ctrl1_abort
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_wseq_ctrl1_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_clocking1_ena
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_clocking1_div
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_clocking1_inv
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_clocking1_src
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking1_sysclk_src
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking1_sysdspclk_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking1_aif2dspclk_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking1_aif1dspclk_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking1_toclk_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking2_opclk_div
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking2_dbclk_div
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_clocking2_toclk_div
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_clk_rate
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_sr
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_sr_r
+                0x0000000000000000       0x44 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_fmt
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_fmt_r
+                0x0000000000000000       0x44 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_wl
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_wl_r
+                0x0000000000000000       0x44 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_lrclk_inv
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_bclk_inv
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_adc_tdm
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_adcr_src
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_control1_adcl_src
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_ms_lrclk_frc
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_ms_clk_frc
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_ms_mstr
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_left_vol_adc1l
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_left_vol_adc1l_r
+                0x0000000000000000       0x3e ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_left_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_right_vol_adc1r
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_right_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_left_vol_adc2l
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_left_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_right_vol_adc2r
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_right_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_filters_adc1r_hpf
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_filters_adc1l_hpf
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_filters_hpf_cut
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc1_filters_4fs
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_filters_adc2r_hpf
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_filters_adc2l_hpf
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_filters_hpf_cut
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_adc2_filters_4fs
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_filter1_deemp
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_filter1_unmute_ramp
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_filter1_muterate
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_filter1_mono
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_filter1_mute
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_filter1_deemp
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_filter1_unmute_ramp
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_filter1_muterate
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_filter1_mono
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_filter1_mute
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_adc1r_drc_ena
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_adc1l_drc_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_dac1_drc_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_anticlip
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_qr
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_knee2_op_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_sig_det
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_sig_det_mode
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_ng_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_sig_det_pk
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc1_sig_det_rms
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_adc2r_drc_ena
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_adc2l_drc_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_dac2_drc_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_anticlip
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_qr
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_knee2_op_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_sig_det
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_sig_det_mode
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_ng_ena
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_sig_det_pk
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1drc2_sig_det_rms
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_mixer_vol_adcl
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_mixer_vol_adcr
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_lmrdac1l_to_dac1l
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_lmrdac2l_to_dac1l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_lmrdacl_to_dac1l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_lmradcl_to_dac1l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_lmradcr_to_dac1l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_rmrdac1r_to_dac1r
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_rmrdac2r_to_dac1r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_rmrdacr_to_dac1r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_rmradcl_to_dac1r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac1_rmradcr_to_dac1r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_lmrdac1l_to_dac2l
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_lmrdac2l_to_dac2l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_lmrdacl_to_dac2l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_lmradcl_to_dac2l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_lmradcr_to_dac2l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_rmrdac1r_to_dac2r
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_rmrdac2r_to_dac2r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_rmrdacr_to_dac2r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_rmradcl_to_dac2r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_aif1_dac2_rmradcr_to_dac2r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc1lmr_aif2dacl_to_aif1adc1l
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc1lmr_adc1l_to_aif1adc1l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc1rmr_aif2dacl_to_aif1adc1r
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc1rmr_adc1r_to_aif1adc1r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc2lmr_aif2dacl_to_aif1adc2l
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc2lmr_adc2l_to_aif1adc2l
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc2rmr_aif2dacl_to_aif1adc2r
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_adc2rmr_adc2r_to_aif1adc2r
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_left_vol_vset
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_left_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_left_vol_mute
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_right_vol_vset
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_right_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac1_right_vol_mute
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac2_left_vol_vset
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac2_left_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac2_left_vol_mute
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac2_right_vol_vset
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac2_right_vol_vu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_dac2_right_vol_mute
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_oversampling_dac_osr128
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_oversampling_adc_osr128
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_fn
+                0x0000000000000000       0x58 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_lvl
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_db
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_op_cfg
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_pol
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_pd
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_pu
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .text.wm8994_gpio1_gp1_dir
+                0x0000000000000000       0x60 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_info    0x0000000000000000     0x7347 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_abbrev  0x0000000000000000      0x14b ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_aranges
+                0x0000000000000000      0xa10 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_ranges  0x0000000000000000      0xa00 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000       0x85 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000      0xac0 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000       0x51 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000      0x103 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000       0x6a ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000      0x1df ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000      0x101 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_macro   0x0000000000000000     0x1731 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_line    0x0000000000000000     0x3aca ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_str     0x0000000000000000     0xfdb3 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .comment       0x0000000000000000       0x54 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .debug_frame   0x0000000000000000     0x2cf4 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .ARM.attributes
+                0x0000000000000000       0x32 ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text          0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .data          0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .bss           0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .data.LED_PORT
+                0x0000000000000000        0x8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .rodata.LED_PIN
+                0x0000000000000000        0x8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .data.BUTTON_PORT
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .rodata.BUTTON_PIN
+                0x0000000000000000        0x2 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .rodata.BUTTON_IRQn
+                0x0000000000000000        0x2 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_GetVersion
+                0x0000000000000000       0x12 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_LED_Init
+                0x0000000000000000       0xbc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_LED_DeInit
+                0x0000000000000000       0x58 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_LED_On
+                0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_LED_Off
+                0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_LED_Toggle
+                0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_LED_GetState
+                0x0000000000000000       0x40 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_PB_Init
+                0x0000000000000000       0xe4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_PB_DeInit
+                0x0000000000000000       0x38 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_PB_GetState
+                0x0000000000000000       0x2c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_PB_IRQHandler
+                0x0000000000000000       0x24 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BUTTON_USER_EXTI_Callback
+                0x0000000000000000        0xe ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .text.BSP_PB_Callback
+                0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .rodata.BUTTON_EXTI_LINE.10907
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .data.ButtonCallback.10905
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .data.BSP_BUTTON_PRIO.10906
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_info    0x0000000000000000     0x1921 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_abbrev  0x0000000000000000      0x320 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_aranges
+                0x0000000000000000       0x80 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_ranges  0x0000000000000000       0x70 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x2f2 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0xac0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x244 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x2e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x42 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x51 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x103 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x6a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x1df ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x101 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000     0x1305 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x11f ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x27 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000    0x21c2a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x6d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000     0x3d09 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x174 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x52 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x17 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x43 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x58 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x71 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x12a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x333 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x1a9 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x5d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000     0x257a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000     0x104f ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x14d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x114 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x3f8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0xac ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x788 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x228 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x66 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x3a6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x2d4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x3f9 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x275 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0xc7 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x4c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x3ca ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x45c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x4a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x22c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x67 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0xa5 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x1c4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x25b ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x35 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x3ad ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0xe4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x67e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0xa6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000      0x5e6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0xa6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_macro   0x0000000000000000       0x9e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_line    0x0000000000000000      0xb04 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_str     0x0000000000000000   0x145b39 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .comment       0x0000000000000000       0x54 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .debug_frame   0x0000000000000000      0x1dc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .ARM.attributes
+                0x0000000000000000       0x32 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ COMMON         0x0000000000000000        0x8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text          0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .data          0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss           0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.Audio_CompObj
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.haudio_out_sai
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.haudio_in_sai
+                0x0000000000000000      0x130 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.Audio_Drv
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.hDmaDfsdm
+                0x0000000000000000      0x1e0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.RecBuffTrigger
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.RecBuffHalf
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.MicRecBuff
+                0x0000000000000000     0x4000 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.MicBuffIndex
+                0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.PDM_FilterHandler
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.PDM_FilterConfig
+                0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Init
+                0x0000000000000000      0x234 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_DeInit
+                0x0000000000000000       0x88 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.MX_SAI1_Block_B_Init
+                0x0000000000000000      0x120 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.MX_SAI1_ClockConfig
+                0x0000000000000000       0x7a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Play
+                0x0000000000000000       0xdc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Pause
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Resume
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Stop
+                0x0000000000000000       0xc4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_SetVolume
+                0x0000000000000000       0x9c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_GetVolume
+                0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Mute
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_UnMute
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_IsMute
+                0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_SetDevice
+                0x0000000000000000       0x4c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_GetDevice
+                0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_SetSampleRate
+                0x0000000000000000       0xc8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_GetSampleRate
+                0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_SetBitsPerSample
+                0x0000000000000000       0xe4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_GetBitsPerSample
+                0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_SetChannelsNbr
+                0x0000000000000000       0x88 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_GetChannelsNbr
+                0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_GetState
+                0x0000000000000000       0x44 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_IRQHandler
+                0x0000000000000000       0x20 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_TxCpltCallback
+                0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_TxHalfCpltCallback
+                0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_ErrorCallback
+                0x0000000000000000       0x2c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_TransferComplete_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_HalfTransfer_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Error_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.WM8994_Probe
+                0x0000000000000000       0xb4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.SAI_MspInit
+                0x0000000000000000      0x4f4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.SAI_MspDeInit
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .rodata        0x0000000000000000       0x78 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_Init
+                0x0000000000000000      0x85c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_DeInit
+                0x0000000000000000      0x208 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.MX_DFSDM1_ClockConfig
+                0x0000000000000000       0x50 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.MX_SAI4_ClockConfig
+                0x0000000000000000       0x8a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.MX_DFSDM1_Init
+                0x0000000000000000       0xfe ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.MX_SAI1_Block_A_Init
+                0x0000000000000000      0x110 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.MX_SAI4_Block_A_Init
+                0x0000000000000000      0x10a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_PDMToPCM_Init
+                0x0000000000000000      0x148 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_PDMToPCM
+                0x0000000000000000       0x74 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_Record
+                0x0000000000000000      0x1f8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_Stop
+                0x0000000000000000      0x168 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_Pause
+                0x0000000000000000      0x11c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_Resume
+                0x0000000000000000      0x17c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_RecordChannels
+                0x0000000000000000      0x1dc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_StopChannels
+                0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_PauseChannels
+                0x0000000000000000       0xbc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_ResumeChannels
+                0x0000000000000000      0x114 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_RecordPDM
+                0x0000000000000000       0x6c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_SetDevice
+                0x0000000000000000      0x130 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_GetDevice
+                0x0000000000000000       0x44 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_SetSampleRate
+                0x0000000000000000      0x1f8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_GetSampleRate
+                0x0000000000000000       0x44 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_SetBitsPerSample
+                0x0000000000000000      0x110 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_GetBitsPerSample
+                0x0000000000000000       0x44 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_SetChannelsNbr
+                0x0000000000000000       0x48 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_GetChannelsNbr
+                0x0000000000000000       0x44 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_SetVolume
+                0x0000000000000000       0x32 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_GetVolume
+                0x0000000000000000       0x32 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_GetState
+                0x0000000000000000       0x44 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_IRQHandler
+                0x0000000000000000       0xa0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_DFSDM_FilterRegConvCpltCallback
+                0x0000000000000000      0x4c4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_DFSDM_FilterRegConvHalfCpltCallback
+                0x0000000000000000      0x4b8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_RxHalfCpltCallback
+                0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_RxCpltCallback
+                0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_TransferComplete_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_HalfTransfer_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_Error_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.DFSDM_ChannelMspInit
+                0x0000000000000000      0x148 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.DFSDM_ChannelMspDeInit
+                0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.DFSDM_FilterMspInit
+                0x0000000000000000      0x3c4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.DFSDM_FilterMspDeInit
+                0x0000000000000000       0x50 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.WM8994Obj.12482
+                0x0000000000000000       0x28 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.hdma_sai_tx.12488
+                0x0000000000000000       0x78 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.hdma_sai_rx.12489
+                0x0000000000000000       0x78 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.DmaRecBuffCplt.12726
+                0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.DmaRecHalfBuffCplt.12735
+                0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_info    0x0000000000000000     0x5d54 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_abbrev  0x0000000000000000      0x3e7 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_aranges
+                0x0000000000000000      0x260 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_ranges  0x0000000000000000      0x250 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x359 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0xac0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x244 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x2e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x42 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x51 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x103 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x6a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x1df ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x101 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000     0x1305 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x11f ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x27 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000    0x21c2a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x6d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000     0x3d09 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x174 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x52 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x17 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x43 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x58 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x71 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x12a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x333 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x1a9 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x5d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000     0x257a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000     0x104f ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x14d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x114 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x3f8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0xac ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x788 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x228 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x66 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x3a6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x2d4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x3f9 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x275 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0xc7 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x4c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x3ca ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x45c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x4a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x22c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x67 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0xa5 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x1c4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x25b ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x35 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x3ad ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0xe4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x67e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0xa6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x5e6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0xa6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000     0x1731 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x116 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x82 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000      0x4aa ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_macro   0x0000000000000000       0x6a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_line    0x0000000000000000     0x2dc7 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_str     0x0000000000000000   0x153660 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .comment       0x0000000000000000       0x54 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_frame   0x0000000000000000      0xacc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .ARM.attributes
+                0x0000000000000000       0x32 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ COMMON         0x0000000000000000      0x2e4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .group         0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text          0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .data          0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .bss           0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .rodata.I2C_Charac
+                0x0000000000000000       0x84 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .bss.I2c4InitCounter
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .bss.I2c_valid_timing
+                0x0000000000000000      0xa00 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .bss.I2c_valid_timing_nbr
+                0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_I2C4_Init
+                0x0000000000000000       0x74 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_I2C4_DeInit
+                0x0000000000000000       0x50 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.MX_I2C4_Init
+                0x0000000000000000       0x84 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_I2C4_WriteReg
+                0x0000000000000000       0x5c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_I2C4_ReadReg
+                0x0000000000000000       0x5c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_I2C4_WriteReg16
+                0x0000000000000000       0x5c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_I2C4_ReadReg16
+                0x0000000000000000       0x5c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_I2C4_IsReady
+                0x0000000000000000       0x38 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.BSP_GetTick
+                0x0000000000000000        0xe ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.I2C_GetTiming
+                0x0000000000000000      0x100 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.I2C_Compute_PRESC_SCLDEL_SDADEL
+                0x0000000000000000      0x1dc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.I2C_Compute_SCLL_SCLH
+                0x0000000000000000      0x210 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.I2C4_MspInit
+                0x0000000000000000       0xcc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.I2C4_MspDeInit
+                0x0000000000000000       0x48 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.I2C4_WriteReg
+                0x0000000000000000       0x4c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .text.I2C4_ReadReg
+                0x0000000000000000       0x4c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_info    0x0000000000000000     0x1f2e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_abbrev  0x0000000000000000      0x35a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_aranges
+                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_ranges  0x0000000000000000       0xb8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x346 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0xac0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x244 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x2e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x42 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x51 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x103 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x6a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x1df ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x101 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000     0x1305 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x11f ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x27 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000    0x21c2a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x6d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000     0x3d09 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x174 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x52 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x17 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x43 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x58 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x71 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x12a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x333 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x1a9 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x5d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000     0x257a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000     0x104f ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x14d ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x114 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x3f8 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0xac ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x788 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x228 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x66 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x3a6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x2d4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x3f9 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x275 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0xc7 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x4c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x3ca ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x45c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x4a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x22c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x67 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0xa5 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x1c4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x25b ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x35 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x3ad ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0xe4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x67e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0xa6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000      0x5e6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0x64 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_macro   0x0000000000000000       0xa6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_line    0x0000000000000000      0xe29 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_str     0x0000000000000000   0x1459e5 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .comment       0x0000000000000000       0x54 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .debug_frame   0x0000000000000000      0x250 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ .ARM.attributes
+                0x0000000000000000       0x32 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
+ COMMON         0x0000000000000000       0x4c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
  .group         0x0000000000000000        0xc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .group         0x0000000000000000        0xc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .group         0x0000000000000000        0xc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
@@ -227,6 +1722,72 @@ Discarded input sections
                 0x0000000000000000       0xec ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .text.HAL_EXTI_D3_EventInputConfig
                 0x0000000000000000       0xd0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0xac0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x244 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x2e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x42 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x8e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x51 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x103 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x6a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x1df ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x22 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x101 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000     0x1305 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x11f ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x27 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000    0x21c2a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x6d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000     0x3d09 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x174 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x52 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x17 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x16 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x43 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x34 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x58 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x71 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x12a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x333 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x1a9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x5d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000     0x257a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000     0x104f ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x14d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x114 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x3f8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0xac ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x788 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x228 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x66 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x3a6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x2d4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x3f9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x275 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0xc7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x4c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x3ca ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x45c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x3c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x4a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x22c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x67 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0xa5 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x1c4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x25b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x35 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x3ad ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0x10 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0xe4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x67e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000       0xa6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_macro   0x0000000000000000      0x5e6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .group         0x0000000000000000        0xc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .group         0x0000000000000000        0xc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .group         0x0000000000000000        0xc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
@@ -4722,6 +6283,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x67e ./Src/main.o
  .debug_macro   0x0000000000000000       0xa6 ./Src/main.o
  .debug_macro   0x0000000000000000      0x5e6 ./Src/main.o
+ .debug_macro   0x0000000000000000       0x82 ./Src/main.o
  .group         0x0000000000000000        0xc ./Src/pdm2pcm.o
  .group         0x0000000000000000        0xc ./Src/pdm2pcm.o
  .group         0x0000000000000000        0xc ./Src/pdm2pcm.o
@@ -5540,6 +7102,11 @@ Linker script and memory map
 LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
 LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
 LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
+LOAD ./Drivers/BSP/Components/wm8994/wm8994.o
+LOAD ./Drivers/BSP/Components/wm8994/wm8994_reg.o
+LOAD ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
+LOAD ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+LOAD ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
 LOAD ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
 LOAD ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
 LOAD ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
@@ -6426,93 +7993,26 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_ranges  0x0000000000000ed8       0x18 ./Src/system_stm32h7xx.o
  .debug_ranges  0x0000000000000ef0       0x20 ./Startup/startup_stm32h735igkx.o
 
-.debug_macro    0x0000000000000000    0x33937
+.debug_macro    0x0000000000000000     0x36d6
  .debug_macro   0x0000000000000000      0x2f5 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000002f5      0xac0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000000db5      0x244 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000000ff9       0x2e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000001027       0x42 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000001069       0x22 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000000108b       0x8e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000001119       0x51 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000000116a      0x103 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000000126d       0x6a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000012d7      0x1df ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000014b6       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000014d2       0x22 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000014f4      0x101 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000015f5     0x1305 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000028fa      0x11f ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000002a19       0x27 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000002a40    0x21c2a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002466a       0x6d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000246d7     0x3d09 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000283e0      0x174 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028554       0x52 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000285a6       0x17 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000285bd       0x3c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000285f9       0x34 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002862d       0x16 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028643       0x43 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028686       0x34 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000286ba       0x10 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000286ca       0x58 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028722       0x71 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028793       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000287af      0x12a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000288d9      0x333 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028c0c      0x1a9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028db5       0x5d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x0000000000028e12     0x257a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002b38c     0x104f ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002c3db      0x14d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002c528      0x114 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002c63c      0x3f8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002ca34       0xac ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002cae0      0x788 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002d268      0x228 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002d490       0x66 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002d4f6      0x3a6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002d89c      0x2d4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002db70      0x3f9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002df69      0x275 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002e1de       0xc7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002e2a5       0x4c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002e2f1      0x3ca ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002e6bb      0x45c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002eb17       0x3c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002eb53       0x4a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002eb9d      0x22c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002edc9       0x67 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002ee30       0xa5 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002eed5      0x1c4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002f099      0x25b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002f2f4       0x35 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002f329      0x3ad ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002f6d6       0x10 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002f6e6       0xe4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002f7ca      0x67e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002fe48       0xa6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x000000000002feee      0x5e6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_macro   0x00000000000304d4      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- .debug_macro   0x000000000003079f      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
- .debug_macro   0x0000000000030a6a      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.o
- .debug_macro   0x0000000000030d35      0x2ef ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm.o
- .debug_macro   0x0000000000031024      0x31e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
- .debug_macro   0x0000000000031342      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
- .debug_macro   0x000000000003160d      0x2d2 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
- .debug_macro   0x00000000000318df      0x304 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
- .debug_macro   0x0000000000031be3      0x2ef ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
- .debug_macro   0x0000000000031ed2      0x2e9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
- .debug_macro   0x00000000000321bb      0x2da ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .debug_macro   0x0000000000032495      0x2f6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
- .debug_macro   0x000000000003278b      0x2d7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_macro   0x0000000000032a62      0x2ec ./Src/main.o
- .debug_macro   0x0000000000032d4e       0x82 ./Src/main.o
- .debug_macro   0x0000000000032dd0      0x2e8 ./Src/pdm2pcm.o
- .debug_macro   0x00000000000330b8      0x2d5 ./Src/stm32h7xx_hal_msp.o
- .debug_macro   0x000000000003338d      0x2df ./Src/stm32h7xx_it.o
- .debug_macro   0x000000000003366c      0x2cb ./Src/system_stm32h7xx.o
+ .debug_macro   0x00000000000002f5      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_macro   0x00000000000005c0      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
+ .debug_macro   0x000000000000088b      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.o
+ .debug_macro   0x0000000000000b56      0x2ef ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm.o
+ .debug_macro   0x0000000000000e45      0x31e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_macro   0x0000000000001163      0x2cb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
+ .debug_macro   0x000000000000142e      0x2d2 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_macro   0x0000000000001700      0x304 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_macro   0x0000000000001a04      0x2ef ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_macro   0x0000000000001cf3      0x2e9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_macro   0x0000000000001fdc      0x2da ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .debug_macro   0x00000000000022b6      0x2f6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+ .debug_macro   0x00000000000025ac      0x2d7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .debug_macro   0x0000000000002883      0x2ec ./Src/main.o
+ .debug_macro   0x0000000000002b6f      0x2e8 ./Src/pdm2pcm.o
+ .debug_macro   0x0000000000002e57      0x2d5 ./Src/stm32h7xx_hal_msp.o
+ .debug_macro   0x000000000000312c      0x2df ./Src/stm32h7xx_it.o
+ .debug_macro   0x000000000000340b      0x2cb ./Src/system_stm32h7xx.o
 
 .debug_line     0x0000000000000000    0x17a78
  .debug_line    0x0000000000000000      0xf19 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o

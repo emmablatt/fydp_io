@@ -20,6 +20,8 @@ OBJCOPY_BIN :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Drivers/BSP/Components/wm8994 \
+Drivers/BSP/STM32H735G-DK \
 Drivers/STM32H7xx_HAL_Driver/Src \
 Src \
 Startup \
