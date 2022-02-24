@@ -82,6 +82,8 @@ __IO int16_t                 UpdatePointer = -1;
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static void Playback_Init(void);
+static int32_t WM8994_Probe(void);
 
 /* USER CODE END 0 */
 

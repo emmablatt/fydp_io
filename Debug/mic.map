@@ -6252,7 +6252,7 @@ Discarded input sections
                 0x0000000000000000       0xb4 ./Src/main.o
  .text.Playback_Init
                 0x0000000000000000      0x180 ./Src/main.o
- .bss.WM8994Obj.12418
+ .bss.WM8994Obj.12422
                 0x0000000000000000       0x28 ./Src/main.o
  .debug_macro   0x0000000000000000      0xac0 ./Src/main.o
  .debug_macro   0x0000000000000000      0x244 ./Src/main.o
