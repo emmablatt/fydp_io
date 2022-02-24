@@ -60,7 +60,6 @@ DMA_HandleTypeDef hdma_sai4_a;
 
 UART_HandleTypeDef huart3;
 
-DMA_HandleTypeDef hdma_dma_generator0;
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t PDM1_filter_handler;
 /* USER CODE END PV */
@@ -75,7 +74,6 @@ static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
 //static void MX_DFSDM1_Init(void);
 static void MX_SAI1_Init(void);
-
 /* USER CODE BEGIN PFP */
 ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
 __IO int16_t                 UpdatePointer = -1;
@@ -130,7 +128,6 @@ int main(void)
   MX_PDM2PCM_Init();
   //MX_DFSDM1_Init();
   MX_SAI1_Init();
-
   /* USER CODE BEGIN 2 */
 
   HAL_SAI_MspInit(&hdma_sai1_b);
@@ -172,32 +169,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	    while(UpdatePointer==-1);
 
-	    int position = UpdatePointer;
-	    UpdatePointer = -1;
-
-	    /* Update the first or the second part of the buffer */
-	    for(int i = 0; i < PLAY_BUFF_SIZE/2; i++)
-	    {
-	      PlayBuff[i+position] = *(uint16_t *)(pcm_buffer + PlaybackPosition);
-	      PlaybackPosition+=2;
-	    }
-
-	    /* Clean Data Cache to update the content of the SRAM */
-	    SCB_CleanDCache_by_Addr((uint32_t*)&PlayBuff[position], PLAY_BUFF_SIZE);
-
-	    /* check the end of the file */
-	    if((PlaybackPosition+PLAY_BUFF_SIZE/2) > PLAY_BUFF_SIZE)
-	    {
-	      PlaybackPosition = PLAY_HEADER;
-	    }
-
-	    if(UpdatePointer != -1)
-	    {
-	      /* Buffer update time is too long compare to the data transfer time */
-	      Error_Handler();
-	    }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -299,150 +271,15 @@ static void MX_CRC_Init(void)
   * @param None
   * @retval None
   */
-
-/**
-  * @brief  Register Bus IOs if component ID is OK
-  * @retval error status
-  */
-static int32_t WM8994_Probe(void)
-{
-  int32_t                   ret = BSP_ERROR_NONE;
-  WM8994_IO_t               hi2c4;
-  static WM8994_Object_t    WM8994Obj;
-  uint32_t                  wm8994_id;
-
-  /* Configure the audio driver */
-  hi2c4.Address     = AUDIO_I2C_ADDRESS;
-  hi2c4.Init        = BSP_I2C4_Init;
-  hi2c4.DeInit      = BSP_I2C4_DeInit;
-  hi2c4.ReadReg     = BSP_I2C4_ReadReg16;
-  hi2c4.WriteReg    = BSP_I2C4_WriteReg16;
-  hi2c4.GetTick     = BSP_GetTick;
-
-  if(WM8994_RegisterBusIO (&WM8994Obj, &hi2c4) != WM8994_OK)
-  {
-    ret = BSP_ERROR_BUS_FAILURE;
-  }
-  else if(WM8994_Reset(&WM8994Obj) != WM8994_OK)
-  {
-    ret = BSP_ERROR_COMPONENT_FAILURE;
-  }
-  else if(WM8994_ReadID(&WM8994Obj, &wm8994_id) != WM8994_OK)
-  {
-    ret = BSP_ERROR_COMPONENT_FAILURE;
-  }
-  else if(wm8994_id != WM8994_ID)
-  {
-    ret = BSP_ERROR_UNKNOWN_COMPONENT;
-  }
-  else
-  {
-    AudioDrv = (AUDIO_Drv_t *) &WM8994_Driver;
-    AudioCompObj = &WM8994Obj;
-  }
-
-  return ret;
-}
-
-/**
-  * @brief  Playback initialization
-  * @param  None
-  * @retval None
-  */
-static void Playback_Init(void)
-{
-  WM8994_Init_t codec_init;
-  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInitStruct;
-
-  /* Configure PLLSAI prescalers */
-  /* PLL2SAI_VCO: VCO_271M
-     SAI_CLK(first level) = PLLSAI_VCO/PLL2P = 271/24 = 11.291 Mhz */
-  RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
-  RCC_PeriphCLKInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2P = 24;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2Q = 24;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2R = 1;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2N = 271;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2FRACN = 0;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_0;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOMEDIUM;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2M = 25;
-
-  if(HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /* Initialize SAI */
-  __HAL_SAI_RESET_HANDLE_STATE(&hsai_BlockB1);
-
-  hsai_BlockB1.Instance = AUDIO_IN_SAIx;
-
-  __HAL_SAI_DISABLE(&hsai_BlockB1);
-
-  hsai_BlockB1.Init.AudioMode      = SAI_MODEMASTER_TX;
-  hsai_BlockB1.Init.Synchro        = SAI_ASYNCHRONOUS;
-  hsai_BlockB1.Init.OutputDrive    = SAI_OUTPUTDRIVE_ENABLE;
-  hsai_BlockB1.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
-  hsai_BlockB1.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
-  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_22K;
-  hsai_BlockB1.Init.Protocol       = SAI_FREE_PROTOCOL;
-  hsai_BlockB1.Init.DataSize       = SAI_DATASIZE_16;
-  hsai_BlockB1.Init.FirstBit       = SAI_FIRSTBIT_MSB;
-  hsai_BlockB1.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
-  hsai_BlockB1.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.Mckdiv         = 0; /* N.U */
-  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockB1.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
-  hsai_BlockB1.Init.MckOverSampling      = SAI_MCK_OVERSAMPLING_DISABLE;
-  hsai_BlockB1.Init.PdmInit.Activation   = DISABLE;
-
-  hsai_BlockB1.FrameInit.FrameLength       = 32;
-  hsai_BlockB1.FrameInit.ActiveFrameLength = 16;
-  hsai_BlockB1.FrameInit.FSDefinition      = SAI_FS_CHANNEL_IDENTIFICATION;
-  hsai_BlockB1.FrameInit.FSPolarity        = SAI_FS_ACTIVE_LOW;
-  hsai_BlockB1.FrameInit.FSOffset          = SAI_FS_BEFOREFIRSTBIT;
-
-  hsai_BlockB1.SlotInit.FirstBitOffset = 0;
-  hsai_BlockB1.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockB1.SlotInit.SlotNumber     = 2;
-  hsai_BlockB1.SlotInit.SlotActive     = (SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_1);
-
-  if(HAL_OK != HAL_SAI_Init(&hsai_BlockB1))
-  {
-    Error_Handler();
-  }
-
-  /* Enable SAI to generate clock used by audio driver */
-  __HAL_SAI_ENABLE(&hsai_BlockB1);
-
-  WM8994_Probe();
-
-  /* Fill codec_init structure */
-  codec_init.InputDevice  = WM8994_IN_NONE;
-  codec_init.OutputDevice = WM8994_OUT_HEADPHONE;
-  codec_init.Frequency    = AUDIO_FREQUENCY_22K;
-  codec_init.Resolution   = WM8994_RESOLUTION_16b; /* Not used */
-  codec_init.Volume       = 80;
-
-  /* Initialize the codec internal registers */
-  if(AudioDrv->Init(AudioCompObj, &codec_init) < 0)
-  {
-     Error_Handler();
-  }
-}
-
-
 //static void MX_DFSDM1_Init(void)
 //{
 //
 //  /* USER CODE BEGIN DFSDM1_Init 0 */
-//
+////
 //  /* USER CODE END DFSDM1_Init 0 */
 //
 //  /* USER CODE BEGIN DFSDM1_Init 1 */
-//
+////
 //  /* USER CODE END DFSDM1_Init 1 */
 //  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
 //  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
@@ -462,16 +299,16 @@ static void Playback_Init(void)
 //    Error_Handler();
 //  }
 //  /* USER CODE BEGIN DFSDM1_Init 2 */
-//
+////
 //  /* USER CODE END DFSDM1_Init 2 */
 //
 //}
-//
-///**
-//  * @brief SAI1 Initialization Function
-//  * @param None
-//  * @retval None
-//  */
+
+/**
+  * @brief SAI1 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_SAI1_Init(void)
 {
 
@@ -504,105 +341,6 @@ static void MX_SAI1_Init(void)
 }
 
 /**
-  * @brief  SAI MSP Init.
-  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
-  *                the configuration information for SAI module.
-  * @retval None
-  */
-//void HAL_SAI_MspInit(SAI_HandleTypeDef *hsai)
-//{
-//  GPIO_InitTypeDef  GPIO_Init;
-//
-//  /* Enable SAI1 clock */
-//  AUDIO_SAIx_CLK_ENABLE();
-//
-//  /* Configure GPIOs used for SAI1 */
-//  AUDIO_SAIx_MCLK_ENABLE();
-//  AUDIO_SAIx_SCK_ENABLE();
-//  AUDIO_SAIx_FS_ENABLE();
-//  AUDIO_SAIx_SD_ENABLE();
-//
-//  GPIO_Init.Mode      = GPIO_MODE_AF_PP;
-//  GPIO_Init.Pull      = GPIO_NOPULL;
-//  GPIO_Init.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-//
-//  GPIO_Init.Alternate = AUDIO_SAIx_FS_AF;
-//  GPIO_Init.Pin       = AUDIO_SAIx_FS_PIN;
-//  HAL_GPIO_Init(AUDIO_SAIx_FS_GPIO_PORT, &GPIO_Init);
-//
-//  GPIO_Init.Alternate = AUDIO_SAIx_SCK_AF;
-//  GPIO_Init.Pin       = AUDIO_SAIx_SCK_PIN;
-//  HAL_GPIO_Init(AUDIO_SAIx_SCK_GPIO_PORT, &GPIO_Init);
-//
-//  GPIO_Init.Alternate = AUDIO_SAIx_SD_AF;
-//  GPIO_Init.Pin       = AUDIO_SAIx_SD_PIN;
-//  HAL_GPIO_Init(AUDIO_SAIx_SD_GPIO_PORT, &GPIO_Init);
-//
-//  GPIO_Init.Alternate = AUDIO_SAIx_MCLK_AF;
-//  GPIO_Init.Pin       = AUDIO_SAIx_MCLK_PIN;
-//  HAL_GPIO_Init(AUDIO_SAIx_MCLK_GPIO_PORT, &GPIO_Init);
-//
-//  /* Configure DMA used for SAI1 */
-//  __HAL_RCC_DMA2_CLK_ENABLE();
-//
-//  if(hsai->Instance == AUDIO_SAIx)
-//  {
-//    hSaiDma.Init.Request             = DMA_REQUEST_SAI1_B;
-//    hSaiDma.Init.Direction           = DMA_MEMORY_TO_PERIPH;
-//    hSaiDma.Init.PeriphInc           = DMA_PINC_DISABLE;
-//    hSaiDma.Init.MemInc              = DMA_MINC_ENABLE;
-//    hSaiDma.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-//    hSaiDma.Init.MemDataAlignment    = DMA_MDATAALIGN_HALFWORD;
-//    hSaiDma.Init.Mode                = DMA_CIRCULAR;
-//    hSaiDma.Init.Priority            = DMA_PRIORITY_HIGH;
-//    hSaiDma.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
-//    hSaiDma.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-//    hSaiDma.Init.MemBurst            = DMA_MBURST_SINGLE;
-//    hSaiDma.Init.PeriphBurst         = DMA_PBURST_SINGLE;
-//
-//    /* Select the DMA instance to be used for the transfer : DMA2_Stream6 */
-//    hSaiDma.Instance                 = DMA2_Stream6;
-//
-//    /* Associate the DMA handle */
-//    __HAL_LINKDMA(hsai, hdmatx, hSaiDma);
-//
-//    /* Deinitialize the Stream for new transfer */
-//    HAL_DMA_DeInit(&hSaiDma);
-//
-//    /* Configure the DMA Stream */
-//    if (HAL_OK != HAL_DMA_Init(&hSaiDma))
-//    {
-//      Error_Handler();
-//    }
-//  }
-//
-//  HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 0x01, 0);
-//  HAL_NVIC_EnableIRQ(DMA2_Stream6_IRQn);
-//}
-
-/**
-  * @brief Tx Transfer completed callbacks.
-  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
-  *                the configuration information for SAI module.
-  * @retval None
-  */
-//void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
-//{
-//  UpdatePointer = PLAY_BUFF_SIZE/2;
-//}
-
-/**
-  * @brief Tx Transfer Half completed callbacks
-  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
-  *                the configuration information for SAI module.
-  * @retval None
-  */
-//void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
-//{
-//  UpdatePointer = 0;
-//}
-
-/**
   * @brief SAI4 Initialization Function
   * @param None
   * @retval None
@@ -631,7 +369,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
   hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
@@ -721,8 +459,6 @@ static void MX_BDMA_Init(void)
 
 /**
   * Enable DMA controller clock
-  * Configure DMA for memory to memory transfers
-  *   hdma_dma_generator0
   */
 static void MX_DMA_Init(void)
 {
@@ -730,29 +466,13 @@ static void MX_DMA_Init(void)
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
 
-  /* Configure DMA request hdma_dma_generator0 on DMA1_Stream0 */
-  hdma_dma_generator0.Instance = DMA1_Stream0;
-  hdma_dma_generator0.Init.Request = DMA_REQUEST_GENERATOR0;
-  hdma_dma_generator0.Init.Direction = DMA_PERIPH_TO_MEMORY;
-  hdma_dma_generator0.Init.PeriphInc = DMA_PINC_DISABLE;
-  hdma_dma_generator0.Init.MemInc = DMA_MINC_ENABLE;
-  hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-  hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-  hdma_dma_generator0.Init.Mode = DMA_CIRCULAR;
-  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_LOW;
-  hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
-  hdma_dma_generator0.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-  hdma_dma_generator0.Init.MemBurst = DMA_MBURST_SINGLE;
-  hdma_dma_generator0.Init.PeriphBurst = DMA_PBURST_SINGLE;
-  if (HAL_DMA_Init(&hdma_dma_generator0) != HAL_OK)
-  {
-    Error_Handler( );
-  }
-
   /* DMA interrupt init */
   /* DMA1_Stream1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+  /* DMAMUX1_OVR_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMAMUX1_OVR_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMAMUX1_OVR_IRQn);
 
 }
 
@@ -775,6 +495,79 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+  * @brief  Register Bus IOs if component ID is OK
+  * @retval error status
+  */
+static int32_t WM8994_Probe(void)
+{
+  int32_t                   ret = BSP_ERROR_NONE;
+  WM8994_IO_t               IOCtx;
+  static WM8994_Object_t    WM8994Obj;
+  uint32_t                  wm8994_id;
+
+  /* Configure the audio driver */
+  IOCtx.Address     = AUDIO_I2C_ADDRESS;
+  IOCtx.Init        = BSP_I2C4_Init;
+  IOCtx.DeInit      = BSP_I2C4_DeInit;
+  IOCtx.ReadReg     = BSP_I2C4_ReadReg16;
+  IOCtx.WriteReg    = BSP_I2C4_WriteReg16;
+  IOCtx.GetTick     = BSP_GetTick;
+
+  if(WM8994_RegisterBusIO (&WM8994Obj, &IOCtx) != WM8994_OK)
+  {
+    ret = BSP_ERROR_BUS_FAILURE;
+  }
+  else if(WM8994_Reset(&WM8994Obj) != WM8994_OK)
+  {
+    ret = BSP_ERROR_COMPONENT_FAILURE;
+  }
+  else if(WM8994_ReadID(&WM8994Obj, &wm8994_id) != WM8994_OK)
+  {
+    ret = BSP_ERROR_COMPONENT_FAILURE;
+  }
+  else if(wm8994_id != WM8994_ID)
+  {
+    ret = BSP_ERROR_UNKNOWN_COMPONENT;
+  }
+  else
+  {
+    AudioDrv = (AUDIO_Drv_t *) &WM8994_Driver;
+    AudioCompObj = &WM8994Obj;
+  }
+
+  return ret;
+}
+
+/**
+  * @brief  Playback initialization
+  * @param  None
+  * @retval None
+  */
+static void Playback_Init(void)
+{
+  WM8994_Init_t codec_init;
+  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInitStruct;
+
+  /* Configure PLLSAI prescalers */
+  /* PLL2SAI_VCO: VCO_271M
+     SAI_CLK(first level) = PLLSAI_VCO/PLL2P = 271/24 = 11.291 Mhz */
+  RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
+  RCC_PeriphCLKInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2P = 24;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2Q = 24;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2R = 1;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2N = 271;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2FRACN = 0;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_0;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOMEDIUM;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2M = 25;
+
+  if(HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
 /* USER CODE END 4 */
 
 /**
@@ -790,6 +583,7 @@ void Error_Handler(void)
   {
   }
   /* USER CODE END Error_Handler_Debug */
+
 }
 
 #ifdef  USE_FULL_ASSERT
