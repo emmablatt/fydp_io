@@ -67,6 +67,7 @@ static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
 static void MX_DFSDM1_Init(void);
 static void MX_SAI1_Init(void);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -113,7 +114,6 @@ int main(void)
   MX_DFSDM1_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
-
   /* Infinite loop */
   // output freq (pcm freq) = 48kHz
   // decimiation factor = 64
@@ -343,7 +343,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
   hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;

@@ -5,5 +5,5 @@ stm32h7xx_hal_msp.c:129:6:HAL_DFSDM_ChannelMspInit	200	static
 stm32h7xx_hal_msp.c:162:6:HAL_DFSDM_ChannelMspDeInit	16	static
 stm32h7xx_hal_msp.c:185:6:HAL_UART_MspInit	224	static
 stm32h7xx_hal_msp.c:231:6:HAL_UART_MspDeInit	16	static
-stm32h7xx_hal_msp.c:258:6:HAL_SAI_MspInit	240	static
-stm32h7xx_hal_msp.c:337:6:HAL_SAI_MspDeInit	16	static
+stm32h7xx_hal_msp.c:261:6:HAL_SAI_MspInit	240	static
+stm32h7xx_hal_msp.c:401:6:HAL_SAI_MspDeInit	16	static
