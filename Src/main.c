@@ -32,8 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define AUDIO_FILE_ADDRESS   0x08080000
-//#define AUDIO_FILE_SIZE      (180*1024)
+//#define AUDIO_FILE_ADDRESS
 #define PLAY_HEADER          0x2C
 #define PLAY_BUFF_SIZE       4096
 //#define AUDIO_I2C_ADDRESS    0x34
@@ -148,6 +147,22 @@ int main(void)
   uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
   Playback_Init();
 
+  /* Initialize the data buffer */
+  for(int i=0; i < PLAY_BUFF_SIZE; i+=2)
+  {
+    PlayBuff[i]=*((__IO uint16_t *)(pcm_buffer + PLAY_HEADER + i));
+  }
+
+  /* Start the playback */
+  if(0 != AudioDrv->Play(AudioCompObj))
+  {
+    Error_Handler();
+  }
+
+  if(HAL_OK != HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)PlayBuff, PLAY_BUFF_SIZE))
+  {
+    Error_Handler();
+  }
   //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
   /* USER CODE END 2 */
 
@@ -157,7 +172,32 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	    while(UpdatePointer==-1);
 
+	    int position = UpdatePointer;
+	    UpdatePointer = -1;
+
+	    /* Update the first or the second part of the buffer */
+	    for(int i = 0; i < PLAY_BUFF_SIZE/2; i++)
+	    {
+	      PlayBuff[i+position] = *(uint16_t *)(pcm_buffer + PlaybackPosition);
+	      PlaybackPosition+=2;
+	    }
+
+	    /* Clean Data Cache to update the content of the SRAM */
+	    SCB_CleanDCache_by_Addr((uint32_t*)&PlayBuff[position], PLAY_BUFF_SIZE);
+
+	    /* check the end of the file */
+	    if((PlaybackPosition+PLAY_BUFF_SIZE/2) > PLAY_BUFF_SIZE)
+	    {
+	      PlaybackPosition = PLAY_HEADER;
+	    }
+
+	    if(UpdatePointer != -1)
+	    {
+	      /* Buffer update time is too long compare to the data transfer time */
+	      Error_Handler();
+	    }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
