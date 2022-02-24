@@ -32,6 +32,13 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+//#define AUDIO_FILE_ADDRESS   0x08080000
+//#define AUDIO_FILE_SIZE      (180*1024)
+#define PLAY_HEADER          0x2C
+#define PLAY_BUFF_SIZE       4096
+#define AUDIO_I2C_ADDRESS    0x34
+#define AUDIO_FREQUENCY_22K  22050U
+static AUDIO_Drv_t *AudioDrv = NULL;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -65,11 +72,12 @@ static void MX_SAI4_Init(void);
 static void MX_CRC_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
-static void MX_DFSDM1_Init(void);
+//static void MX_DFSDM1_Init(void);
 static void MX_SAI1_Init(void);
 
 /* USER CODE BEGIN PFP */
-
+ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
+__IO int16_t                 UpdatePointer = -1;
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -84,7 +92,13 @@ static void MX_SAI1_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	  // for pdm: input buffer is uint8 with length >= (48 * 64 * 1/8) = 384
+	  uint8_t pdm_buffer[PLAY_BUFF_SIZE/4] = {0};
 
+	  // for pdm: output buffer is uint16 with length >= 48
+	  uint16_t pcm_buffer[PLAY_BUFF_SIZE] = {0};
+
+	  uint32_t PlaybackPosition   = PLAY_BUFF_SIZE + pcm_buffer;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -111,20 +125,12 @@ int main(void)
   MX_USART3_UART_Init();
   MX_DMA_Init();
   MX_PDM2PCM_Init();
-  MX_DFSDM1_Init();
+  //MX_DFSDM1_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
   /* Infinite loop */
   // output freq (pcm freq) = 48kHz
   // decimiation factor = 64
-
-  // for pdm: input buffer is uint8
-  // with length >= (48 * 64 * 1/8) = 384
-  uint8_t pdm_buffer[4096] = {0};
-
-  // for pdm: output buffer is uint16
-  // with length >= 48
-  uint16_t pcm_buffer[4096] = {0};
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
@@ -245,38 +251,83 @@ static void MX_CRC_Init(void)
   * @param None
   * @retval None
   */
-static void MX_DFSDM1_Init(void)
+
+/**
+  * @brief  Register Bus IOs if component ID is OK
+  * @retval error status
+  */
+static int32_t WM8994_Probe(void)
 {
+  int32_t                   ret = BSP_ERROR_NONE;
+  WM8994_IO_t               hi2c4;
+  static WM8994_Object_t    WM8994Obj;
+  uint32_t                  wm8994_id;
 
-  /* USER CODE BEGIN DFSDM1_Init 0 */
+  /* Configure the audio driver */
+  hi2c4.Address     = AUDIO_I2C_ADDRESS;
+  hi2c4.Init        = BSP_I2C4_Init;
+  hi2c4.DeInit      = BSP_I2C4_DeInit;
+  hi2c4.ReadReg     = BSP_I2C4_ReadReg16;
+  hi2c4.WriteReg    = BSP_I2C4_WriteReg16;
+  hi2c4.GetTick     = BSP_GetTick;
 
-  /* USER CODE END DFSDM1_Init 0 */
-
-  /* USER CODE BEGIN DFSDM1_Init 1 */
-
-  /* USER CODE END DFSDM1_Init 1 */
-  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
-  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
-  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
-  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
-  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
-  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
-  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
-  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
-  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
-  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
-  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
-  hdfsdm1_channel0.Init.Offset = 0x00;
-  hdfsdm1_channel0.Init.RightBitShift = 0x00;
-  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
+  if(WM8994_RegisterBusIO (&WM8994Obj, &hi2c4) != WM8994_OK)
   {
-    Error_Handler();
+    ret = BSP_ERROR_BUS_FAILURE;
   }
-  /* USER CODE BEGIN DFSDM1_Init 2 */
+  else if(WM8994_Reset(&WM8994Obj) != WM8994_OK)
+  {
+    ret = BSP_ERROR_COMPONENT_FAILURE;
+  }
+  else if(WM8994_ReadID(&WM8994Obj, &wm8994_id) != WM8994_OK)
+  {
+    ret = BSP_ERROR_COMPONENT_FAILURE;
+  }
+  else if(wm8994_id != WM8994_ID)
+  {
+    ret = BSP_ERROR_UNKNOWN_COMPONENT;
+  }
+  else
+  {
+    AudioDrv = (AUDIO_Drv_t *) &WM8994_Driver;
+    AudioCompObj = &WM8994Obj;
+  }
 
-  /* USER CODE END DFSDM1_Init 2 */
-
+  return ret;
 }
+
+//static void MX_DFSDM1_Init(void)
+//{
+//
+//  /* USER CODE BEGIN DFSDM1_Init 0 */
+//
+//  /* USER CODE END DFSDM1_Init 0 */
+//
+//  /* USER CODE BEGIN DFSDM1_Init 1 */
+//
+//  /* USER CODE END DFSDM1_Init 1 */
+//  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
+//  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
+//  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
+//  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
+//  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
+//  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
+//  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
+//  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
+//  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
+//  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
+//  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
+//  hdfsdm1_channel0.Init.Offset = 0x00;
+//  hdfsdm1_channel0.Init.RightBitShift = 0x00;
+//  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN DFSDM1_Init 2 */
+//
+//  /* USER CODE END DFSDM1_Init 2 */
+//
+//}
 
 /**
   * @brief SAI1 Initialization Function
