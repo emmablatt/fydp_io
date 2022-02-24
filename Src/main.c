@@ -116,11 +116,11 @@ int main(void)
 
   // for pdm: input buffer is uint8
   // with length >= (48 * 64 * 1/8) = 384
-  uint8_t pdm_buffer[400] = {0};
+  uint8_t pdm_buffer[4096] = {0};
 
   // for pdm: output buffer is uint16
   // with length >= 48
-  uint16_t pcm_buffer[400] = {0};
+  uint16_t pcm_buffer[4096] = {0};
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
