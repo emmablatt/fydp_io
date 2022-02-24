@@ -1,5 +1,5 @@
-Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.o: \
- ../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.c \
+Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm.o: \
+ ../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm.c \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h \
  ../Inc/stm32h7xx_hal_conf.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h \

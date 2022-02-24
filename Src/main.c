@@ -43,9 +43,10 @@
 
 CRC_HandleTypeDef hcrc;
 
+DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
+
 SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai4_a;
-PDM_Filter_Handler_t PDM1_filter_handler;
 
 UART_HandleTypeDef huart3;
 
@@ -62,6 +63,7 @@ static void MX_SAI4_Init(void);
 static void MX_CRC_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
+static void MX_DFSDM1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -101,10 +103,11 @@ int main(void)
   MX_GPIO_Init();
   MX_BDMA_Init();
   MX_SAI4_Init();
+  MX_CRC_Init();
   MX_USART3_UART_Init();
   MX_DMA_Init();
-  MX_CRC_Init();
   MX_PDM2PCM_Init();
+  MX_DFSDM1_Init();
   /* USER CODE BEGIN 2 */
 
   /* Infinite loop */
@@ -124,14 +127,13 @@ int main(void)
   HAL_SAI_Init(&hsai_BlockA4);
 
   // polling mode - SIZE = # BYTES
-  //HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
-  //uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
+  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
-  // do i need to provide clock to the codec (master to SAIB1)
-  // codec
-  // dma mode
-  HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
+  //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
+  /* USER CODE END 2 */
 
+  /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
   while (1)
@@ -231,6 +233,44 @@ static void MX_CRC_Init(void)
   HAL_CRC_MspInit(&hcrc);
 
   /* USER CODE END CRC_Init 2 */
+
+}
+
+/**
+  * @brief DFSDM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_DFSDM1_Init(void)
+{
+
+  /* USER CODE BEGIN DFSDM1_Init 0 */
+
+  /* USER CODE END DFSDM1_Init 0 */
+
+  /* USER CODE BEGIN DFSDM1_Init 1 */
+
+  /* USER CODE END DFSDM1_Init 1 */
+  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
+  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
+  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
+  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
+  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
+  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
+  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
+  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
+  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
+  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
+  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
+  hdfsdm1_channel0.Init.Offset = 0x00;
+  hdfsdm1_channel0.Init.RightBitShift = 0x00;
+  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN DFSDM1_Init 2 */
+
+  /* USER CODE END DFSDM1_Init 2 */
 
 }
 
@@ -371,7 +411,7 @@ static void MX_DMA_Init(void)
   hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
   hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
   hdma_dma_generator0.Init.Mode = DMA_CIRCULAR;
-  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_HIGH;
+  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_LOW;
   hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
   hdma_dma_generator0.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
   hdma_dma_generator0.Init.MemBurst = DMA_MBURST_SINGLE;
@@ -380,6 +420,7 @@ static void MX_DMA_Init(void)
   {
     Error_Handler( );
   }
+
 }
 
 /**
