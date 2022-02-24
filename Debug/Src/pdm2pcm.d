@@ -34,6 +34,7 @@ Src/pdm2pcm.o: ../Src/pdm2pcm.c ../Inc/pdm2pcm.h ../Inc/main.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
+ ../Inc/../Drivers/BSP/Components/Common/audio.h \
  ../Inc/../Drivers/BSP/Components/wm8994/wm8994.h \
  ../Inc/../Drivers/BSP/Components/wm8994/wm8994_reg.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
@@ -122,6 +123,8 @@ Src/pdm2pcm.o: ../Src/pdm2pcm.c ../Inc/pdm2pcm.h ../Inc/main.h \
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:
 
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
+
+../Inc/../Drivers/BSP/Components/Common/audio.h:
 
 ../Inc/../Drivers/BSP/Components/wm8994/wm8994.h:
 

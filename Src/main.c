@@ -37,6 +37,7 @@
 #define PLAY_BUFF_SIZE       4096
 //#define AUDIO_I2C_ADDRESS    0x34
 #define AUDIO_FREQUENCY_22K  22050U
+
 static AUDIO_Drv_t *AudioDrv = NULL;
 void *AudioCompObj;
 
@@ -149,7 +150,7 @@ int main(void)
   {
     PlayBuff[i]=*((__IO uint16_t *)(pcm_buffer + PLAY_HEADER + i));
   }
-
+  uint8_t audio_drv_test = AudioDrv->Play(AudioCompObj);
   /* Start the playback */
   if(0 != AudioDrv->Play(AudioCompObj))
   {

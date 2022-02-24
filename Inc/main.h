@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "../Drivers/BSP/Components/Common/audio.h"
+#include "../Drivers/BSP/Components/Common/audio.h"
 #include "../Drivers/BSP/Components/wm8994/wm8994.h"
 #include "../Drivers/BSP/Components/wm8994/wm8994_reg.h"
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
