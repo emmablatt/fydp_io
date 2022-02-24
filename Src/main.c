@@ -36,9 +36,11 @@
 //#define AUDIO_FILE_SIZE      (180*1024)
 #define PLAY_HEADER          0x2C
 #define PLAY_BUFF_SIZE       4096
-#define AUDIO_I2C_ADDRESS    0x34
+//#define AUDIO_I2C_ADDRESS    0x34
 #define AUDIO_FREQUENCY_22K  22050U
 static AUDIO_Drv_t *AudioDrv = NULL;
+void *AudioCompObj;
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -141,6 +143,7 @@ int main(void)
   // polling mode - SIZE = # BYTES
   HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
   uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+  Playback_Init();
 
   //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
   /* USER CODE END 2 */
