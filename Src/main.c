@@ -296,6 +296,96 @@ static int32_t WM8994_Probe(void)
   return ret;
 }
 
+/**
+  * @brief  Playback initialization
+  * @param  None
+  * @retval None
+  */
+static void Playback_Init(void)
+{
+  WM8994_Init_t codec_init;
+  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInitStruct;
+
+  /* Configure PLLSAI prescalers */
+  /* PLL2SAI_VCO: VCO_271M
+     SAI_CLK(first level) = PLLSAI_VCO/PLL2P = 271/24 = 11.291 Mhz */
+  RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
+  RCC_PeriphCLKInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2P = 24;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2Q = 24;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2R = 1;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2N = 271;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2FRACN = 0;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_0;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOMEDIUM;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2M = 25;
+
+  if(HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /* Initialize SAI */
+  __HAL_SAI_RESET_HANDLE_STATE(&hsai_BlockB1);
+
+  hsai_BlockB1.Instance = AUDIO_IN_SAIx;
+
+  __HAL_SAI_DISABLE(&hsai_BlockB1);
+
+  hsai_BlockB1.Init.AudioMode      = SAI_MODEMASTER_TX;
+  hsai_BlockB1.Init.Synchro        = SAI_ASYNCHRONOUS;
+  hsai_BlockB1.Init.OutputDrive    = SAI_OUTPUTDRIVE_ENABLE;
+  hsai_BlockB1.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
+  hsai_BlockB1.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
+  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_22K;
+  hsai_BlockB1.Init.Protocol       = SAI_FREE_PROTOCOL;
+  hsai_BlockB1.Init.DataSize       = SAI_DATASIZE_16;
+  hsai_BlockB1.Init.FirstBit       = SAI_FIRSTBIT_MSB;
+  hsai_BlockB1.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
+  hsai_BlockB1.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
+  hsai_BlockB1.Init.Mckdiv         = 0; /* N.U */
+  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
+  hsai_BlockB1.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
+  hsai_BlockB1.Init.MckOverSampling      = SAI_MCK_OVERSAMPLING_DISABLE;
+  hsai_BlockB1.Init.PdmInit.Activation   = DISABLE;
+
+  hsai_BlockB1.FrameInit.FrameLength       = 32;
+  hsai_BlockB1.FrameInit.ActiveFrameLength = 16;
+  hsai_BlockB1.FrameInit.FSDefinition      = SAI_FS_CHANNEL_IDENTIFICATION;
+  hsai_BlockB1.FrameInit.FSPolarity        = SAI_FS_ACTIVE_LOW;
+  hsai_BlockB1.FrameInit.FSOffset          = SAI_FS_BEFOREFIRSTBIT;
+
+  hsai_BlockB1.SlotInit.FirstBitOffset = 0;
+  hsai_BlockB1.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
+  hsai_BlockB1.SlotInit.SlotNumber     = 2;
+  hsai_BlockB1.SlotInit.SlotActive     = (SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_1);
+
+  if(HAL_OK != HAL_SAI_Init(&hsai_BlockB1))
+  {
+    Error_Handler();
+  }
+
+  /* Enable SAI to generate clock used by audio driver */
+  __HAL_SAI_ENABLE(&hsai_BlockB1);
+
+  WM8994_Probe();
+
+  /* Fill codec_init structure */
+  codec_init.InputDevice  = WM8994_IN_NONE;
+  codec_init.OutputDevice = WM8994_OUT_HEADPHONE;
+  codec_init.Frequency    = AUDIO_FREQUENCY_22K;
+  codec_init.Resolution   = WM8994_RESOLUTION_16b; /* Not used */
+  codec_init.Volume       = 80;
+
+  /* Initialize the codec internal registers */
+  if(AudioDrv->Init(AudioCompObj, &codec_init) < 0)
+  {
+     Error_Handler();
+  }
+}
+
+
 //static void MX_DFSDM1_Init(void)
 //{
 //
