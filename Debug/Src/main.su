@@ -3,6 +3,7 @@ main.c:210:6:SystemClock_Config	120	static
 main.c:267:13:MX_CRC_Init	16	static
 main.c:307:16:WM8994_Probe	40	static
 main.c:352:13:Playback_Init	208	static
+main.c:475:13:MX_SAI1_Init	8	static
 main.c:610:13:MX_SAI4_Init	8	static
 main.c:660:13:MX_USART3_UART_Init	8	static
 main.c:706:13:MX_BDMA_Init	16	static

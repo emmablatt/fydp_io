@@ -129,7 +129,7 @@ int main(void)
   MX_DMA_Init();
   MX_PDM2PCM_Init();
   //MX_DFSDM1_Init();
-  //MX_SAI1_Init();
+  MX_SAI1_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -472,36 +472,36 @@ static void Playback_Init(void)
 //  * @param None
 //  * @retval None
 //  */
-//static void MX_SAI1_Init(void)
-//{
-//
-//  /* USER CODE BEGIN SAI1_Init 0 */
-//
-//  /* USER CODE END SAI1_Init 0 */
-//
-//  /* USER CODE BEGIN SAI1_Init 1 */
-//
-//  /* USER CODE END SAI1_Init 1 */
-//  hsai_BlockB1.Instance = SAI1_Block_B;
-//  hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
-//  hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
-//  hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-//  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-//  hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-//  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
-//  hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-//  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
-//  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
-//  hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-//  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
-//  {
-//    Error_Handler();
-//  }
-//  /* USER CODE BEGIN SAI1_Init 2 */
-//
-//  /* USER CODE END SAI1_Init 2 */
-//
-//}
+static void MX_SAI1_Init(void)
+{
+
+  /* USER CODE BEGIN SAI1_Init 0 */
+
+  /* USER CODE END SAI1_Init 0 */
+
+  /* USER CODE BEGIN SAI1_Init 1 */
+
+  /* USER CODE END SAI1_Init 1 */
+  hsai_BlockB1.Instance = SAI1_Block_B;
+  hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
+  hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
+  hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
+  hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
+  hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
+  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SAI1_Init 2 */
+
+  /* USER CODE END SAI1_Init 2 */
+
+}
 
 /**
   * @brief  SAI MSP Init.
