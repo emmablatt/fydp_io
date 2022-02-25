@@ -541,7 +541,7 @@ int32_t BSP_AUDIO_IN_GetState(uint32_t Instance, uint32_t *State);
 void BSP_AUDIO_IN_IRQHandler(uint32_t Instance, uint32_t InputDevice);
 
 #if (USE_BSP_PDM_LIB_FEATURE > 0U)
-/* Specific PDM recodr APIs */
+/* Specific PDM recoder APIs */
 int32_t BSP_AUDIO_IN_PDMToPCM_Init(uint32_t Instance, uint32_t AudioFreq, uint32_t ChnlNbrIn, uint32_t ChnlNbrOut);
 int32_t BSP_AUDIO_IN_PDMToPCM(uint32_t Instance, uint16_t *PDMBuf, uint16_t *PCMBuf);
 #endif

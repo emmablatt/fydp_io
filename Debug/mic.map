@@ -30,28 +30,26 @@ Archive member included to satisfy reference by file (symbol)
 Allocating common symbols
 Common symbol       size              file
 
-AudioCompObj        0x4               ./Src/main.o
 huart3              0x90              ./Src/main.o
 haudio_in_dfsdm_channel
                     0xe0              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
 hcrc                0x24              ./Src/main.o
+hsai_A4             0x98              ./Src/main.o
 uwTick              0x4               ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
 pFlash              0x1c              ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.o
 haudio_in_dfsdm_filter
                     0x150             ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-PlayBuff            0x2000            ./Src/main.o
-hsai_BlockB1        0x98              ./Src/main.o
+hsai_B1             0x98              ./Src/main.o
+hdma_sai_B1         0x78              ./Src/main.o
 PDM1_filter_config  0x6               ./Src/pdm2pcm.o
-hsai_BlockA4        0x98              ./Src/main.o
+hdma_sai_A4         0x78              ./Src/main.o
 hpb_exti            0x8               ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
 Audio_Out_Ctx       0x24              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-hdma_sai4_a         0x78              ./Src/main.o
-hdfsdm1_channel0    0x38              ./Src/main.o
 PDM1_filter_handler
-                    0x4c              ./Src/main.o
+                    0x4c              ./Src/pdm2pcm.o
 hbus_i2c4           0x4c              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
-hdma_sai1_b         0x78              ./Src/main.o
 Audio_In_Ctx        0x90              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+hpdm_handler        0x4c              ./Src/main.o
 
 Discarded input sections
 
@@ -1112,10 +1110,6 @@ Discarded input sections
                 0x0000000000000000     0x4000 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.MicBuffIndex
                 0x0000000000000000       0x10 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
- .bss.PDM_FilterHandler
-                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
- .bss.PDM_FilterConfig
-                0x0000000000000000        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.BSP_AUDIO_OUT_Init
                 0x0000000000000000      0x234 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.BSP_AUDIO_OUT_DeInit
@@ -1162,12 +1156,24 @@ Discarded input sections
                 0x0000000000000000       0x44 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.BSP_AUDIO_OUT_IRQHandler
                 0x0000000000000000       0x20 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_TxCpltCallback
+                0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_TxHalfCpltCallback
+                0x0000000000000000       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.HAL_SAI_ErrorCallback
+                0x0000000000000000       0x2c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_TransferComplete_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_HalfTransfer_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_OUT_Error_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.WM8994_Probe
                 0x0000000000000000       0xb4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.SAI_MspInit
                 0x0000000000000000      0x4f4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.SAI_MspDeInit
-                0x0000000000000000       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+                0x0000000000000000       0x8c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .rodata        0x0000000000000000       0x78 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.BSP_AUDIO_IN_Init
                 0x0000000000000000      0x85c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
@@ -1183,8 +1189,6 @@ Discarded input sections
                 0x0000000000000000      0x110 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.MX_SAI4_Block_A_Init
                 0x0000000000000000      0x10a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
- .text.BSP_AUDIO_IN_PDMToPCM_Init
-                0x0000000000000000      0x148 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.BSP_AUDIO_IN_PDMToPCM
                 0x0000000000000000       0x74 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.BSP_AUDIO_IN_Record
@@ -1240,6 +1244,8 @@ Discarded input sections
  .text.BSP_AUDIO_IN_TransferComplete_CallBack
                 0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.BSP_AUDIO_IN_HalfTransfer_CallBack
+                0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .text.BSP_AUDIO_IN_Error_CallBack
                 0x0000000000000000       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .text.DFSDM_ChannelMspInit
                 0x0000000000000000      0x148 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
@@ -2594,6 +2600,8 @@ Discarded input sections
                 0x0000000000000000      0x36c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.HAL_DMA_Start
                 0x0000000000000000      0x240 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .text.HAL_DMA_Start_IT
+                0x0000000000000000      0x4d4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.HAL_DMA_Abort
                 0x0000000000000000      0x63c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.HAL_DMA_Abort_IT
@@ -2606,6 +2614,10 @@ Discarded input sections
                 0x0000000000000000       0xdc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.HAL_DMA_GetState
                 0x0000000000000000       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .text.HAL_DMA_GetError
+                0x0000000000000000       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .text.DMA_SetConfig
+                0x0000000000000000      0x358 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .debug_macro   0x0000000000000000      0xac0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .debug_macro   0x0000000000000000      0x244 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .debug_macro   0x0000000000000000       0x2e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
@@ -5133,6 +5145,8 @@ Discarded input sections
                 0x0000000000000000       0x14 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.HAL_SAI_Transmit
                 0x0000000000000000      0x20c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .text.HAL_SAI_Receive
+                0x0000000000000000      0x202 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.HAL_SAI_Transmit_IT
                 0x0000000000000000       0xf8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.HAL_SAI_Receive_IT
@@ -5145,6 +5159,8 @@ Discarded input sections
                 0x0000000000000000       0xfc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.HAL_SAI_Abort
                 0x0000000000000000      0x11e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .text.HAL_SAI_Transmit_DMA
+                0x0000000000000000      0x16c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.HAL_SAI_Receive_DMA
                 0x0000000000000000      0x128 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.HAL_SAI_EnableTxMuteMode
@@ -5173,6 +5189,8 @@ Discarded input sections
                 0x0000000000000000       0x1a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_FillFifo
                 0x0000000000000000      0x106 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .text.SAI_InterruptFlag
+                0x0000000000000000       0x6e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_Transmit_IT8Bit
                 0x0000000000000000       0x6a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_Transmit_IT16Bit
@@ -5185,10 +5203,16 @@ Discarded input sections
                 0x0000000000000000       0x8c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_Receive_IT32Bit
                 0x0000000000000000       0xb8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .text.SAI_DMATxCplt
+                0x0000000000000000       0x60 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .text.SAI_DMATxHalfCplt
+                0x0000000000000000       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_DMARxCplt
                 0x0000000000000000       0x60 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_DMARxHalfCplt
                 0x0000000000000000       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .text.SAI_DMAError
+                0x0000000000000000       0x5e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_DMAAbort
                 0x0000000000000000       0x6e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .debug_macro   0x0000000000000000      0xac0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
@@ -6199,12 +6223,6 @@ Discarded input sections
  .text          0x0000000000000000        0x0 ./Src/main.o
  .data          0x0000000000000000        0x0 ./Src/main.o
  .bss           0x0000000000000000        0x0 ./Src/main.o
- .data.UpdatePointer
-                0x0000000000000000        0x2 ./Src/main.o
- .text.WM8994_Probe
-                0x0000000000000000       0xb4 ./Src/main.o
- .bss.WM8994Obj.12452
-                0x0000000000000000       0x28 ./Src/main.o
  .debug_macro   0x0000000000000000      0xac0 ./Src/main.o
  .debug_macro   0x0000000000000000      0x244 ./Src/main.o
  .debug_macro   0x0000000000000000       0x2e ./Src/main.o
@@ -7079,6 +7097,8 @@ Discarded input sections
  .text          0x0000000000000000        0x0 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.PDM_Filter_getConfig
                 0x0000000000000000       0x20 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+ .text.PDM_Filter
+                0x0000000000000000       0x34 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text          0x0000000000000000        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
  .data          0x0000000000000000        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
  .bss           0x0000000000000000        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
@@ -7215,7 +7235,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                 0x0000000008000000                g_pfnVectors
                 0x00000000080002cc                . = ALIGN (0x4)
 
-.text           0x00000000080002d0     0xadb8
+.text           0x00000000080002d0     0x9fa0
                 0x00000000080002d0                . = ALIGN (0x4)
  *(.text)
  .text          0x00000000080002d0       0x40 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
@@ -7227,578 +7247,530 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                 0x0000000008000604                __aeabi_ldiv0
                 0x0000000008000604                __aeabi_idiv0
  *(.text*)
- .text.HAL_SAI_TxCpltCallback
-                0x0000000008000608       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x0000000008000608                HAL_SAI_TxCpltCallback
- .text.HAL_SAI_TxHalfCpltCallback
-                0x000000000800061e       0x16 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x000000000800061e                HAL_SAI_TxHalfCpltCallback
- .text.HAL_SAI_ErrorCallback
-                0x0000000008000634       0x2c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x0000000008000634                HAL_SAI_ErrorCallback
- .text.BSP_AUDIO_OUT_TransferComplete_CallBack
-                0x0000000008000660       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x0000000008000660                BSP_AUDIO_OUT_TransferComplete_CallBack
- .text.BSP_AUDIO_OUT_HalfTransfer_CallBack
-                0x0000000008000674       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x0000000008000674                BSP_AUDIO_OUT_HalfTransfer_CallBack
- .text.BSP_AUDIO_OUT_Error_CallBack
-                0x0000000008000688       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x0000000008000688                BSP_AUDIO_OUT_Error_CallBack
- .text.BSP_AUDIO_IN_Error_CallBack
-                0x000000000800069c       0x14 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x000000000800069c                BSP_AUDIO_IN_Error_CallBack
+ .text.BSP_AUDIO_IN_PDMToPCM_Init
+                0x0000000008000608      0x148 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+                0x0000000008000608                BSP_AUDIO_IN_PDMToPCM_Init
  .text.HAL_Init
-                0x00000000080006b0       0x78 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
-                0x00000000080006b0                HAL_Init
+                0x0000000008000750       0x78 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+                0x0000000008000750                HAL_Init
  .text.HAL_InitTick
-                0x0000000008000728       0x6c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
-                0x0000000008000728                HAL_InitTick
+                0x00000000080007c8       0x6c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+                0x00000000080007c8                HAL_InitTick
  .text.HAL_IncTick
-                0x0000000008000794       0x28 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
-                0x0000000008000794                HAL_IncTick
+                0x0000000008000834       0x28 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+                0x0000000008000834                HAL_IncTick
  .text.HAL_GetTick
-                0x00000000080007bc       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
-                0x00000000080007bc                HAL_GetTick
+                0x000000000800085c       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+                0x000000000800085c                HAL_GetTick
  .text.__NVIC_SetPriorityGrouping
-                0x00000000080007d4       0x48 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x0000000008000874       0x48 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .text.__NVIC_GetPriorityGrouping
-                0x000000000800081c       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x00000000080008bc       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .text.__NVIC_EnableIRQ
-                0x0000000008000838       0x3c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x00000000080008d8       0x3c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .text.__NVIC_SetPriority
-                0x0000000008000874       0x54 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x0000000008000914       0x54 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .text.NVIC_EncodePriority
-                0x00000000080008c8       0x66 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- *fill*         0x000000000800092e        0x2 
+                0x0000000008000968       0x66 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ *fill*         0x00000000080009ce        0x2 
  .text.SysTick_Config
-                0x0000000008000930       0x44 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x00000000080009d0       0x44 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .text.HAL_NVIC_SetPriorityGrouping
-                0x0000000008000974       0x16 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
-                0x0000000008000974                HAL_NVIC_SetPriorityGrouping
+                0x0000000008000a14       0x16 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x0000000008000a14                HAL_NVIC_SetPriorityGrouping
  .text.HAL_NVIC_SetPriority
-                0x000000000800098a       0x34 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
-                0x000000000800098a                HAL_NVIC_SetPriority
+                0x0000000008000a2a       0x34 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x0000000008000a2a                HAL_NVIC_SetPriority
  .text.HAL_NVIC_EnableIRQ
-                0x00000000080009be       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
-                0x00000000080009be                HAL_NVIC_EnableIRQ
+                0x0000000008000a5e       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x0000000008000a5e                HAL_NVIC_EnableIRQ
  .text.HAL_SYSTICK_Config
-                0x00000000080009da       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
-                0x00000000080009da                HAL_SYSTICK_Config
- *fill*         0x00000000080009f2        0x2 
+                0x0000000008000a7a       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+                0x0000000008000a7a                HAL_SYSTICK_Config
+ *fill*         0x0000000008000a92        0x2 
  .text.HAL_CRC_Init
-                0x00000000080009f4       0xc8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
-                0x00000000080009f4                HAL_CRC_Init
+                0x0000000008000a94       0xc8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
+                0x0000000008000a94                HAL_CRC_Init
  .text.HAL_CRCEx_Polynomial_Set
-                0x0000000008000abc      0x10c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.o
-                0x0000000008000abc                HAL_CRCEx_Polynomial_Set
+                0x0000000008000b5c      0x10c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.o
+                0x0000000008000b5c                HAL_CRCEx_Polynomial_Set
  .text.HAL_DMA_Init
-                0x0000000008000bc8      0x6b4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
-                0x0000000008000bc8                HAL_DMA_Init
- .text.HAL_DMA_Start_IT
-                0x000000000800127c      0x4d4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
-                0x000000000800127c                HAL_DMA_Start_IT
+                0x0000000008000c68      0x6b4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x0000000008000c68                HAL_DMA_Init
  .text.HAL_DMA_IRQHandler
-                0x0000000008001750      0xe54 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
-                0x0000000008001750                HAL_DMA_IRQHandler
- .text.HAL_DMA_GetError
-                0x00000000080025a4       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
-                0x00000000080025a4                HAL_DMA_GetError
- .text.DMA_SetConfig
-                0x00000000080025bc      0x358 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x000000000800131c      0xe54 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x000000000800131c                HAL_DMA_IRQHandler
  .text.DMA_CalcBaseAndBitshift
-                0x0000000008002914      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x0000000008002170      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.DMA_CheckFifoParam
-                0x0000000008002a78       0xf8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x00000000080022d4       0xf8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.DMA_CalcDMAMUXChannelBaseAndMask
-                0x0000000008002b70      0x134 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x00000000080023cc      0x134 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.DMA_CalcDMAMUXRequestGenBaseAndMask
-                0x0000000008002ca4       0xe8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x0000000008002500       0xe8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .text.HAL_DMAEx_ConfigMuxSync
-                0x0000000008002d8c      0x18c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
-                0x0000000008002d8c                HAL_DMAEx_ConfigMuxSync
+                0x00000000080025e8      0x18c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
+                0x00000000080025e8                HAL_DMAEx_ConfigMuxSync
  .text.HAL_DMAEx_MUX_IRQHandler
-                0x0000000008002f18       0xa4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
-                0x0000000008002f18                HAL_DMAEx_MUX_IRQHandler
+                0x0000000008002774       0xa4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
+                0x0000000008002774                HAL_DMAEx_MUX_IRQHandler
  .text.HAL_GPIO_Init
-                0x0000000008002fbc      0x350 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
-                0x0000000008002fbc                HAL_GPIO_Init
+                0x0000000008002818      0x350 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+                0x0000000008002818                HAL_GPIO_Init
  .text.HAL_PWREx_ConfigSupply
-                0x000000000800330c       0xb4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
-                0x000000000800330c                HAL_PWREx_ConfigSupply
+                0x0000000008002b68       0xb4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+                0x0000000008002b68                HAL_PWREx_ConfigSupply
  .text.HAL_RCC_OscConfig
-                0x00000000080033c0      0x758 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
-                0x00000000080033c0                HAL_RCC_OscConfig
+                0x0000000008002c1c      0x758 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+                0x0000000008002c1c                HAL_RCC_OscConfig
  .text.HAL_RCC_ClockConfig
-                0x0000000008003b18      0x36c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
-                0x0000000008003b18                HAL_RCC_ClockConfig
+                0x0000000008003374      0x36c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+                0x0000000008003374                HAL_RCC_ClockConfig
  .text.HAL_RCC_GetSysClockFreq
-                0x0000000008003e84      0x2f4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
-                0x0000000008003e84                HAL_RCC_GetSysClockFreq
+                0x00000000080036e0      0x2f4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+                0x00000000080036e0                HAL_RCC_GetSysClockFreq
  .text.HAL_RCC_GetHCLKFreq
-                0x0000000008004178       0x60 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
-                0x0000000008004178                HAL_RCC_GetHCLKFreq
+                0x00000000080039d4       0x60 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+                0x00000000080039d4                HAL_RCC_GetHCLKFreq
  .text.HAL_RCC_GetPCLK1Freq
-                0x00000000080041d8       0x2c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
-                0x00000000080041d8                HAL_RCC_GetPCLK1Freq
+                0x0000000008003a34       0x2c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+                0x0000000008003a34                HAL_RCC_GetPCLK1Freq
  .text.HAL_RCC_GetPCLK2Freq
-                0x0000000008004204       0x2c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
-                0x0000000008004204                HAL_RCC_GetPCLK2Freq
+                0x0000000008003a60       0x2c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+                0x0000000008003a60                HAL_RCC_GetPCLK2Freq
  .text.HAL_RCCEx_PeriphCLKConfig
-                0x0000000008004230      0xdf4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
-                0x0000000008004230                HAL_RCCEx_PeriphCLKConfig
+                0x0000000008003a8c      0xdf4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x0000000008003a8c                HAL_RCCEx_PeriphCLKConfig
  .text.HAL_RCCEx_GetPeriphCLKFreq
-                0x0000000008005024      0x848 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
-                0x0000000008005024                HAL_RCCEx_GetPeriphCLKFreq
+                0x0000000008004880      0x848 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x0000000008004880                HAL_RCCEx_GetPeriphCLKFreq
  .text.HAL_RCCEx_GetD3PCLK1Freq
-                0x000000000800586c       0x2c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
-                0x000000000800586c                HAL_RCCEx_GetD3PCLK1Freq
+                0x00000000080050c8       0x2c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x00000000080050c8                HAL_RCCEx_GetD3PCLK1Freq
  .text.HAL_RCCEx_GetPLL2ClockFreq
-                0x0000000008005898      0x2a8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
-                0x0000000008005898                HAL_RCCEx_GetPLL2ClockFreq
+                0x00000000080050f4      0x2a8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x00000000080050f4                HAL_RCCEx_GetPLL2ClockFreq
  .text.HAL_RCCEx_GetPLL3ClockFreq
-                0x0000000008005b40      0x2a8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
-                0x0000000008005b40                HAL_RCCEx_GetPLL3ClockFreq
+                0x000000000800539c      0x2a8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x000000000800539c                HAL_RCCEx_GetPLL3ClockFreq
  .text.HAL_RCCEx_GetPLL1ClockFreq
-                0x0000000008005de8      0x2a4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
-                0x0000000008005de8                HAL_RCCEx_GetPLL1ClockFreq
+                0x0000000008005644      0x2a4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x0000000008005644                HAL_RCCEx_GetPLL1ClockFreq
  .text.RCCEx_PLL2_Config
-                0x000000000800608c      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x00000000080058e8      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
  .text.RCCEx_PLL3_Config
-                0x00000000080061f0      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+                0x0000000008005a4c      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
  .text.HAL_SAI_InitProtocol
-                0x0000000008006354       0x62 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
-                0x0000000008006354                HAL_SAI_InitProtocol
- *fill*         0x00000000080063b6        0x2 
+                0x0000000008005bb0       0x62 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+                0x0000000008005bb0                HAL_SAI_InitProtocol
+ *fill*         0x0000000008005c12        0x2 
  .text.HAL_SAI_Init
-                0x00000000080063b8      0x428 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
-                0x00000000080063b8                HAL_SAI_Init
- .text.HAL_SAI_Receive
-                0x00000000080067e0      0x202 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
-                0x00000000080067e0                HAL_SAI_Receive
- *fill*         0x00000000080069e2        0x2 
- .text.HAL_SAI_Transmit_DMA
-                0x00000000080069e4      0x16c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
-                0x00000000080069e4                HAL_SAI_Transmit_DMA
+                0x0000000008005c14      0x428 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+                0x0000000008005c14                HAL_SAI_Init
  .text.SAI_InitI2S
-                0x0000000008006b50      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+                0x000000000800603c      0x164 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_InitPCM
-                0x0000000008006cb4      0x104 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .text.SAI_InterruptFlag
-                0x0000000008006db8       0x6e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- *fill*         0x0000000008006e26        0x2 
+                0x00000000080061a0      0x104 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_Disable
-                0x0000000008006e28       0x74 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .text.SAI_DMATxCplt
-                0x0000000008006e9c       0x60 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .text.SAI_DMATxHalfCplt
-                0x0000000008006efc       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .text.SAI_DMAError
-                0x0000000008006f18       0x5e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+                0x00000000080062a4       0x74 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.HAL_UART_Init
-                0x0000000008006f76       0xa0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
-                0x0000000008006f76                HAL_UART_Init
- *fill*         0x0000000008007016        0x2 
+                0x0000000008006318       0xa0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+                0x0000000008006318                HAL_UART_Init
  .text.UART_SetConfig
-                0x0000000008007018      0xcbc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
-                0x0000000008007018                UART_SetConfig
+                0x00000000080063b8      0xcbc ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+                0x00000000080063b8                UART_SetConfig
  .text.UART_AdvFeatureConfig
-                0x0000000008007cd4      0x144 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
-                0x0000000008007cd4                UART_AdvFeatureConfig
+                0x0000000008007074      0x144 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+                0x0000000008007074                UART_AdvFeatureConfig
  .text.UART_CheckIdleState
-                0x0000000008007e18       0x96 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
-                0x0000000008007e18                UART_CheckIdleState
+                0x00000000080071b8       0x96 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+                0x00000000080071b8                UART_CheckIdleState
  .text.UART_WaitOnFlagUntilTimeout
-                0x0000000008007eae      0x190 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
-                0x0000000008007eae                UART_WaitOnFlagUntilTimeout
+                0x000000000800724e      0x190 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+                0x000000000800724e                UART_WaitOnFlagUntilTimeout
  .text.HAL_UARTEx_DisableFifoMode
-                0x000000000800803e       0x72 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
-                0x000000000800803e                HAL_UARTEx_DisableFifoMode
+                0x00000000080073de       0x72 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+                0x00000000080073de                HAL_UARTEx_DisableFifoMode
  .text.HAL_UARTEx_SetTxFifoThreshold
-                0x00000000080080b0       0x7c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
-                0x00000000080080b0                HAL_UARTEx_SetTxFifoThreshold
+                0x0000000008007450       0x7c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+                0x0000000008007450                HAL_UARTEx_SetTxFifoThreshold
  .text.HAL_UARTEx_SetRxFifoThreshold
-                0x000000000800812c       0x7c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
-                0x000000000800812c                HAL_UARTEx_SetRxFifoThreshold
+                0x00000000080074cc       0x7c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+                0x00000000080074cc                HAL_UARTEx_SetRxFifoThreshold
  .text.UARTEx_SetNbDataToProcess
-                0x00000000080081a8       0x9c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .text.main     0x0000000008008244      0x178 ./Src/main.o
-                0x0000000008008244                main
+                0x0000000008007548       0x9c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .text.main     0x00000000080075e4       0x40 ./Src/main.o
+                0x00000000080075e4                main
  .text.SystemClock_Config
-                0x00000000080083bc       0xdc ./Src/main.o
-                0x00000000080083bc                SystemClock_Config
+                0x0000000008007624       0xdc ./Src/main.o
+                0x0000000008007624                SystemClock_Config
  .text.MX_CRC_Init
-                0x0000000008008498       0x84 ./Src/main.o
+                0x0000000008007700       0x84 ./Src/main.o
  .text.MX_SAI1_Init
-                0x000000000800851c       0x6c ./Src/main.o
+                0x0000000008007784       0x6c ./Src/main.o
  .text.MX_SAI4_Init
-                0x0000000008008588       0xc0 ./Src/main.o
+                0x00000000080077f0       0xc0 ./Src/main.o
  .text.MX_USART3_UART_Init
-                0x0000000008008648       0x98 ./Src/main.o
+                0x00000000080078b0       0x98 ./Src/main.o
  .text.MX_BDMA_Init
-                0x00000000080086e0       0x50 ./Src/main.o
+                0x0000000008007948       0x50 ./Src/main.o
  .text.MX_DMA_Init
-                0x0000000008008730       0x50 ./Src/main.o
+                0x0000000008007998       0x50 ./Src/main.o
  .text.MX_GPIO_Init
-                0x0000000008008780       0xac ./Src/main.o
- .text.Playback_Init
-                0x000000000800882c       0x4c ./Src/main.o
+                0x00000000080079e8       0xac ./Src/main.o
  .text.Error_Handler
-                0x0000000008008878        0xa ./Src/main.o
-                0x0000000008008878                Error_Handler
- *fill*         0x0000000008008882        0x2 
+                0x0000000008007a94        0xa ./Src/main.o
+                0x0000000008007a94                Error_Handler
+ *fill*         0x0000000008007a9e        0x2 
  .text.MX_PDM2PCM_Init
-                0x0000000008008884       0x54 ./Src/pdm2pcm.o
-                0x0000000008008884                MX_PDM2PCM_Init
+                0x0000000008007aa0       0x54 ./Src/pdm2pcm.o
+                0x0000000008007aa0                MX_PDM2PCM_Init
  .text.HAL_MspInit
-                0x00000000080088d8       0x34 ./Src/stm32h7xx_hal_msp.o
-                0x00000000080088d8                HAL_MspInit
+                0x0000000008007af4       0x34 ./Src/stm32h7xx_hal_msp.o
+                0x0000000008007af4                HAL_MspInit
  .text.HAL_CRC_MspInit
-                0x000000000800890c       0x44 ./Src/stm32h7xx_hal_msp.o
-                0x000000000800890c                HAL_CRC_MspInit
+                0x0000000008007b28       0x44 ./Src/stm32h7xx_hal_msp.o
+                0x0000000008007b28                HAL_CRC_MspInit
  .text.HAL_UART_MspInit
-                0x0000000008008950       0xcc ./Src/stm32h7xx_hal_msp.o
-                0x0000000008008950                HAL_UART_MspInit
+                0x0000000008007b6c       0xcc ./Src/stm32h7xx_hal_msp.o
+                0x0000000008007b6c                HAL_UART_MspInit
  .text.HAL_SAI_MspInit
-                0x0000000008008a1c      0x2f4 ./Src/stm32h7xx_hal_msp.o
-                0x0000000008008a1c                HAL_SAI_MspInit
+                0x0000000008007c38      0x2f4 ./Src/stm32h7xx_hal_msp.o
+                0x0000000008007c38                HAL_SAI_MspInit
  .text.NMI_Handler
-                0x0000000008008d10        0x6 ./Src/stm32h7xx_it.o
-                0x0000000008008d10                NMI_Handler
+                0x0000000008007f2c        0x6 ./Src/stm32h7xx_it.o
+                0x0000000008007f2c                NMI_Handler
  .text.HardFault_Handler
-                0x0000000008008d16        0x6 ./Src/stm32h7xx_it.o
-                0x0000000008008d16                HardFault_Handler
+                0x0000000008007f32        0x6 ./Src/stm32h7xx_it.o
+                0x0000000008007f32                HardFault_Handler
  .text.MemManage_Handler
-                0x0000000008008d1c        0x6 ./Src/stm32h7xx_it.o
-                0x0000000008008d1c                MemManage_Handler
+                0x0000000008007f38        0x6 ./Src/stm32h7xx_it.o
+                0x0000000008007f38                MemManage_Handler
  .text.BusFault_Handler
-                0x0000000008008d22        0x6 ./Src/stm32h7xx_it.o
-                0x0000000008008d22                BusFault_Handler
+                0x0000000008007f3e        0x6 ./Src/stm32h7xx_it.o
+                0x0000000008007f3e                BusFault_Handler
  .text.UsageFault_Handler
-                0x0000000008008d28        0x6 ./Src/stm32h7xx_it.o
-                0x0000000008008d28                UsageFault_Handler
+                0x0000000008007f44        0x6 ./Src/stm32h7xx_it.o
+                0x0000000008007f44                UsageFault_Handler
  .text.SVC_Handler
-                0x0000000008008d2e        0xe ./Src/stm32h7xx_it.o
-                0x0000000008008d2e                SVC_Handler
+                0x0000000008007f4a        0xe ./Src/stm32h7xx_it.o
+                0x0000000008007f4a                SVC_Handler
  .text.DebugMon_Handler
-                0x0000000008008d3c        0xe ./Src/stm32h7xx_it.o
-                0x0000000008008d3c                DebugMon_Handler
+                0x0000000008007f58        0xe ./Src/stm32h7xx_it.o
+                0x0000000008007f58                DebugMon_Handler
  .text.PendSV_Handler
-                0x0000000008008d4a        0xe ./Src/stm32h7xx_it.o
-                0x0000000008008d4a                PendSV_Handler
+                0x0000000008007f66        0xe ./Src/stm32h7xx_it.o
+                0x0000000008007f66                PendSV_Handler
  .text.SysTick_Handler
-                0x0000000008008d58        0xc ./Src/stm32h7xx_it.o
-                0x0000000008008d58                SysTick_Handler
+                0x0000000008007f74        0xc ./Src/stm32h7xx_it.o
+                0x0000000008007f74                SysTick_Handler
  .text.DMA1_Stream1_IRQHandler
-                0x0000000008008d64       0x14 ./Src/stm32h7xx_it.o
-                0x0000000008008d64                DMA1_Stream1_IRQHandler
+                0x0000000008007f80       0x14 ./Src/stm32h7xx_it.o
+                0x0000000008007f80                DMA1_Stream1_IRQHandler
  .text.DMAMUX1_OVR_IRQHandler
-                0x0000000008008d78       0x14 ./Src/stm32h7xx_it.o
-                0x0000000008008d78                DMAMUX1_OVR_IRQHandler
+                0x0000000008007f94       0x14 ./Src/stm32h7xx_it.o
+                0x0000000008007f94                DMAMUX1_OVR_IRQHandler
  .text.DMAMUX2_OVR_IRQHandler
-                0x0000000008008d8c       0x14 ./Src/stm32h7xx_it.o
-                0x0000000008008d8c                DMAMUX2_OVR_IRQHandler
+                0x0000000008007fa8       0x14 ./Src/stm32h7xx_it.o
+                0x0000000008007fa8                DMAMUX2_OVR_IRQHandler
  .text.BDMA_Channel0_IRQHandler
-                0x0000000008008da0       0x14 ./Src/stm32h7xx_it.o
-                0x0000000008008da0                BDMA_Channel0_IRQHandler
+                0x0000000008007fbc       0x14 ./Src/stm32h7xx_it.o
+                0x0000000008007fbc                BDMA_Channel0_IRQHandler
  .text.SystemInit
-                0x0000000008008db4       0xf0 ./Src/system_stm32h7xx.o
-                0x0000000008008db4                SystemInit
+                0x0000000008007fd0       0xf0 ./Src/system_stm32h7xx.o
+                0x0000000008007fd0                SystemInit
  .text.Reset_Handler
-                0x0000000008008ea4       0x50 ./Startup/startup_stm32h735igkx.o
-                0x0000000008008ea4                Reset_Handler
+                0x00000000080080c0       0x50 ./Startup/startup_stm32h735igkx.o
+                0x00000000080080c0                Reset_Handler
  .text.Default_Handler
-                0x0000000008008ef4        0x2 ./Startup/startup_stm32h735igkx.o
-                0x0000000008008ef4                DMA1_Stream3_IRQHandler
-                0x0000000008008ef4                HASH_RNG_IRQHandler
-                0x0000000008008ef4                EXTI2_IRQHandler
-                0x0000000008008ef4                TIM8_CC_IRQHandler
-                0x0000000008008ef4                UART8_IRQHandler
-                0x0000000008008ef4                SPI4_IRQHandler
-                0x0000000008008ef4                FDCAN3_IT0_IRQHandler
-                0x0000000008008ef4                TIM1_CC_IRQHandler
-                0x0000000008008ef4                BDMA_Channel6_IRQHandler
-                0x0000000008008ef4                DMA2_Stream5_IRQHandler
-                0x0000000008008ef4                DMA1_Stream5_IRQHandler
-                0x0000000008008ef4                CORDIC_IRQHandler
-                0x0000000008008ef4                BDMA_Channel1_IRQHandler
-                0x0000000008008ef4                TAMP_STAMP_IRQHandler
-                0x0000000008008ef4                EXTI3_IRQHandler
-                0x0000000008008ef4                LPTIM4_IRQHandler
-                0x0000000008008ef4                TIM8_TRG_COM_TIM14_IRQHandler
-                0x0000000008008ef4                LPTIM2_IRQHandler
-                0x0000000008008ef4                DFSDM1_FLT1_IRQHandler
-                0x0000000008008ef4                TIM8_UP_TIM13_IRQHandler
-                0x0000000008008ef4                I2C3_ER_IRQHandler
-                0x0000000008008ef4                DFSDM1_FLT2_IRQHandler
-                0x0000000008008ef4                I2C5_EV_IRQHandler
-                0x0000000008008ef4                USART10_IRQHandler
-                0x0000000008008ef4                MDMA_IRQHandler
-                0x0000000008008ef4                LPTIM3_IRQHandler
-                0x0000000008008ef4                HSEM1_IRQHandler
-                0x0000000008008ef4                EXTI0_IRQHandler
-                0x0000000008008ef4                I2C2_EV_IRQHandler
-                0x0000000008008ef4                DMA1_Stream2_IRQHandler
-                0x0000000008008ef4                FPU_IRQHandler
-                0x0000000008008ef4                OTG_HS_WKUP_IRQHandler
-                0x0000000008008ef4                FDCAN1_IT1_IRQHandler
-                0x0000000008008ef4                LTDC_ER_IRQHandler
-                0x0000000008008ef4                DMA2_Stream2_IRQHandler
-                0x0000000008008ef4                SPI1_IRQHandler
-                0x0000000008008ef4                OCTOSPI1_IRQHandler
-                0x0000000008008ef4                TIM6_DAC_IRQHandler
-                0x0000000008008ef4                DMA2_Stream3_IRQHandler
-                0x0000000008008ef4                OCTOSPI2_IRQHandler
-                0x0000000008008ef4                DFSDM1_FLT3_IRQHandler
-                0x0000000008008ef4                TIM23_IRQHandler
-                0x0000000008008ef4                USART6_IRQHandler
-                0x0000000008008ef4                TIM17_IRQHandler
-                0x0000000008008ef4                USART3_IRQHandler
-                0x0000000008008ef4                BDMA_Channel7_IRQHandler
-                0x0000000008008ef4                CRYP_IRQHandler
-                0x0000000008008ef4                LPTIM5_IRQHandler
-                0x0000000008008ef4                UART5_IRQHandler
-                0x0000000008008ef4                ADC3_IRQHandler
-                0x0000000008008ef4                DMA2_Stream0_IRQHandler
-                0x0000000008008ef4                TIM4_IRQHandler
-                0x0000000008008ef4                BDMA_Channel2_IRQHandler
-                0x0000000008008ef4                I2C1_EV_IRQHandler
-                0x0000000008008ef4                DMA1_Stream6_IRQHandler
-                0x0000000008008ef4                TIM16_IRQHandler
-                0x0000000008008ef4                UART4_IRQHandler
-                0x0000000008008ef4                BDMA_Channel5_IRQHandler
-                0x0000000008008ef4                TIM3_IRQHandler
-                0x0000000008008ef4                RCC_IRQHandler
-                0x0000000008008ef4                UART9_IRQHandler
-                0x0000000008008ef4                TIM8_BRK_TIM12_IRQHandler
-                0x0000000008008ef4                TIM1_TRG_COM_IRQHandler
-                0x0000000008008ef4                Default_Handler
-                0x0000000008008ef4                ECC_IRQHandler
-                0x0000000008008ef4                FMAC_IRQHandler
-                0x0000000008008ef4                CEC_IRQHandler
-                0x0000000008008ef4                EXTI15_10_IRQHandler
-                0x0000000008008ef4                ADC_IRQHandler
-                0x0000000008008ef4                I2C5_ER_IRQHandler
-                0x0000000008008ef4                OTFDEC1_IRQHandler
-                0x0000000008008ef4                DMA1_Stream7_IRQHandler
-                0x0000000008008ef4                SPI5_IRQHandler
-                0x0000000008008ef4                TIM7_IRQHandler
-                0x0000000008008ef4                FDCAN3_IT1_IRQHandler
-                0x0000000008008ef4                SDMMC1_IRQHandler
-                0x0000000008008ef4                TIM5_IRQHandler
-                0x0000000008008ef4                DMA2_Stream7_IRQHandler
-                0x0000000008008ef4                TIM15_IRQHandler
-                0x0000000008008ef4                PVD_AVD_IRQHandler
-                0x0000000008008ef4                I2C3_EV_IRQHandler
-                0x0000000008008ef4                EXTI9_5_IRQHandler
-                0x0000000008008ef4                RTC_WKUP_IRQHandler
-                0x0000000008008ef4                LTDC_IRQHandler
-                0x0000000008008ef4                ETH_WKUP_IRQHandler
-                0x0000000008008ef4                SPDIF_RX_IRQHandler
-                0x0000000008008ef4                SPI2_IRQHandler
-                0x0000000008008ef4                OTG_HS_EP1_IN_IRQHandler
-                0x0000000008008ef4                DMA1_Stream0_IRQHandler
-                0x0000000008008ef4                OTFDEC2_IRQHandler
-                0x0000000008008ef4                TIM24_IRQHandler
-                0x0000000008008ef4                CRS_IRQHandler
-                0x0000000008008ef4                EXTI4_IRQHandler
-                0x0000000008008ef4                FDCAN2_IT1_IRQHandler
-                0x0000000008008ef4                ETH_IRQHandler
-                0x0000000008008ef4                TIM1_UP_IRQHandler
-                0x0000000008008ef4                BDMA_Channel4_IRQHandler
-                0x0000000008008ef4                OTG_HS_EP1_OUT_IRQHandler
-                0x0000000008008ef4                WWDG_IRQHandler
-                0x0000000008008ef4                SPI6_IRQHandler
-                0x0000000008008ef4                MDIOS_IRQHandler
-                0x0000000008008ef4                I2C4_EV_IRQHandler
-                0x0000000008008ef4                FDCAN2_IT0_IRQHandler
-                0x0000000008008ef4                LPUART1_IRQHandler
-                0x0000000008008ef4                FDCAN1_IT0_IRQHandler
-                0x0000000008008ef4                TIM2_IRQHandler
-                0x0000000008008ef4                OTG_HS_IRQHandler
-                0x0000000008008ef4                DMA2D_IRQHandler
-                0x0000000008008ef4                TIM1_BRK_IRQHandler
-                0x0000000008008ef4                EXTI1_IRQHandler
-                0x0000000008008ef4                SDMMC2_IRQHandler
-                0x0000000008008ef4                BDMA_Channel3_IRQHandler
-                0x0000000008008ef4                DTS_IRQHandler
-                0x0000000008008ef4                UART7_IRQHandler
-                0x0000000008008ef4                MDIOS_WKUP_IRQHandler
-                0x0000000008008ef4                USART2_IRQHandler
-                0x0000000008008ef4                DFSDM1_FLT0_IRQHandler
-                0x0000000008008ef4                SAI4_IRQHandler
-                0x0000000008008ef4                I2C2_ER_IRQHandler
-                0x0000000008008ef4                DMA2_Stream1_IRQHandler
-                0x0000000008008ef4                FLASH_IRQHandler
-                0x0000000008008ef4                DMA2_Stream4_IRQHandler
-                0x0000000008008ef4                USART1_IRQHandler
-                0x0000000008008ef4                SPI3_IRQHandler
-                0x0000000008008ef4                WAKEUP_PIN_IRQHandler
-                0x0000000008008ef4                DMA1_Stream4_IRQHandler
-                0x0000000008008ef4                I2C1_ER_IRQHandler
-                0x0000000008008ef4                FMC_IRQHandler
-                0x0000000008008ef4                FDCAN_CAL_IRQHandler
-                0x0000000008008ef4                SWPMI1_IRQHandler
-                0x0000000008008ef4                COMP1_IRQHandler
-                0x0000000008008ef4                LPTIM1_IRQHandler
-                0x0000000008008ef4                DCMI_PSSI_IRQHandler
-                0x0000000008008ef4                I2C4_ER_IRQHandler
-                0x0000000008008ef4                DMA2_Stream6_IRQHandler
-                0x0000000008008ef4                SAI1_IRQHandler
-                0x0000000008008ef4                RTC_Alarm_IRQHandler
- *fill*         0x0000000008008ef6        0x2 
+                0x0000000008008110        0x2 ./Startup/startup_stm32h735igkx.o
+                0x0000000008008110                DMA1_Stream3_IRQHandler
+                0x0000000008008110                HASH_RNG_IRQHandler
+                0x0000000008008110                EXTI2_IRQHandler
+                0x0000000008008110                TIM8_CC_IRQHandler
+                0x0000000008008110                UART8_IRQHandler
+                0x0000000008008110                SPI4_IRQHandler
+                0x0000000008008110                FDCAN3_IT0_IRQHandler
+                0x0000000008008110                TIM1_CC_IRQHandler
+                0x0000000008008110                BDMA_Channel6_IRQHandler
+                0x0000000008008110                DMA2_Stream5_IRQHandler
+                0x0000000008008110                DMA1_Stream5_IRQHandler
+                0x0000000008008110                CORDIC_IRQHandler
+                0x0000000008008110                BDMA_Channel1_IRQHandler
+                0x0000000008008110                TAMP_STAMP_IRQHandler
+                0x0000000008008110                EXTI3_IRQHandler
+                0x0000000008008110                LPTIM4_IRQHandler
+                0x0000000008008110                TIM8_TRG_COM_TIM14_IRQHandler
+                0x0000000008008110                LPTIM2_IRQHandler
+                0x0000000008008110                DFSDM1_FLT1_IRQHandler
+                0x0000000008008110                TIM8_UP_TIM13_IRQHandler
+                0x0000000008008110                I2C3_ER_IRQHandler
+                0x0000000008008110                DFSDM1_FLT2_IRQHandler
+                0x0000000008008110                I2C5_EV_IRQHandler
+                0x0000000008008110                USART10_IRQHandler
+                0x0000000008008110                MDMA_IRQHandler
+                0x0000000008008110                LPTIM3_IRQHandler
+                0x0000000008008110                HSEM1_IRQHandler
+                0x0000000008008110                EXTI0_IRQHandler
+                0x0000000008008110                I2C2_EV_IRQHandler
+                0x0000000008008110                DMA1_Stream2_IRQHandler
+                0x0000000008008110                FPU_IRQHandler
+                0x0000000008008110                OTG_HS_WKUP_IRQHandler
+                0x0000000008008110                FDCAN1_IT1_IRQHandler
+                0x0000000008008110                LTDC_ER_IRQHandler
+                0x0000000008008110                DMA2_Stream2_IRQHandler
+                0x0000000008008110                SPI1_IRQHandler
+                0x0000000008008110                OCTOSPI1_IRQHandler
+                0x0000000008008110                TIM6_DAC_IRQHandler
+                0x0000000008008110                DMA2_Stream3_IRQHandler
+                0x0000000008008110                OCTOSPI2_IRQHandler
+                0x0000000008008110                DFSDM1_FLT3_IRQHandler
+                0x0000000008008110                TIM23_IRQHandler
+                0x0000000008008110                USART6_IRQHandler
+                0x0000000008008110                TIM17_IRQHandler
+                0x0000000008008110                USART3_IRQHandler
+                0x0000000008008110                BDMA_Channel7_IRQHandler
+                0x0000000008008110                CRYP_IRQHandler
+                0x0000000008008110                LPTIM5_IRQHandler
+                0x0000000008008110                UART5_IRQHandler
+                0x0000000008008110                ADC3_IRQHandler
+                0x0000000008008110                DMA2_Stream0_IRQHandler
+                0x0000000008008110                TIM4_IRQHandler
+                0x0000000008008110                BDMA_Channel2_IRQHandler
+                0x0000000008008110                I2C1_EV_IRQHandler
+                0x0000000008008110                DMA1_Stream6_IRQHandler
+                0x0000000008008110                TIM16_IRQHandler
+                0x0000000008008110                UART4_IRQHandler
+                0x0000000008008110                BDMA_Channel5_IRQHandler
+                0x0000000008008110                TIM3_IRQHandler
+                0x0000000008008110                RCC_IRQHandler
+                0x0000000008008110                UART9_IRQHandler
+                0x0000000008008110                TIM8_BRK_TIM12_IRQHandler
+                0x0000000008008110                TIM1_TRG_COM_IRQHandler
+                0x0000000008008110                Default_Handler
+                0x0000000008008110                ECC_IRQHandler
+                0x0000000008008110                FMAC_IRQHandler
+                0x0000000008008110                CEC_IRQHandler
+                0x0000000008008110                EXTI15_10_IRQHandler
+                0x0000000008008110                ADC_IRQHandler
+                0x0000000008008110                I2C5_ER_IRQHandler
+                0x0000000008008110                OTFDEC1_IRQHandler
+                0x0000000008008110                DMA1_Stream7_IRQHandler
+                0x0000000008008110                SPI5_IRQHandler
+                0x0000000008008110                TIM7_IRQHandler
+                0x0000000008008110                FDCAN3_IT1_IRQHandler
+                0x0000000008008110                SDMMC1_IRQHandler
+                0x0000000008008110                TIM5_IRQHandler
+                0x0000000008008110                DMA2_Stream7_IRQHandler
+                0x0000000008008110                TIM15_IRQHandler
+                0x0000000008008110                PVD_AVD_IRQHandler
+                0x0000000008008110                I2C3_EV_IRQHandler
+                0x0000000008008110                EXTI9_5_IRQHandler
+                0x0000000008008110                RTC_WKUP_IRQHandler
+                0x0000000008008110                LTDC_IRQHandler
+                0x0000000008008110                ETH_WKUP_IRQHandler
+                0x0000000008008110                SPDIF_RX_IRQHandler
+                0x0000000008008110                SPI2_IRQHandler
+                0x0000000008008110                OTG_HS_EP1_IN_IRQHandler
+                0x0000000008008110                DMA1_Stream0_IRQHandler
+                0x0000000008008110                OTFDEC2_IRQHandler
+                0x0000000008008110                TIM24_IRQHandler
+                0x0000000008008110                CRS_IRQHandler
+                0x0000000008008110                EXTI4_IRQHandler
+                0x0000000008008110                FDCAN2_IT1_IRQHandler
+                0x0000000008008110                ETH_IRQHandler
+                0x0000000008008110                TIM1_UP_IRQHandler
+                0x0000000008008110                BDMA_Channel4_IRQHandler
+                0x0000000008008110                OTG_HS_EP1_OUT_IRQHandler
+                0x0000000008008110                WWDG_IRQHandler
+                0x0000000008008110                SPI6_IRQHandler
+                0x0000000008008110                MDIOS_IRQHandler
+                0x0000000008008110                I2C4_EV_IRQHandler
+                0x0000000008008110                FDCAN2_IT0_IRQHandler
+                0x0000000008008110                LPUART1_IRQHandler
+                0x0000000008008110                FDCAN1_IT0_IRQHandler
+                0x0000000008008110                TIM2_IRQHandler
+                0x0000000008008110                OTG_HS_IRQHandler
+                0x0000000008008110                DMA2D_IRQHandler
+                0x0000000008008110                TIM1_BRK_IRQHandler
+                0x0000000008008110                EXTI1_IRQHandler
+                0x0000000008008110                SDMMC2_IRQHandler
+                0x0000000008008110                BDMA_Channel3_IRQHandler
+                0x0000000008008110                DTS_IRQHandler
+                0x0000000008008110                UART7_IRQHandler
+                0x0000000008008110                MDIOS_WKUP_IRQHandler
+                0x0000000008008110                USART2_IRQHandler
+                0x0000000008008110                DFSDM1_FLT0_IRQHandler
+                0x0000000008008110                SAI4_IRQHandler
+                0x0000000008008110                I2C2_ER_IRQHandler
+                0x0000000008008110                DMA2_Stream1_IRQHandler
+                0x0000000008008110                FLASH_IRQHandler
+                0x0000000008008110                DMA2_Stream4_IRQHandler
+                0x0000000008008110                USART1_IRQHandler
+                0x0000000008008110                SPI3_IRQHandler
+                0x0000000008008110                WAKEUP_PIN_IRQHandler
+                0x0000000008008110                DMA1_Stream4_IRQHandler
+                0x0000000008008110                I2C1_ER_IRQHandler
+                0x0000000008008110                FMC_IRQHandler
+                0x0000000008008110                FDCAN_CAL_IRQHandler
+                0x0000000008008110                SWPMI1_IRQHandler
+                0x0000000008008110                COMP1_IRQHandler
+                0x0000000008008110                LPTIM1_IRQHandler
+                0x0000000008008110                DCMI_PSSI_IRQHandler
+                0x0000000008008110                I2C4_ER_IRQHandler
+                0x0000000008008110                DMA2_Stream6_IRQHandler
+                0x0000000008008110                SAI1_IRQHandler
+                0x0000000008008110                RTC_Alarm_IRQHandler
+ *fill*         0x0000000008008112        0x2 
  .text.D16_GENERIC
-                0x0000000008008ef8      0x110 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008008114      0x110 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D24_GENERIC
-                0x0000000008009008      0x178 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008008224      0x178 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D32_GENERIC
-                0x0000000008009180      0x188 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x000000000800839c      0x188 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D48_GENERIC
-                0x0000000008009308      0x1e4 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008008524      0x1e4 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D64_GENERIC
-                0x00000000080094ec      0x238 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008008708      0x238 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D80_GENERIC
-                0x0000000008009724      0x298 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008008940      0x298 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D128_GENERIC
-                0x00000000080099bc      0x3b8 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008008bd8      0x3b8 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D16_1CH_HTONS_VOL_HP
-                0x0000000008009d74       0xe0 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008008f90       0xe0 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D24_1CH_HTONS_VOL_HP
-                0x0000000008009e54      0x13c ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008009070      0x13c ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D32_1CH_HTONS_VOL_HP
-                0x0000000008009f90      0x12c ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x00000000080091ac      0x12c ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D48_1CH_HTONS_VOL_HP
-                0x000000000800a0bc      0x16c ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x00000000080092d8      0x16c ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D64_1CH_HTONS_VOL_HP
-                0x000000000800a228      0x1ac ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008009444      0x1ac ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D80_1CH_HTONS_VOL_HP
-                0x000000000800a3d4      0x1fc ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x00000000080095f0      0x1fc ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.D128_1CH_HTONS_VOL_HP
-                0x000000000800a5d0      0x2ec ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x00000000080097ec      0x2ec ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  .text.PDM_Filter_Init
-                0x000000000800a8bc      0x1a0 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
-                0x000000000800a8bc                PDM_Filter_Init
+                0x0000000008009ad8      0x1a0 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008009ad8                PDM_Filter_Init
  .text.PDM_Filter_setConfig
-                0x000000000800aa5c      0x1f4 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
-                0x000000000800aa5c                PDM_Filter_setConfig
- .text.PDM_Filter
-                0x000000000800ac50       0x34 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
-                0x000000000800ac50                PDM_Filter
- .text.__errno  0x000000000800ac84        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
-                0x000000000800ac84                __errno
+                0x0000000008009c78      0x1f4 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+                0x0000000008009c78                PDM_Filter_setConfig
+ .text.__errno  0x0000000008009e6c        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
+                0x0000000008009e6c                __errno
  .text.__libc_init_array
-                0x000000000800ac90       0x48 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-init.o)
-                0x000000000800ac90                __libc_init_array
- .text.memset   0x000000000800acd8       0x10 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
-                0x000000000800acd8                memset
+                0x0000000008009e78       0x48 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-init.o)
+                0x0000000008009e78                __libc_init_array
+ .text.memset   0x0000000008009ec0       0x10 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
+                0x0000000008009ec0                memset
  .text.checkint
-                0x000000000800ace8       0x2e /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow.o)
- *fill*         0x000000000800ad16        0x2 
- .text.powf     0x000000000800ad18      0x2c8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow.o)
-                0x000000000800ad18                powf
+                0x0000000008009ed0       0x2e /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow.o)
+ *fill*         0x0000000008009efe        0x2 
+ .text.powf     0x0000000008009f00      0x2c8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow.o)
+                0x0000000008009f00                powf
  .text.with_errnof
-                0x000000000800afe0       0x16 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
- .text.xflowf   0x000000000800aff6       0x16 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+                0x000000000800a1c8       0x16 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+ .text.xflowf   0x000000000800a1de       0x16 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
  .text.__math_uflowf
-                0x000000000800b00c        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
-                0x000000000800b00c                __math_uflowf
+                0x000000000800a1f4        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+                0x000000000800a1f4                __math_uflowf
  .text.__math_may_uflowf
-                0x000000000800b018        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
-                0x000000000800b018                __math_may_uflowf
+                0x000000000800a200        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+                0x000000000800a200                __math_may_uflowf
  .text.__math_oflowf
-                0x000000000800b024        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
-                0x000000000800b024                __math_oflowf
+                0x000000000800a20c        0xc /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+                0x000000000800a20c                __math_oflowf
  .text.__math_divzerof
-                0x000000000800b030       0x20 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
-                0x000000000800b030                __math_divzerof
+                0x000000000800a218       0x20 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+                0x000000000800a218                __math_divzerof
  .text.__math_invalidf
-                0x000000000800b050       0x1e /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
-                0x000000000800b050                __math_invalidf
+                0x000000000800a238       0x1e /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+                0x000000000800a238                __math_invalidf
  *(.glue_7)
- .glue_7        0x000000000800b06e        0x0 linker stubs
+ .glue_7        0x000000000800a256        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x000000000800b06e        0x0 linker stubs
+ .glue_7t       0x000000000800a256        0x0 linker stubs
  *(.eh_frame)
- *fill*         0x000000000800b06e        0x2 
- .eh_frame      0x000000000800b070        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+ *fill*         0x000000000800a256        0x2 
+ .eh_frame      0x000000000800a258        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
  *(.init)
- .init          0x000000000800b070        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
-                0x000000000800b070                _init
- .init          0x000000000800b074        0x8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtn.o
+ .init          0x000000000800a258        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
+                0x000000000800a258                _init
+ .init          0x000000000800a25c        0x8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtn.o
  *(.fini)
- .fini          0x000000000800b07c        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
-                0x000000000800b07c                _fini
- .fini          0x000000000800b080        0x8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtn.o
-                0x000000000800b088                . = ALIGN (0x4)
-                0x000000000800b088                _etext = .
+ .fini          0x000000000800a264        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
+                0x000000000800a264                _fini
+ .fini          0x000000000800a268        0x8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtn.o
+                0x000000000800a270                . = ALIGN (0x4)
+                0x000000000800a270                _etext = .
 
-.vfp11_veneer   0x000000000800b088        0x0
- .vfp11_veneer  0x000000000800b088        0x0 linker stubs
+.vfp11_veneer   0x000000000800a270        0x0
+ .vfp11_veneer  0x000000000800a270        0x0 linker stubs
 
-.v4_bx          0x000000000800b088        0x0
- .v4_bx         0x000000000800b088        0x0 linker stubs
+.v4_bx          0x000000000800a270        0x0
+ .v4_bx         0x000000000800a270        0x0 linker stubs
 
-.iplt           0x000000000800b088        0x0
- .iplt          0x000000000800b088        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+.iplt           0x000000000800a270        0x0
+ .iplt          0x000000000800a270        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.rodata         0x000000000800b088      0x2e8
-                0x000000000800b088                . = ALIGN (0x4)
+.rodata         0x000000000800a270      0x2e8
+                0x000000000800a270                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x000000000800b088       0x38 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+ .rodata        0x000000000800a270       0x38 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  *(.rodata*)
  .rodata.flagBitshiftOffset.10955
-                0x000000000800b0c0        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x000000000800a2a8        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .rodata.UARTPrescTable
-                0x000000000800b0c8       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
-                0x000000000800b0c8                UARTPrescTable
+                0x000000000800a2b0       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+                0x000000000800a2b0                UARTPrescTable
  .rodata.numerator.10922
-                0x000000000800b0e0        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+                0x000000000800a2c8        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
  .rodata.denominator.10923
-                0x000000000800b0e8        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+                0x000000000800a2d0        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
  .rodata.D1CorePrescTable
-                0x000000000800b0f0       0x10 ./Src/system_stm32h7xx.o
-                0x000000000800b0f0                D1CorePrescTable
+                0x000000000800a2d8       0x10 ./Src/system_stm32h7xx.o
+                0x000000000800a2d8                D1CorePrescTable
  .rodata.__powf_log2_data
-                0x000000000800b100      0x128 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow_log2_data.o)
-                0x000000000800b100                __powf_log2_data
+                0x000000000800a2e8      0x128 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow_log2_data.o)
+                0x000000000800a2e8                __powf_log2_data
  .rodata.__exp2f_data
-                0x000000000800b228      0x148 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_exp2_data.o)
-                0x000000000800b228                __exp2f_data
-                0x000000000800b370                . = ALIGN (0x4)
+                0x000000000800a410      0x148 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_exp2_data.o)
+                0x000000000800a410                __exp2f_data
+                0x000000000800a558                . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x000000000800b370        0x8
-                0x000000000800b370                __exidx_start = .
+.ARM            0x000000000800a558        0x8
+                0x000000000800a558                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x000000000800b370        0x8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a(_udivmoddi4.o)
-                0x000000000800b378                __exidx_end = .
+ .ARM.exidx     0x000000000800a558        0x8 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a(_udivmoddi4.o)
+                0x000000000800a560                __exidx_end = .
 
-.rel.dyn        0x000000000800b378        0x0
- .rel.iplt      0x000000000800b378        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+.rel.dyn        0x000000000800a560        0x0
+ .rel.iplt      0x000000000800a560        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.preinit_array  0x000000000800b378        0x0
-                0x000000000800b378                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x000000000800a560        0x0
+                0x000000000800a560                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x000000000800b378                PROVIDE (__preinit_array_end = .)
+                0x000000000800a560                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x000000000800b378        0x4
-                0x000000000800b378                PROVIDE (__init_array_start = .)
+.init_array     0x000000000800a560        0x4
+                0x000000000800a560                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x000000000800b378        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
-                0x000000000800b37c                PROVIDE (__init_array_end = .)
+ .init_array    0x000000000800a560        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+                0x000000000800a564                PROVIDE (__init_array_end = .)
 
-.fini_array     0x000000000800b37c        0x4
+.fini_array     0x000000000800a564        0x4
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x000000000800b37c        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+ .fini_array    0x000000000800a564        0x4 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x000000000800b380                _sidata = LOADADDR (.data)
+                0x000000000800a568                _sidata = LOADADDR (.data)
 
-.data           0x0000000024000000      0x474 load address 0x000000000800b380
+.data           0x0000000024000000      0x474 load address 0x000000000800a568
                 0x0000000024000000                . = ALIGN (0x4)
                 0x0000000024000000                _sdata = .
  *(.data)
@@ -7827,56 +7799,54 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                 0x0000000024000474                . = ALIGN (0x4)
                 0x0000000024000474                _edata = .
 
-.igot.plt       0x0000000024000474        0x0 load address 0x000000000800b7f4
+.igot.plt       0x0000000024000474        0x0 load address 0x000000000800a9dc
  .igot.plt      0x0000000024000474        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
                 0x0000000024000474                . = ALIGN (0x4)
 
-.bss            0x0000000024000480     0x23ac load address 0x000000000800b7f4
-                0x0000000024000480                _sbss = .
-                0x0000000024000480                __bss_start__ = _sbss
+.bss            0x0000000024000474      0x444 load address 0x000000000800a9dc
+                0x0000000024000474                _sbss = .
+                0x0000000024000474                __bss_start__ = _sbss
  *(.bss)
- .bss           0x0000000024000480       0x1c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
- .bss           0x000000002400049c        0x1 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
+ .bss           0x0000000024000474       0x1c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+ .bss           0x0000000024000490        0x1 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  *(.bss*)
- *fill*         0x000000002400049d        0x3 
- .bss.AudioDrv  0x00000000240004a0        0x4 ./Src/main.o
+ *fill*         0x0000000024000491        0x3 
+ .bss.PDM_FilterHandler
+                0x0000000024000494       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .bss.PDM_FilterConfig
+                0x000000002400052c        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.SAI1_client
-                0x00000000240004a4        0x4 ./Src/stm32h7xx_hal_msp.o
+                0x0000000024000538        0x4 ./Src/stm32h7xx_hal_msp.o
  .bss.SAI4_client
-                0x00000000240004a8        0x4 ./Src/stm32h7xx_hal_msp.o
+                0x000000002400053c        0x4 ./Src/stm32h7xx_hal_msp.o
  *(COMMON)
- COMMON         0x00000000240004ac        0x4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
-                0x00000000240004ac                uwTick
- *fill*         0x00000000240004b0       0x10 
- COMMON         0x00000000240004c0     0x2364 ./Src/main.o
-                0x00000000240004c0                AudioCompObj
-                0x00000000240004c4                huart3
-                0x0000000024000554                hcrc
-                0x0000000024000580                PlayBuff
-                0x0000000024002580                hsai_BlockB1
-                0x0000000024002618                hsai_BlockA4
-                0x00000000240026b0                hdma_sai4_a
-                0x0000000024002728                hdfsdm1_channel0
-                0x0000000024002760                PDM1_filter_handler
-                0x00000000240027ac                hdma_sai1_b
- COMMON         0x0000000024002824        0x6 ./Src/pdm2pcm.o
-                0x0000000024002824                PDM1_filter_config
-                0x000000002400282c                . = ALIGN (0x4)
- *fill*         0x000000002400282a        0x2 
-                0x000000002400282c                _ebss = .
-                0x000000002400282c                __bss_end__ = _ebss
+ COMMON         0x0000000024000540        0x4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+                0x0000000024000540                uwTick
+ COMMON         0x0000000024000544      0x320 ./Src/main.o
+                0x0000000024000544                huart3
+                0x00000000240005d4                hcrc
+                0x00000000240005f8                hsai_A4
+                0x0000000024000690                hsai_B1
+                0x0000000024000728                hdma_sai_B1
+                0x00000000240007a0                hdma_sai_A4
+                0x0000000024000818                hpdm_handler
+ COMMON         0x0000000024000864       0x54 ./Src/pdm2pcm.o
+                0x0000000024000864                PDM1_filter_config
+                0x000000002400086c                PDM1_filter_handler
+                0x00000000240008b8                . = ALIGN (0x4)
+                0x00000000240008b8                _ebss = .
+                0x00000000240008b8                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x000000002400282c      0x604 load address 0x000000000800b7f4
-                0x0000000024002830                . = ALIGN (0x8)
- *fill*         0x000000002400282c        0x4 
+                0x00000000240008b8      0x600 load address 0x000000000800a9dc
+                0x00000000240008b8                . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
-                0x0000000024002830                PROVIDE (_end = .)
-                0x0000000024002a30                . = (. + _Min_Heap_Size)
- *fill*         0x0000000024002830      0x200 
-                0x0000000024002e30                . = (. + _Min_Stack_Size)
- *fill*         0x0000000024002a30      0x400 
-                0x0000000024002e30                . = ALIGN (0x8)
+                0x00000000240008b8                PROVIDE (_end = .)
+                0x0000000024000ab8                . = (. + _Min_Heap_Size)
+ *fill*         0x00000000240008b8      0x200 
+                0x0000000024000eb8                . = (. + _Min_Stack_Size)
+ *fill*         0x0000000024000ab8      0x400 
+                0x0000000024000eb8                . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
@@ -7962,7 +7932,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
 LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a
 LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a
 
-.debug_info     0x0000000000000000    0x296ee
+.debug_info     0x0000000000000000    0x2911e
  .debug_info    0x0000000000000000     0x5d54 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_info    0x0000000000005d54     0x211e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .debug_info    0x0000000000007e72     0x1c19 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
@@ -7977,14 +7947,14 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_info    0x0000000000014870     0x1e83 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .debug_info    0x00000000000166f3     0x558a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
  .debug_info    0x000000000001bc7d     0x19a9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_info    0x000000000001d626     0x37f3 ./Src/main.o
- .debug_info    0x0000000000020e19     0x2167 ./Src/pdm2pcm.o
- .debug_info    0x0000000000022f80     0x3066 ./Src/stm32h7xx_hal_msp.o
- .debug_info    0x0000000000025fe6     0x2121 ./Src/stm32h7xx_it.o
- .debug_info    0x0000000000028107     0x15c5 ./Src/system_stm32h7xx.o
- .debug_info    0x00000000000296cc       0x22 ./Startup/startup_stm32h735igkx.o
+ .debug_info    0x000000000001d626     0x3223 ./Src/main.o
+ .debug_info    0x0000000000020849     0x2167 ./Src/pdm2pcm.o
+ .debug_info    0x00000000000229b0     0x3066 ./Src/stm32h7xx_hal_msp.o
+ .debug_info    0x0000000000025a16     0x2121 ./Src/stm32h7xx_it.o
+ .debug_info    0x0000000000027b37     0x15c5 ./Src/system_stm32h7xx.o
+ .debug_info    0x00000000000290fc       0x22 ./Startup/startup_stm32h735igkx.o
 
-.debug_abbrev   0x0000000000000000     0x3847
+.debug_abbrev   0x0000000000000000     0x37d9
  .debug_abbrev  0x0000000000000000      0x3e7 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_abbrev  0x00000000000003e7      0x324 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .debug_abbrev  0x000000000000070b      0x409 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
@@ -7999,14 +7969,14 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_abbrev  0x00000000000021ad      0x2f8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .debug_abbrev  0x00000000000024a5      0x37d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
  .debug_abbrev  0x0000000000002822      0x33d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_abbrev  0x0000000000002b5f      0x38b ./Src/main.o
- .debug_abbrev  0x0000000000002eea      0x230 ./Src/pdm2pcm.o
- .debug_abbrev  0x000000000000311a      0x2be ./Src/stm32h7xx_hal_msp.o
- .debug_abbrev  0x00000000000033d8      0x20c ./Src/stm32h7xx_it.o
- .debug_abbrev  0x00000000000035e4      0x251 ./Src/system_stm32h7xx.o
- .debug_abbrev  0x0000000000003835       0x12 ./Startup/startup_stm32h735igkx.o
+ .debug_abbrev  0x0000000000002b5f      0x31d ./Src/main.o
+ .debug_abbrev  0x0000000000002e7c      0x230 ./Src/pdm2pcm.o
+ .debug_abbrev  0x00000000000030ac      0x2be ./Src/stm32h7xx_hal_msp.o
+ .debug_abbrev  0x000000000000336a      0x20c ./Src/stm32h7xx_it.o
+ .debug_abbrev  0x0000000000003576      0x251 ./Src/system_stm32h7xx.o
+ .debug_abbrev  0x00000000000037c7       0x12 ./Startup/startup_stm32h735igkx.o
 
-.debug_aranges  0x0000000000000000     0x1028
+.debug_aranges  0x0000000000000000     0x1018
  .debug_aranges
                 0x0000000000000000      0x260 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_aranges
@@ -8036,19 +8006,19 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_aranges
                 0x0000000000000db8       0xa0 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
  .debug_aranges
-                0x0000000000000e58       0x78 ./Src/main.o
+                0x0000000000000e58       0x68 ./Src/main.o
  .debug_aranges
-                0x0000000000000ed0       0x28 ./Src/pdm2pcm.o
+                0x0000000000000ec0       0x28 ./Src/pdm2pcm.o
  .debug_aranges
-                0x0000000000000ef8       0x60 ./Src/stm32h7xx_hal_msp.o
+                0x0000000000000ee8       0x60 ./Src/stm32h7xx_hal_msp.o
  .debug_aranges
-                0x0000000000000f58       0x80 ./Src/stm32h7xx_it.o
+                0x0000000000000f48       0x80 ./Src/stm32h7xx_it.o
  .debug_aranges
-                0x0000000000000fd8       0x28 ./Src/system_stm32h7xx.o
+                0x0000000000000fc8       0x28 ./Src/system_stm32h7xx.o
  .debug_aranges
-                0x0000000000001000       0x28 ./Startup/startup_stm32h735igkx.o
+                0x0000000000000ff0       0x28 ./Startup/startup_stm32h735igkx.o
 
-.debug_ranges   0x0000000000000000      0xf38
+.debug_ranges   0x0000000000000000      0xf28
  .debug_ranges  0x0000000000000000      0x250 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_ranges  0x0000000000000250      0x1b8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .debug_ranges  0x0000000000000408      0x110 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
@@ -8063,14 +8033,14 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_ranges  0x0000000000000948      0x180 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .debug_ranges  0x0000000000000ac8      0x268 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
  .debug_ranges  0x0000000000000d30       0x90 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_ranges  0x0000000000000dc0       0x68 ./Src/main.o
- .debug_ranges  0x0000000000000e28       0x18 ./Src/pdm2pcm.o
- .debug_ranges  0x0000000000000e40       0x50 ./Src/stm32h7xx_hal_msp.o
- .debug_ranges  0x0000000000000e90       0x70 ./Src/stm32h7xx_it.o
- .debug_ranges  0x0000000000000f00       0x18 ./Src/system_stm32h7xx.o
- .debug_ranges  0x0000000000000f18       0x20 ./Startup/startup_stm32h735igkx.o
+ .debug_ranges  0x0000000000000dc0       0x58 ./Src/main.o
+ .debug_ranges  0x0000000000000e18       0x18 ./Src/pdm2pcm.o
+ .debug_ranges  0x0000000000000e30       0x50 ./Src/stm32h7xx_hal_msp.o
+ .debug_ranges  0x0000000000000e80       0x70 ./Src/stm32h7xx_it.o
+ .debug_ranges  0x0000000000000ef0       0x18 ./Src/system_stm32h7xx.o
+ .debug_ranges  0x0000000000000f08       0x20 ./Startup/startup_stm32h735igkx.o
 
-.debug_macro    0x0000000000000000     0x400e
+.debug_macro    0x0000000000000000     0x4000
  .debug_macro   0x0000000000000000      0x359 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_macro   0x0000000000000359       0x82 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_macro   0x00000000000003db      0x4aa ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
@@ -8088,37 +8058,37 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_macro   0x00000000000025dc      0x2da ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .debug_macro   0x00000000000028b6      0x2f6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
  .debug_macro   0x0000000000002bac      0x2d7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_macro   0x0000000000002e83      0x375 ./Src/main.o
- .debug_macro   0x00000000000031f8       0x94 ./Src/main.o
- .debug_macro   0x000000000000328c       0xa4 ./Src/main.o
- .debug_macro   0x0000000000003330      0x35f ./Src/pdm2pcm.o
- .debug_macro   0x000000000000368f      0x355 ./Src/stm32h7xx_hal_msp.o
- .debug_macro   0x00000000000039e4      0x35f ./Src/stm32h7xx_it.o
- .debug_macro   0x0000000000003d43      0x2cb ./Src/system_stm32h7xx.o
+ .debug_macro   0x0000000000002e83      0x367 ./Src/main.o
+ .debug_macro   0x00000000000031ea       0x94 ./Src/main.o
+ .debug_macro   0x000000000000327e       0xa4 ./Src/main.o
+ .debug_macro   0x0000000000003322      0x35f ./Src/pdm2pcm.o
+ .debug_macro   0x0000000000003681      0x355 ./Src/stm32h7xx_hal_msp.o
+ .debug_macro   0x00000000000039d6      0x35f ./Src/stm32h7xx_it.o
+ .debug_macro   0x0000000000003d35      0x2cb ./Src/system_stm32h7xx.o
 
-.debug_line     0x0000000000000000    0x18de7
- .debug_line    0x0000000000000000     0x2dc7 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
- .debug_line    0x0000000000002dc7      0xf19 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_line    0x0000000000003ce0      0xe8e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- .debug_line    0x0000000000004b6e      0xc1b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
- .debug_line    0x0000000000005789      0x98d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.o
- .debug_line    0x0000000000006116     0x27d2 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
- .debug_line    0x00000000000088e8     0x1221 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
- .debug_line    0x0000000000009b09      0xd37 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
- .debug_line    0x000000000000a840      0xf28 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
- .debug_line    0x000000000000b768     0x1359 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
- .debug_line    0x000000000000cac1     0x1ac7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
- .debug_line    0x000000000000e588     0x1e52 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .debug_line    0x00000000000103da     0x3f52 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
- .debug_line    0x000000000001432c      0xf66 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_line    0x0000000000015292      0xd77 ./Src/main.o
- .debug_line    0x0000000000016009      0xaa3 ./Src/pdm2pcm.o
- .debug_line    0x0000000000016aac      0xcab ./Src/stm32h7xx_hal_msp.o
- .debug_line    0x0000000000017757      0xb90 ./Src/stm32h7xx_it.o
- .debug_line    0x00000000000182e7      0xa7d ./Src/system_stm32h7xx.o
- .debug_line    0x0000000000018d64       0x83 ./Startup/startup_stm32h735igkx.o
+.debug_line     0x0000000000000000    0x18d4b
+ .debug_line    0x0000000000000000     0x2dc6 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+ .debug_line    0x0000000000002dc6      0xf19 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_line    0x0000000000003cdf      0xe8e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_line    0x0000000000004b6d      0xc1b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
+ .debug_line    0x0000000000005788      0x98d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.o
+ .debug_line    0x0000000000006115     0x27d2 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_line    0x00000000000088e7     0x1221 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.o
+ .debug_line    0x0000000000009b08      0xd37 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_line    0x000000000000a83f      0xf28 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_line    0x000000000000b767     0x1359 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_line    0x000000000000cac0     0x1ac7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_line    0x000000000000e587     0x1e52 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
+ .debug_line    0x00000000000103d9     0x3f52 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+ .debug_line    0x000000000001432b      0xf66 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .debug_line    0x0000000000015291      0xcdc ./Src/main.o
+ .debug_line    0x0000000000015f6d      0xaa3 ./Src/pdm2pcm.o
+ .debug_line    0x0000000000016a10      0xcab ./Src/stm32h7xx_hal_msp.o
+ .debug_line    0x00000000000176bb      0xb90 ./Src/stm32h7xx_it.o
+ .debug_line    0x000000000001824b      0xa7d ./Src/system_stm32h7xx.o
+ .debug_line    0x0000000000018cc8       0x83 ./Startup/startup_stm32h735igkx.o
 
-.debug_str      0x0000000000000000   0x1574c3
+.debug_str      0x0000000000000000   0x1573ff
  .debug_str     0x0000000000000000   0x152cbd ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
                                      0x153660 (size before relaxing)
  .debug_str     0x0000000000152cbd      0x93b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
@@ -8147,17 +8117,17 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                                      0x145749 (size before relaxing)
  .debug_str     0x00000000001569bc      0x2e7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
                                      0x144d71 (size before relaxing)
- .debug_str     0x0000000000156ca3      0x5df ./Src/main.o
-                                     0x152df8 (size before relaxing)
- .debug_str     0x0000000000157282       0x34 ./Src/pdm2pcm.o
+ .debug_str     0x0000000000156ca3      0x51b ./Src/main.o
+                                     0x1529f7 (size before relaxing)
+ .debug_str     0x00000000001571be       0x34 ./Src/pdm2pcm.o
                                      0x1519f5 (size before relaxing)
- .debug_str     0x00000000001572b6       0x8a ./Src/stm32h7xx_hal_msp.o
+ .debug_str     0x00000000001571f2       0x8a ./Src/stm32h7xx_hal_msp.o
                                      0x1523b5 (size before relaxing)
- .debug_str     0x0000000000157340      0x117 ./Src/stm32h7xx_it.o
+ .debug_str     0x000000000015727c      0x117 ./Src/stm32h7xx_it.o
                                      0x1519ee (size before relaxing)
- .debug_str     0x0000000000157457       0x3b ./Src/system_stm32h7xx.o
+ .debug_str     0x0000000000157393       0x3b ./Src/system_stm32h7xx.o
                                      0x14494e (size before relaxing)
- .debug_str     0x0000000000157492       0x31 ./Startup/startup_stm32h735igkx.o
+ .debug_str     0x00000000001573ce       0x31 ./Startup/startup_stm32h735igkx.o
                                          0x57 (size before relaxing)
 
 .comment        0x0000000000000000       0xd1
@@ -8184,7 +8154,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .comment       0x0000000000000053       0x7e ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
                                          0x7f (size before relaxing)
 
-.debug_frame    0x0000000000000000     0x4450
+.debug_frame    0x0000000000000000     0x4400
  .debug_frame   0x0000000000000000      0xacc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_frame   0x0000000000000acc      0x760 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .debug_frame   0x000000000000122c      0x4b8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
@@ -8199,15 +8169,15 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_frame   0x0000000000002978      0x69c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .debug_frame   0x0000000000003014      0xa8c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
  .debug_frame   0x0000000000003aa0      0x29c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_frame   0x0000000000003d3c      0x1a0 ./Src/main.o
- .debug_frame   0x0000000000003edc       0x54 ./Src/pdm2pcm.o
- .debug_frame   0x0000000000003f30      0x16c ./Src/stm32h7xx_hal_msp.o
- .debug_frame   0x000000000000409c      0x174 ./Src/stm32h7xx_it.o
- .debug_frame   0x0000000000004210       0x58 ./Src/system_stm32h7xx.o
- .debug_frame   0x0000000000004268       0x20 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
- .debug_frame   0x0000000000004288       0x2c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-init.o)
- .debug_frame   0x00000000000042b4       0x20 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
- .debug_frame   0x00000000000042d4       0x90 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow.o)
- .debug_frame   0x0000000000004364       0x8c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
- .debug_frame   0x00000000000043f0       0x2c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x000000000000441c       0x34 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000000000003d3c      0x150 ./Src/main.o
+ .debug_frame   0x0000000000003e8c       0x54 ./Src/pdm2pcm.o
+ .debug_frame   0x0000000000003ee0      0x16c ./Src/stm32h7xx_hal_msp.o
+ .debug_frame   0x000000000000404c      0x174 ./Src/stm32h7xx_it.o
+ .debug_frame   0x00000000000041c0       0x58 ./Src/system_stm32h7xx.o
+ .debug_frame   0x0000000000004218       0x20 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
+ .debug_frame   0x0000000000004238       0x2c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x0000000000004264       0x20 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000004284       0x90 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-sf_pow.o)
+ .debug_frame   0x0000000000004314       0x8c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a(lib_a-math_errf.o)
+ .debug_frame   0x00000000000043a0       0x2c /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x00000000000043cc       0x34 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a(_udivmoddi4.o)

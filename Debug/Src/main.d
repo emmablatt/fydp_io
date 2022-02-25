@@ -49,7 +49,8 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
  ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h \
  ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_conf_template.h \
- ../Inc/pdm2pcm.h ../Inc/main.h
+ ../Inc/pdm2pcm.h ../Inc/main.h \
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h
 
 ../Inc/main.h:
 
@@ -156,3 +157,5 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 ../Inc/pdm2pcm.h:
 
 ../Inc/main.h:
+
+../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h:

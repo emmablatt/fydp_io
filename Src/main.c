@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "pdm2pcm.h"
-
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -32,15 +32,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define AUDIO_FILE_ADDRESS
-#define PLAY_HEADER          0x2C
-#define PLAY_BUFF_SIZE       4096
-//#define AUDIO_I2C_ADDRESS    0x34
-#define AUDIO_FREQUENCY_22K  22050U
-
-static AUDIO_Drv_t *AudioDrv = NULL;
-void *AudioCompObj;
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,18 +42,14 @@ void *AudioCompObj;
 /* Private variables ---------------------------------------------------------*/
 
 CRC_HandleTypeDef hcrc;
-
-DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
-
-SAI_HandleTypeDef hsai_BlockB1;
-SAI_HandleTypeDef hsai_BlockA4;
-DMA_HandleTypeDef hdma_sai1_b;
-DMA_HandleTypeDef hdma_sai4_a;
-
+SAI_HandleTypeDef hsai_B1;
+SAI_HandleTypeDef hsai_A4;
+DMA_HandleTypeDef hdma_sai_B1;
+DMA_HandleTypeDef hdma_sai_A4;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-PDM_Filter_Handler_t PDM1_filter_handler;
+PDM_Filter_Handler_t hpdm_handler;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,17 +60,14 @@ static void MX_SAI4_Init(void);
 static void MX_CRC_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
-//static void MX_DFSDM1_Init(void);
 static void MX_SAI1_Init(void);
 /* USER CODE BEGIN PFP */
-ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
-__IO int16_t                 UpdatePointer = -1;
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static void Playback_Init(void);
-static int32_t WM8994_Probe(void);
+
 
 /* USER CODE END 0 */
 
@@ -94,13 +78,6 @@ static int32_t WM8994_Probe(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	  // for pdm: input buffer is uint8 with length >= (48 * 64 * 1/8) = 384
-	  uint8_t pdm_buffer[PLAY_BUFF_SIZE/4] = {0};
-
-	  // for pdm: output buffer is uint16 with length >= 48
-	  uint16_t pcm_buffer[PLAY_BUFF_SIZE] = {0};
-
-	  uint32_t PlaybackPosition   = PLAY_BUFF_SIZE + pcm_buffer;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -127,45 +104,14 @@ int main(void)
   MX_USART3_UART_Init();
   MX_DMA_Init();
   MX_PDM2PCM_Init();
-  //MX_DFSDM1_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
+  BSP_AUDIO_IN_PDMToPCM_Init(&hsai_A4, SAI_AUDIO_FREQUENCY_48K, 1, 1);
 
-  HAL_SAI_MspInit(&hdma_sai1_b);
-  /* Infinite loop */
-  // output freq (pcm freq) = 48kHz
-  // decimiation factor = 64
-
-  /* INITIALIZE */
-  HAL_SAI_MspInit(&hsai_BlockA4);
-  HAL_SAI_Init(&hsai_BlockA4);
-
-  // polling mode - SIZE = # BYTES
-  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
-  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
-  Playback_Init();
-
-  /* Initialize the data buffer */
-  for(int i=0; i < PLAY_BUFF_SIZE; i+=2)
-  {
-    PlayBuff[i]=*((__IO uint16_t *)(pcm_buffer + PLAY_HEADER + i));
-  }
-  uint8_t audio_drv_test = AudioDrv->Play(AudioCompObj);
-  /* Start the playback */
-  if(0 != AudioDrv->Play(AudioCompObj))
-  {
-    Error_Handler();
-  }
-
-  if(HAL_OK != HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)PlayBuff, PLAY_BUFF_SIZE))
-  {
-    Error_Handler();
-  }
-  //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+//  /* USER CODE END 2 */
+//
+//  /* Infinite loop */
+//  /* USER CODE BEGIN WHILE */
 
   while (1)
   {
@@ -320,18 +266,18 @@ static void MX_SAI1_Init(void)
   /* USER CODE BEGIN SAI1_Init 1 */
 
   /* USER CODE END SAI1_Init 1 */
-  hsai_BlockB1.Instance = SAI1_Block_B;
-  hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
-  hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
-  hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+  hsai_B1.Instance = SAI1_Block_B;
+  hsai_B1.Init.AudioMode = SAI_MODEMASTER_TX;
+  hsai_B1.Init.Synchro = SAI_ASYNCHRONOUS;
+  hsai_B1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  hsai_B1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  hsai_B1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  hsai_B1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
+  hsai_B1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+  hsai_B1.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_B1.Init.CompandingMode = SAI_NOCOMPANDING;
+  hsai_B1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
+  if (HAL_SAI_InitProtocol(&hsai_B1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -356,32 +302,32 @@ static void MX_SAI4_Init(void)
   /* USER CODE BEGIN SAI4_Init 1 */
 
   /* USER CODE END SAI4_Init 1 */
-  hsai_BlockA4.Instance = SAI4_Block_A;
-  hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
-  hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
-  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
-  hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
-  hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
-  hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
-  hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 16;
-  hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
-  hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
-  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
-  hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
-  hsai_BlockA4.SlotInit.FirstBitOffset = 0;
-  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockA4.SlotInit.SlotNumber = 1;
-  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
-  if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
+  hsai_A4.Instance = SAI4_Block_A;
+  hsai_A4.Init.Protocol = SAI_FREE_PROTOCOL;
+  hsai_A4.Init.AudioMode = SAI_MODEMASTER_RX;
+  hsai_A4.Init.DataSize = SAI_DATASIZE_16;
+  hsai_A4.Init.FirstBit = SAI_FIRSTBIT_MSB;
+  hsai_A4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
+  hsai_A4.Init.Synchro = SAI_ASYNCHRONOUS;
+  hsai_A4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  hsai_A4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  hsai_A4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  hsai_A4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+  hsai_A4.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_A4.Init.CompandingMode = SAI_NOCOMPANDING;
+  hsai_A4.Init.PdmInit.Activation = ENABLE;
+  hsai_A4.Init.PdmInit.MicPairsNbr = 1;
+  hsai_A4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+  hsai_A4.FrameInit.FrameLength = 16;
+  hsai_A4.FrameInit.ActiveFrameLength = 1;
+  hsai_A4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
+  hsai_A4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
+  hsai_A4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
+  hsai_A4.SlotInit.FirstBitOffset = 0;
+  hsai_A4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  hsai_A4.SlotInit.SlotNumber = 1;
+  hsai_A4.SlotInit.SlotActive = 0x0000FFFF;
+  if (HAL_SAI_Init(&hsai_A4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -500,75 +446,14 @@ static void MX_GPIO_Init(void)
   * @brief  Register Bus IOs if component ID is OK
   * @retval error status
   */
-static int32_t WM8994_Probe(void)
-{
-  int32_t                   ret = BSP_ERROR_NONE;
-  WM8994_IO_t               IOCtx;
-  static WM8994_Object_t    WM8994Obj;
-  uint32_t                  wm8994_id;
 
-  /* Configure the audio driver */
-  IOCtx.Address     = AUDIO_I2C_ADDRESS;
-  IOCtx.Init        = BSP_I2C4_Init;
-  IOCtx.DeInit      = BSP_I2C4_DeInit;
-  IOCtx.ReadReg     = BSP_I2C4_ReadReg16;
-  IOCtx.WriteReg    = BSP_I2C4_WriteReg16;
-  IOCtx.GetTick     = BSP_GetTick;
-
-  if(WM8994_RegisterBusIO (&WM8994Obj, &IOCtx) != WM8994_OK)
-  {
-    ret = BSP_ERROR_BUS_FAILURE;
-  }
-  else if(WM8994_Reset(&WM8994Obj) != WM8994_OK)
-  {
-    ret = BSP_ERROR_COMPONENT_FAILURE;
-  }
-  else if(WM8994_ReadID(&WM8994Obj, &wm8994_id) != WM8994_OK)
-  {
-    ret = BSP_ERROR_COMPONENT_FAILURE;
-  }
-  else if(wm8994_id != WM8994_ID)
-  {
-    ret = BSP_ERROR_UNKNOWN_COMPONENT;
-  }
-  else
-  {
-    AudioDrv = (AUDIO_Drv_t *) &WM8994_Driver;
-    AudioCompObj = &WM8994Obj;
-  }
-
-  return ret;
-}
 
 /**
   * @brief  Playback initialization
   * @param  None
   * @retval None
   */
-static void Playback_Init(void)
-{
-  WM8994_Init_t codec_init;
-  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInitStruct;
 
-  /* Configure PLLSAI prescalers */
-  /* PLL2SAI_VCO: VCO_271M
-     SAI_CLK(first level) = PLLSAI_VCO/PLL2P = 271/24 = 11.291 Mhz */
-  RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
-  RCC_PeriphCLKInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2P = 24;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2Q = 24;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2R = 1;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2N = 271;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2FRACN = 0;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_0;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOMEDIUM;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2M = 25;
-
-  if(HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
 /* USER CODE END 4 */
 
 /**

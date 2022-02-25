@@ -1758,7 +1758,7 @@ static void SAI_MspDeInit(SAI_HandleTypeDef *hsai)
     (void)HAL_DMA_DeInit(hsai->hdmarx);
 
     /* De-initialize SD pin */
-    HAL_GPIO_DeInit(AUDIO_IN_SAIx_SD_GPIO_PORT, AUDIO_IN_SAIx_SD_PIN);
+//    HAL_GPIO_DeInit(AUDIO_IN_SAIx_SD_GPIO_PORT, AUDIO_IN_SAIx_SD_PIN);
 
     /* Disable SAI clock */
     AUDIO_IN_SAIx_CLK_DISABLE();
