@@ -35,8 +35,6 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o: \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h \
- ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
- ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
  ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h
 
 ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h:
@@ -108,9 +106,5 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o: \
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h:
 
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h:
-
-../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:
-
-../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
 
 ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:

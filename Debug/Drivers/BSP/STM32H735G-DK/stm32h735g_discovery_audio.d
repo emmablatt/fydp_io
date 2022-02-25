@@ -35,8 +35,6 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o: \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h \
- ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
- ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
  ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
  ../Inc/../Drivers/BSP/Components/wm8994/wm8994.h \
  ../Inc/../Drivers/BSP/Components/wm8994/wm8994_reg.h \
@@ -114,10 +112,6 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o: \
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h:
 
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h:
-
-../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:
-
-../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
 
 ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
 

@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "pdm2pcm.h"
-#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -45,11 +45,13 @@
 /* Private variables ---------------------------------------------------------*/
 
 CRC_HandleTypeDef hcrc;
-SAI_HandleTypeDef hsai_B1;
-SAI_HandleTypeDef hsai_A4;
-DMA_HandleTypeDef hdma_sai_B1;
-DMA_HandleTypeDef hdma_sai_A4;
-UART_HandleTypeDef huart3;
+
+//DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
+
+SAI_HandleTypeDef hsai_BlockB1;
+SAI_HandleTypeDef hsai_BlockA4;
+DMA_HandleTypeDef hdma_sai1_b;
+DMA_HandleTypeDef hdma_sai4_a;
 
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t hpdm_handler;
@@ -62,11 +64,10 @@ static void MX_GPIO_Init(void);
 static void MX_BDMA_Init(void);
 static void MX_SAI4_Init(void);
 static void MX_CRC_Init(void);
-static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
+//static void MX_DFSDM1_Init(void);
 static void MX_SAI1_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -103,35 +104,41 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_BDMA_Init();
   MX_SAI4_Init();
+  MX_BDMA_Init();
   MX_CRC_Init();
-  MX_USART3_UART_Init();
   MX_DMA_Init();
+  if (HAL_SAI_Init(&haudio_in_sai[audio_instance]) != HAL_OK)
+  {
+    Error_Handler();
+  }
   MX_PDM2PCM_Init();
+  //MX_DFSDM1_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
   int8_t mic_buffer[PDM_BUFFER_SIZE];
   int8_t speaker_buffer[PCM_BUFFER_SIZE];
-  uint32_t audio_instance = 1;
+
+
 
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
+  uint32_t audio_instance = 1;
   Audio_In_Ctx[audio_instance].Device = AUDIO_IN_DEVICE_DIGITAL_MIC;
   Audio_In_Ctx[audio_instance].ChannelsNbr = 1;
-  Audio_In_Ctx[audio_instance].SampleRate = SAI_AUDIO_FREQUENCY_48K;
+  Audio_In_Ctx[audio_instance].SampleRate = SAI_AUDIO_FREQUENCY_16K;
   Audio_In_Ctx[audio_instance].BitsPerSample = AUDIO_RESOLUTION_8B;
   Audio_In_Ctx[audio_instance].Volume = 80;
 
   // initialize audio instance: (NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U)
   // needs to be HAL_OK = 0
   // 64 bytes / mic_buffer[1].16bits/sample / 8
-  int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(audio_instance, SAI_AUDIO_FREQUENCY_48K, 1, 1);
+  int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(audio_instance, SAI_AUDIO_FREQUENCY_16K, 1, 1);
   int32_t status_record = BSP_AUDIO_IN_RecordPDM(audio_instance, mic_buffer, 64);
   //int32_t status BSP_AUDIO_IN_PDMToPCM(SAI_AUDIO_IN, mic_buffer, speaker_buffer);
-//  /* USER CODE END 2 */
-//
-//  /* Infinite loop */
-//  /* USER CODE BEGIN WHILE */
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
 
   while (1)
   {
@@ -242,11 +249,11 @@ static void MX_CRC_Init(void)
 //{
 //
 //  /* USER CODE BEGIN DFSDM1_Init 0 */
-////
+//////
 //  /* USER CODE END DFSDM1_Init 0 */
 //
 //  /* USER CODE BEGIN DFSDM1_Init 1 */
-////
+//////
 //  /* USER CODE END DFSDM1_Init 1 */
 //  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
 //  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
@@ -266,16 +273,16 @@ static void MX_CRC_Init(void)
 //    Error_Handler();
 //  }
 //  /* USER CODE BEGIN DFSDM1_Init 2 */
-////
+//////
 //  /* USER CODE END DFSDM1_Init 2 */
 //
 //}
-
-/**
-  * @brief SAI1 Initialization Function
-  * @param None
-  * @retval None
-  */
+//
+///**
+//  * @brief SAI1 Initialization Function
+//  * @param None
+//  * @retval None
+//  */
 static void MX_SAI1_Init(void)
 {
 
@@ -286,18 +293,18 @@ static void MX_SAI1_Init(void)
   /* USER CODE BEGIN SAI1_Init 1 */
 
   /* USER CODE END SAI1_Init 1 */
-  hsai_B1.Instance = SAI1_Block_B;
-  hsai_B1.Init.AudioMode = SAI_MODEMASTER_TX;
-  hsai_B1.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_B1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_B1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_B1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_B1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
-  hsai_B1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_B1.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_B1.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_B1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_B1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+  hsai_BlockB1.Instance = SAI1_Block_B;
+  hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
+  hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
+  hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
+  hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
+  hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
+  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -322,40 +329,12 @@ static void MX_SAI4_Init(void)
   /* USER CODE BEGIN SAI4_Init 1 */
 
   /* USER CODE END SAI4_Init 1 */
-  hsai_A4.Instance = SAI4_Block_A;
-  hsai_A4.Init.Protocol = SAI_FREE_PROTOCOL;
-  hsai_A4.Init.AudioMode = SAI_MODEMASTER_RX;
-  hsai_A4.Init.DataSize = SAI_DATASIZE_16;
-  hsai_A4.Init.FirstBit = SAI_FIRSTBIT_MSB;
-  hsai_A4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
-  hsai_A4.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_A4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_A4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_A4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_A4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
-  hsai_A4.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_A4.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_A4.Init.PdmInit.Activation = ENABLE;
-  hsai_A4.Init.PdmInit.MicPairsNbr = 1;
-  hsai_A4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_A4.FrameInit.FrameLength = 32;
-  hsai_A4.FrameInit.ActiveFrameLength = 16;
-  hsai_A4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
-  hsai_A4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
-  hsai_A4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
-  hsai_A4.SlotInit.FirstBitOffset = 0;
-  hsai_A4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_A4.SlotInit.SlotNumber = 1;
-  hsai_A4.SlotInit.SlotActive = 0x0000FFFF;
-  if (HAL_SAI_Init(&hsai_A4) != HAL_OK)
-  {
-    Error_Handler();
-  }
+
   /* USER CODE BEGIN SAI4_Init 2 */
   haudio_in_sai[audio_instance].Instance = SAI4_Block_A;
   haudio_in_sai[audio_instance].Init.Protocol = SAI_FREE_PROTOCOL;
   haudio_in_sai[audio_instance].Init.AudioMode = SAI_MODEMASTER_RX;
-  haudio_in_sai[audio_instance].Init.DataSize = SAI_DATASIZE_16;
+  haudio_in_sai[audio_instance].Init.DataSize = SAI_DATASIZE_8;
   haudio_in_sai[audio_instance].Init.FirstBit = SAI_FIRSTBIT_MSB;
   haudio_in_sai[audio_instance].Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
   haudio_in_sai[audio_instance].Init.Synchro = SAI_ASYNCHRONOUS;
@@ -363,13 +342,13 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[audio_instance].Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   haudio_in_sai[audio_instance].Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
   haudio_in_sai[audio_instance].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
-  haudio_in_sai[audio_instance].Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_in_sai[audio_instance].Init.MonoStereoMode = SAI_MONOMODE;
   haudio_in_sai[audio_instance].Init.CompandingMode = SAI_NOCOMPANDING;
   haudio_in_sai[audio_instance].Init.PdmInit.Activation = ENABLE;
   haudio_in_sai[audio_instance].Init.PdmInit.MicPairsNbr = 1;
   haudio_in_sai[audio_instance].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  haudio_in_sai[audio_instance].FrameInit.FrameLength = 32;
-  haudio_in_sai[audio_instance].FrameInit.ActiveFrameLength = 16;
+  haudio_in_sai[audio_instance].FrameInit.FrameLength = 15;
+  haudio_in_sai[audio_instance].FrameInit.ActiveFrameLength = 8;
   haudio_in_sai[audio_instance].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   haudio_in_sai[audio_instance].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
   haudio_in_sai[audio_instance].FrameInit.FSOffset = SAI_FS_FIRSTBIT;
@@ -377,59 +356,8 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[audio_instance].SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
   haudio_in_sai[audio_instance].SlotInit.SlotNumber = 1;
   haudio_in_sai[audio_instance].SlotInit.SlotActive = 0x0000FFFF;
-  if (HAL_SAI_Init(&haudio_in_sai[audio_instance]) != HAL_OK)
-  {
-    Error_Handler();
-  }
+
   /* USER CODE END SAI4_Init 2 */
-
-}
-
-/**
-  * @brief USART3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART3_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART3_Init 0 */
-
-  /* USER CODE END USART3_Init 0 */
-
-  /* USER CODE BEGIN USART3_Init 1 */
-
-  /* USER CODE END USART3_Init 1 */
-  huart3.Instance = USART3;
-  huart3.Init.BaudRate = 115200;
-  huart3.Init.WordLength = UART_WORDLENGTH_8B;
-  huart3.Init.StopBits = UART_STOPBITS_1;
-  huart3.Init.Parity = UART_PARITY_NONE;
-  huart3.Init.Mode = UART_MODE_TX_RX;
-  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart3.Init.ClockPrescaler = UART_PRESCALER_DIV1;
-  huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetTxFifoThreshold(&huart3, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetRxFifoThreshold(&huart3, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_DisableFifoMode(&huart3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART3_Init 2 */
-
-  /* USER CODE END USART3_Init 2 */
 
 }
 
@@ -482,7 +410,6 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
@@ -517,7 +444,6 @@ void Error_Handler(void)
   {
   }
   /* USER CODE END Error_Handler_Debug */
-
 }
 
 #ifdef  USE_FULL_ASSERT

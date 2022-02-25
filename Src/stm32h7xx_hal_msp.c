@@ -176,84 +176,9 @@ void HAL_DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef* hdfsdm_channel)
 
 }
 
-/**
-* @brief UART MSP Initialization
-* This function configures the hardware resources used in this example
-* @param huart: UART handle pointer
-* @retval None
-*/
-void HAL_UART_MspInit(UART_HandleTypeDef* huart)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  if(huart->Instance==USART3)
-  {
-  /* USER CODE BEGIN USART3_MspInit 0 */
+extern DMA_HandleTypeDef hdma_sai1_b;
 
-  /* USER CODE END USART3_MspInit 0 */
-  /** Initializes the peripherals clock
-  */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3;
-    PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    /* Peripheral clock enable */
-    __HAL_RCC_USART3_CLK_ENABLE();
-
-    __HAL_RCC_GPIOC_CLK_ENABLE();
-    /**USART3 GPIO Configuration
-    PC11     ------> USART3_RX
-    PC10     ------> USART3_TX
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_10;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN USART3_MspInit 1 */
-
-  /* USER CODE END USART3_MspInit 1 */
-  }
-
-}
-
-/**
-* @brief UART MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param huart: UART handle pointer
-* @retval None
-*/
-void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
-{
-  if(huart->Instance==USART3)
-  {
-  /* USER CODE BEGIN USART3_MspDeInit 0 */
-
-  /* USER CODE END USART3_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_USART3_CLK_DISABLE();
-
-    /**USART3 GPIO Configuration
-    PC11     ------> USART3_RX
-    PC10     ------> USART3_TX
-    */
-    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_11|GPIO_PIN_10);
-
-  /* USER CODE BEGIN USART3_MspDeInit 1 */
-
-  /* USER CODE END USART3_MspDeInit 1 */
-  }
-
-}
-
-extern DMA_HandleTypeDef hdma_sai_B1;
-
-extern DMA_HandleTypeDef hdma_sai_A4;
+extern DMA_HandleTypeDef hdma_sai4_a;
 
 static uint32_t SAI1_client =0;
 static uint32_t SAI4_client =0;
@@ -305,17 +230,17 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
       /* Peripheral DMA init*/
 
-    hdma_sai_B1.Instance = DMA1_Stream1;
-    hdma_sai_B1.Init.Request = DMA_REQUEST_SAI1_B;
-    hdma_sai_B1.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_sai_B1.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_sai_B1.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai_B1.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-    hdma_sai_B1.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-    hdma_sai_B1.Init.Mode = DMA_CIRCULAR;
-    hdma_sai_B1.Init.Priority = DMA_PRIORITY_HIGH;
-    hdma_sai_B1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_sai_B1) != HAL_OK)
+    hdma_sai1_b.Instance = DMA1_Stream1;
+    hdma_sai1_b.Init.Request = DMA_REQUEST_SAI1_B;
+    hdma_sai1_b.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_sai1_b.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai1_b.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai1_b.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_sai1_b.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_sai1_b.Init.Mode = DMA_CIRCULAR;
+    hdma_sai1_b.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_sai1_b.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+    if (HAL_DMA_Init(&hdma_sai1_b) != HAL_OK)
     {
       Error_Handler();
     }
@@ -325,15 +250,15 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     pSyncConfig.SyncEnable = DISABLE;
     pSyncConfig.EventEnable = ENABLE;
     pSyncConfig.RequestNumber = 1;
-    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai_B1, &pSyncConfig) != HAL_OK)
+    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai1_b, &pSyncConfig) != HAL_OK)
     {
       Error_Handler();
     }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai_B1);
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai_B1);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
     }
 /* SAI4 */
     if(hsai->Instance==SAI4_Block_A)
@@ -375,16 +300,16 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
       /* Peripheral DMA init*/
 
-    hdma_sai_A4.Instance = BDMA_Channel0;
-    hdma_sai_A4.Init.Request = BDMA_REQUEST_SAI4_A;
-    hdma_sai_A4.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_sai_A4.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_sai_A4.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai_A4.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-    hdma_sai_A4.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-    hdma_sai_A4.Init.Mode = DMA_CIRCULAR;
-    hdma_sai_A4.Init.Priority = DMA_PRIORITY_HIGH;
-    if (HAL_DMA_Init(&hdma_sai_A4) != HAL_OK)
+    hdma_sai4_a.Instance = BDMA_Channel0;
+    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
+    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
+    hdma_sai4_a.Init.Priority = DMA_PRIORITY_HIGH;
+    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
     {
       Error_Handler();
     }
@@ -394,16 +319,16 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     pSyncConfig.SyncEnable = DISABLE;
     pSyncConfig.EventEnable = ENABLE;
     pSyncConfig.RequestNumber = 1;
-    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai_A4, &pSyncConfig) != HAL_OK)
+    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai4_a, &pSyncConfig) != HAL_OK)
     {
       Error_Handler();
     }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai_A4);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
 
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai_A4);
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai4_a);
 
     }
 }
