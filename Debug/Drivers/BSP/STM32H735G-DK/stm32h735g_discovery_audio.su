@@ -46,7 +46,7 @@ stm32h735g_discovery_audio.c:2905:9:BSP_AUDIO_IN_Resume	72	static,ignoring_inlin
 stm32h735g_discovery_audio.c:2967:9:BSP_AUDIO_IN_RecordChannels	96	static,ignoring_inline_asm
 stm32h735g_discovery_audio.c:3027:9:BSP_AUDIO_IN_StopChannels	24	static
 stm32h735g_discovery_audio.c:3050:9:BSP_AUDIO_IN_PauseChannels	40	static,ignoring_inline_asm
-stm32h735g_discovery_audio.c:3092:9:BSP_AUDIO_IN_ResumeChannels	64	static,ignoring_inline_asm
+stm32h735g_discovery_audio.c:3092:9:BSP_AUDIO_IN_ResumeChannels	56	static,ignoring_inline_asm
 stm32h735g_discovery_audio.c:3135:9:BSP_AUDIO_IN_RecordPDM	32	static
 stm32h735g_discovery_audio.c:3162:9:BSP_AUDIO_IN_SetDevice	48	static
 stm32h735g_discovery_audio.c:3217:9:BSP_AUDIO_IN_GetDevice	24	static

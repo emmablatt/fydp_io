@@ -410,7 +410,7 @@ typedef struct
 #define AUDIO_IN_STATE_RECORDING           1U
 #define AUDIO_IN_STATE_STOP                2U
 #define AUDIO_IN_STATE_PAUSE               3U
-
+#define AUDIO_IN_INSTANCE				   1U
 /* Audio In instances number */
 #define AUDIO_IN_INSTANCES_NBR             3U
 /**
