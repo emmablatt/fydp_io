@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define PDM_BUFFER_SIZE 400
+#define PDM_BUFFER_SIZE 512
 #define PCM_BUFFER_SIZE 1024
 
 /* USER CODE END PD */
@@ -132,7 +132,7 @@ int main(void)
   // 64 bytes / mic_buffer[AUDIO_IN_INSTANCE].16bits/sample / 8
   int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(AUDIO_IN_INSTANCE, SAI_AUDIO_FREQUENCY_16K, 1, 1);
   int32_t status_record = BSP_AUDIO_IN_RecordPDM(AUDIO_IN_INSTANCE, mic_buffer, 64);
-  //int32_t status BSP_AUDIO_IN_PDMToPCM(SAI_AUDIO_IN, mic_buffer, speaker_buffer);
+  int32_t status BSP_AUDIO_IN_PDMToPCM(AUDIO_IN_INSTANCE, mic_buffer, speaker_buffer);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -332,7 +332,7 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[AUDIO_IN_INSTANCE].Instance = AUDIO_IN_SAI_PDMx;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.Protocol = SAI_FREE_PROTOCOL;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.AudioMode = SAI_MODEMASTER_RX;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.DataSize = SAI_DATASIZE_8;
+  haudio_in_sai[AUDIO_IN_INSTANCE].Init.DataSize = SAI_DATASIZE_16;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.FirstBit = SAI_FIRSTBIT_MSB;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.Synchro = SAI_ASYNCHRONOUS;
@@ -345,8 +345,8 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.Activation = ENABLE;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.MicPairsNbr = 0;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FrameLength = 15;
-  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.ActiveFrameLength = 8;
+  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FrameLength = 16;
+  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.ActiveFrameLength = 1;
   haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
   haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FSOffset = SAI_FS_FIRSTBIT;
@@ -354,7 +354,9 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[AUDIO_IN_INSTANCE].SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
   haudio_in_sai[AUDIO_IN_INSTANCE].SlotInit.SlotNumber = 0;
   haudio_in_sai[AUDIO_IN_INSTANCE].SlotInit.SlotActive = 0x0000FFFF;
-
+  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.Activation = ENABLE;
+  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.MicPairsNbr = 1;
+  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
   // microphone sampling rate 48khz
   // up to 2 microphones
   // 3.072 sysclk freq
