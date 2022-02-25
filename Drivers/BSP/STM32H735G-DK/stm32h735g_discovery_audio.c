@@ -3142,6 +3142,7 @@ int32_t BSP_AUDIO_IN_RecordPDM(uint32_t Instance, uint8_t* pBuf, uint32_t NbrOfB
   }
   else
   {
+	uint16_t status = (uint16_t)(NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U));
     /* Start the process receive DMA */
     if(HAL_SAI_Receive_DMA(&haudio_in_sai[Instance], (uint8_t*)pBuf, (uint16_t)(NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U))) != HAL_OK)
     {

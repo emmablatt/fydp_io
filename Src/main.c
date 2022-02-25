@@ -32,7 +32,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BUFFER_SIZE 2048
+#define PDM_BUFFER_SIZE 128
+#define PCM_BUFFER_SIZE 1024
 #define SAI_AUDIO_IN 1
 
 /* USER CODE END PD */
@@ -53,7 +54,6 @@ UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t hpdm_handler;
-BSP_AUDIO_Init_t  haudio_in;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,19 +110,23 @@ int main(void)
   MX_PDM2PCM_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
-  int16_t mic_buffer[BUFFER_SIZE];
-  int16_t speaker_buffer[BUFFER_SIZE];
+  int8_t mic_buffer[PDM_BUFFER_SIZE];
+  int8_t speaker_buffer[PCM_BUFFER_SIZE];
 
-  haudio_in.Device = AUDIO_IN_DEVICE_DIGITAL_MIC;
-  haudio_in.ChannelsNbr = 1;
-  haudio_in.SampleRate = SAI_AUDIO_FREQUENCY_48K;
-  haudio_in.BitsPerSample = AUDIO_RESOLUTION_16B;
-  haudio_in.Volume = 80;
+  // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
+  uint32_t in_instance = 1;
+  Audio_In_Ctx[in_instance].Device = AUDIO_IN_DEVICE_DIGITAL_MIC;
+  Audio_In_Ctx[in_instance].ChannelsNbr = 1;
+  Audio_In_Ctx[in_instance].SampleRate = SAI_AUDIO_FREQUENCY_48K;
+  Audio_In_Ctx[in_instance].BitsPerSample = AUDIO_RESOLUTION_8B;
+  Audio_In_Ctx[in_instance].Volume = 80;
 
-  // initialize audio instance
-  BSP_AUDIO_IN_PDMToPCM_Init(SAI_AUDIO_IN, SAI_AUDIO_FREQUENCY_48K, 1, 1);
-  BSP_AUDIO_IN_RecordPDM(SAI_AUDIO_IN, mic_buffer, 8);
-  BSP_AUDIO_IN_PDMToPCM(SAI_AUDIO_IN, mic_buffer, speaker_buffer);
+  // initialize audio instance: (NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U)
+  // needs to be HAL_OK = 0
+  // 64 bytes / mic_buffer[1].16bits/sample / 8
+  int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(SAI_AUDIO_IN, SAI_AUDIO_FREQUENCY_48K, 1, 1);
+  int32_t status_record = BSP_AUDIO_IN_RecordPDM(SAI_AUDIO_IN, mic_buffer, 64);
+  //int32_t status BSP_AUDIO_IN_PDMToPCM(SAI_AUDIO_IN, mic_buffer, speaker_buffer);
 //  /* USER CODE END 2 */
 //
 //  /* Infinite loop */
