@@ -270,7 +270,7 @@ typedef struct
 /*------------------------------------------------------------------------------
                         AUDIO IN CONFIGURATION
 ------------------------------------------------------------------------------*/
-/* SAI peripheral configuration defines */
+///* SAI peripheral configuration defines */
 #define AUDIO_IN_SAIx                           SAI1_Block_A
 #define AUDIO_IN_SAIx_CLK_ENABLE()              __HAL_RCC_SAI1_CLK_ENABLE()
 #define AUDIO_IN_SAIx_CLK_DISABLE()             __HAL_RCC_SAI1_CLK_DISABLE()

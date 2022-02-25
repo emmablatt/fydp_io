@@ -2642,6 +2642,7 @@ int32_t BSP_AUDIO_IN_RegisterMspCallbacks (uint32_t Instance, BSP_AUDIO_IN_Cb_t 
   * @param  ChnlNbrOut Number of desired output audio channels in the  resulting PCM buffer
   * @retval BSP status
   */
+
 int32_t BSP_AUDIO_IN_PDMToPCM_Init(uint32_t Instance, uint32_t AudioFreq, uint32_t ChnlNbrIn, uint32_t ChnlNbrOut)
 {
   uint32_t index = 0;
@@ -2654,6 +2655,7 @@ int32_t BSP_AUDIO_IN_PDMToPCM_Init(uint32_t Instance, uint32_t AudioFreq, uint32
   {
     /* Enable CRC peripheral to unlock the PDM library */
     __HAL_RCC_CRC_CLK_ENABLE();
+
 
     for(index = 0; index < ChnlNbrIn; index++)
     {

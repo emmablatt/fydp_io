@@ -32,6 +32,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define BUFFER_SIZE 2048
+#define SAI_AUDIO_IN 1
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,6 +53,7 @@ UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t hpdm_handler;
+BSP_AUDIO_Init_t  haudio_in;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -106,8 +110,19 @@ int main(void)
   MX_PDM2PCM_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
-  BSP_AUDIO_IN_PDMToPCM_Init(&hsai_A4, SAI_AUDIO_FREQUENCY_48K, 1, 1);
+  int16_t mic_buffer[BUFFER_SIZE];
+  int16_t speaker_buffer[BUFFER_SIZE];
 
+  haudio_in.Device = AUDIO_IN_DEVICE_DIGITAL_MIC;
+  haudio_in.ChannelsNbr = 1;
+  haudio_in.SampleRate = SAI_AUDIO_FREQUENCY_48K;
+  haudio_in.BitsPerSample = AUDIO_RESOLUTION_16B;
+  haudio_in.Volume = 80;
+
+  // initialize audio instance
+  BSP_AUDIO_IN_PDMToPCM_Init(SAI_AUDIO_IN, SAI_AUDIO_FREQUENCY_48K, 1, 1);
+  BSP_AUDIO_IN_RecordPDM(SAI_AUDIO_IN, mic_buffer, 8);
+  BSP_AUDIO_IN_PDMToPCM(SAI_AUDIO_IN, mic_buffer, speaker_buffer);
 //  /* USER CODE END 2 */
 //
 //  /* Infinite loop */
@@ -318,8 +333,8 @@ static void MX_SAI4_Init(void)
   hsai_A4.Init.PdmInit.Activation = ENABLE;
   hsai_A4.Init.PdmInit.MicPairsNbr = 1;
   hsai_A4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_A4.FrameInit.FrameLength = 16;
-  hsai_A4.FrameInit.ActiveFrameLength = 1;
+  hsai_A4.FrameInit.FrameLength = 32;
+  hsai_A4.FrameInit.ActiveFrameLength = 16;
   hsai_A4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   hsai_A4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
   hsai_A4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
