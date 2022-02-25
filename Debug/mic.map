@@ -6150,7 +6150,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_macro   0x0000000000032d24      0x2d5 ./Src/stm32h7xx_it.o
  .debug_macro   0x0000000000032ff9      0x2c1 ./Src/system_stm32h7xx.o
 
-.debug_line     0x0000000000000000    0x15676
+.debug_line     0x0000000000000000    0x15678
  .debug_line    0x0000000000000000      0xf00 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .debug_line    0x0000000000000f00      0xe75 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
  .debug_line    0x0000000000001d75      0xc02 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.o
@@ -6164,12 +6164,12 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_line    0x000000000000b6c7     0x1e39 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .debug_line    0x000000000000d500     0x3f39 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
  .debug_line    0x0000000000011439      0xf4d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_line    0x0000000000012386      0xb18 ./Src/main.o
- .debug_line    0x0000000000012e9e      0x930 ./Src/pdm2pcm.o
- .debug_line    0x00000000000137ce      0xa12 ./Src/stm32h7xx_hal_msp.o
- .debug_line    0x00000000000141e0      0x9af ./Src/stm32h7xx_it.o
- .debug_line    0x0000000000014b8f      0xa64 ./Src/system_stm32h7xx.o
- .debug_line    0x00000000000155f3       0x83 ./Startup/startup_stm32h735igkx.o
+ .debug_line    0x0000000000012386      0xb1a ./Src/main.o
+ .debug_line    0x0000000000012ea0      0x930 ./Src/pdm2pcm.o
+ .debug_line    0x00000000000137d0      0xa12 ./Src/stm32h7xx_hal_msp.o
+ .debug_line    0x00000000000141e2      0x9af ./Src/stm32h7xx_it.o
+ .debug_line    0x0000000000014b91      0xa64 ./Src/system_stm32h7xx.o
+ .debug_line    0x00000000000155f5       0x83 ./Startup/startup_stm32h735igkx.o
 
 .debug_str      0x0000000000000000   0x147a3b
  .debug_str     0x0000000000000000   0x14320b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o

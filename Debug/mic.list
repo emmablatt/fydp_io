@@ -33,13 +33,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_macro  000332ba  00000000  00000000  000443c0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   00015676  00000000  00000000  0007767a  2**0
+ 15 .debug_line   00015678  00000000  00000000  0007767a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    00147a3b  00000000  00000000  0008ccf0  2**0
+ 16 .debug_str    00147a3b  00000000  00000000  0008ccf2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      000000d1  00000000  00000000  001d472b  2**0
+ 17 .comment      000000d1  00000000  00000000  001d472d  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00003898  00000000  00000000  001d47fc  2**2
+ 18 .debug_frame  00003898  00000000  00000000  001d4800  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -18779,10 +18779,10 @@ int main(void)
   HAL_SAI_Init(&hsai_BlockA4);
  8007d1c:	4805      	ldr	r0, [pc, #20]	; (8007d34 <main+0x70>)
  8007d1e:	f7fe fac5 	bl	80062ac <HAL_SAI_Init>
-  // polling mode - SIZE = # BYTES
-  //HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
   //uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
+  // do i need to provide clock to the codec (master to SAIB1)
+  // codec
   // dma mode
   HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
  8007d22:	f507 7348 	add.w	r3, r7, #800	; 0x320
@@ -18790,6 +18790,7 @@ int main(void)
  8007d28:	4619      	mov	r1, r3
  8007d2a:	4802      	ldr	r0, [pc, #8]	; (8007d34 <main+0x70>)
  8007d2c:	f7fe fcd2 	bl	80066d4 <HAL_SAI_Receive_DMA>
+
   /* USER CODE BEGIN WHILE */
 
   while (1)
@@ -19418,7 +19419,6 @@ static void MX_DMA_Init(void)
     Error_Handler( );
  80080c8:	f000 f852 	bl	8008170 <Error_Handler>
   }
-
 }
  80080cc:	bf00      	nop
  80080ce:	3708      	adds	r7, #8
