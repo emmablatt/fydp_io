@@ -34,7 +34,6 @@
 /* USER CODE BEGIN PD */
 #define PDM_BUFFER_SIZE 128
 #define PCM_BUFFER_SIZE 1024
-#define SAI_AUDIO_IN 1
 
 /* USER CODE END PD */
 
@@ -54,6 +53,7 @@ UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t hpdm_handler;
+uint32_t audio_instance = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -82,6 +82,7 @@ static void MX_SAI1_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -112,20 +113,20 @@ int main(void)
   /* USER CODE BEGIN 2 */
   int8_t mic_buffer[PDM_BUFFER_SIZE];
   int8_t speaker_buffer[PCM_BUFFER_SIZE];
+  uint32_t audio_instance = 1;
 
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
-  uint32_t in_instance = 1;
-  Audio_In_Ctx[in_instance].Device = AUDIO_IN_DEVICE_DIGITAL_MIC;
-  Audio_In_Ctx[in_instance].ChannelsNbr = 1;
-  Audio_In_Ctx[in_instance].SampleRate = SAI_AUDIO_FREQUENCY_48K;
-  Audio_In_Ctx[in_instance].BitsPerSample = AUDIO_RESOLUTION_8B;
-  Audio_In_Ctx[in_instance].Volume = 80;
+  Audio_In_Ctx[audio_instance].Device = AUDIO_IN_DEVICE_DIGITAL_MIC;
+  Audio_In_Ctx[audio_instance].ChannelsNbr = 1;
+  Audio_In_Ctx[audio_instance].SampleRate = SAI_AUDIO_FREQUENCY_48K;
+  Audio_In_Ctx[audio_instance].BitsPerSample = AUDIO_RESOLUTION_8B;
+  Audio_In_Ctx[audio_instance].Volume = 80;
 
   // initialize audio instance: (NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U)
   // needs to be HAL_OK = 0
   // 64 bytes / mic_buffer[1].16bits/sample / 8
-  int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(SAI_AUDIO_IN, SAI_AUDIO_FREQUENCY_48K, 1, 1);
-  int32_t status_record = BSP_AUDIO_IN_RecordPDM(SAI_AUDIO_IN, mic_buffer, 64);
+  int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(audio_instance, SAI_AUDIO_FREQUENCY_48K, 1, 1);
+  int32_t status_record = BSP_AUDIO_IN_RecordPDM(audio_instance, mic_buffer, 64);
   //int32_t status BSP_AUDIO_IN_PDMToPCM(SAI_AUDIO_IN, mic_buffer, speaker_buffer);
 //  /* USER CODE END 2 */
 //
@@ -351,7 +352,35 @@ static void MX_SAI4_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN SAI4_Init 2 */
-
+  haudio_in_sai[audio_instance].Instance = SAI4_Block_A;
+  haudio_in_sai[audio_instance].Init.Protocol = SAI_FREE_PROTOCOL;
+  haudio_in_sai[audio_instance].Init.AudioMode = SAI_MODEMASTER_RX;
+  haudio_in_sai[audio_instance].Init.DataSize = SAI_DATASIZE_16;
+  haudio_in_sai[audio_instance].Init.FirstBit = SAI_FIRSTBIT_MSB;
+  haudio_in_sai[audio_instance].Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
+  haudio_in_sai[audio_instance].Init.Synchro = SAI_ASYNCHRONOUS;
+  haudio_in_sai[audio_instance].Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  haudio_in_sai[audio_instance].Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  haudio_in_sai[audio_instance].Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  haudio_in_sai[audio_instance].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+  haudio_in_sai[audio_instance].Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_in_sai[audio_instance].Init.CompandingMode = SAI_NOCOMPANDING;
+  haudio_in_sai[audio_instance].Init.PdmInit.Activation = ENABLE;
+  haudio_in_sai[audio_instance].Init.PdmInit.MicPairsNbr = 1;
+  haudio_in_sai[audio_instance].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+  haudio_in_sai[audio_instance].FrameInit.FrameLength = 32;
+  haudio_in_sai[audio_instance].FrameInit.ActiveFrameLength = 16;
+  haudio_in_sai[audio_instance].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
+  haudio_in_sai[audio_instance].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
+  haudio_in_sai[audio_instance].FrameInit.FSOffset = SAI_FS_FIRSTBIT;
+  haudio_in_sai[audio_instance].SlotInit.FirstBitOffset = 0;
+  haudio_in_sai[audio_instance].SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  haudio_in_sai[audio_instance].SlotInit.SlotNumber = 1;
+  haudio_in_sai[audio_instance].SlotInit.SlotActive = 0x0000FFFF;
+  if (HAL_SAI_Init(&haudio_in_sai[audio_instance]) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE END SAI4_Init 2 */
 
 }
