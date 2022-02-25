@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define PDM_BUFFER_SIZE 512
+#define PDM_BUFFER_SIZE 256
 #define PCM_BUFFER_SIZE 1024
 
 /* USER CODE END PD */
@@ -132,7 +132,7 @@ int main(void)
   // 64 bytes / mic_buffer[AUDIO_IN_INSTANCE].16bits/sample / 8
   int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(AUDIO_IN_INSTANCE, SAI_AUDIO_FREQUENCY_16K, 1, 1);
   int32_t status_record = BSP_AUDIO_IN_RecordPDM(AUDIO_IN_INSTANCE, mic_buffer, 64);
-  int32_t status BSP_AUDIO_IN_PDMToPCM(AUDIO_IN_INSTANCE, mic_buffer, speaker_buffer);
+  //int32_t status_convert = BSP_AUDIO_IN_PDMToPCM(AUDIO_IN_INSTANCE, mic_buffer, speaker_buffer);
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -47,7 +47,7 @@ void MX_PDM2PCM_Init(void)
 	PDM_Filter_Init(&PDM1_filter_handler);
 
 	// UM2372 pdm config
-	PDM1_filter_config.decimation_factor = PDM_FILTER_DEC_FACTOR_64;
+	PDM1_filter_config.decimation_factor = PDM_FILTER_DEC_FACTOR_32;
 	PDM1_filter_config.output_samples_number = 8;
 	PDM1_filter_config.mic_gain = 0;
 	PDM_Filter_setConfig(&PDM1_filter_handler, &PDM1_filter_config);
