@@ -106,10 +106,7 @@ int main(void)
   MX_BDMA_Init();
   MX_CRC_Init();
   MX_DMA_Init();
-  if (HAL_SAI_Init(&haudio_in_sai[AUDIO_IN_INSTANCE]) != HAL_OK)
-  {
-    Error_Handler();
-  }
+
   //MX_PDM2PCM_Init();
   //MX_DFSDM1_Init();
   MX_SAI1_Init();
@@ -357,6 +354,10 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.Activation = ENABLE;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.MicPairsNbr = 1;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+  if (HAL_SAI_Init(&haudio_in_sai[AUDIO_IN_INSTANCE]) != HAL_OK)
+  {
+    Error_Handler();
+  }
   // microphone sampling rate 48khz
   // up to 2 microphones
   // 3.072 sysclk freq
