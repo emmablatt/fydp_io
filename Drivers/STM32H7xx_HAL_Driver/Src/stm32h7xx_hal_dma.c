@@ -716,7 +716,8 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *hdma, uint32_t SrcAddress,
     {
       /* Enable Common interrupts */
       MODIFY_REG(((BDMA_Channel_TypeDef   *)hdma->Instance)->CCR, (BDMA_CCR_TCIE | BDMA_CCR_HTIE | BDMA_CCR_TEIE), (BDMA_CCR_TCIE | BDMA_CCR_TEIE));
-
+      //TODO: added enable for mux request generator
+      HAL_DMAEx_EnableMuxRequestGenerator(&hdma);
       if(hdma->XferHalfCpltCallback != NULL)
       {
         /*Enable Half Transfer IT if corresponding Callback is set */
