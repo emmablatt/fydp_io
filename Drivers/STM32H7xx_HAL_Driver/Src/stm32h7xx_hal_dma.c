@@ -699,9 +699,7 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *hdma, uint32_t SrcAddress,
     /* Disable the peripheral */
     __HAL_DMA_DISABLE(hdma);
 
-    /* Configure the source, destination address and the data length */
-    DMA_SetConfig(hdma, SrcAddress, DstAddress, DataLength);
-
+    /* Configure the source, destination address and the data length */    DMA_SetConfig(hdma, SrcAddress, DstAddress, DataLength);
     if(IS_DMA_STREAM_INSTANCE(hdma->Instance) != 0U) /* DMA1 or DMA2 instance */
     {
       /* Enable Common interrupts*/
@@ -1821,7 +1819,7 @@ static void DMA_SetConfig(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t
     ((BDMA_Channel_TypeDef *)hdma->Instance)->CNDTR = DataLength;
 
     /* Peripheral to Memory */ // TODO: changed direction
-    if((hdma->Init.Direction) == DMA_PERIPH_TO_MEMORY)
+    if((hdma->Init.Direction) == DMA_MEMORY_TO_PERIPH)
     {
       /* Configure DMA Channel destination address */
     	//Set the peripheral register address in the BDMA_CPARx register.
