@@ -1024,6 +1024,7 @@ HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *hdma, HAL_DMA_Level
   }
   else /* BDMA channel */
   {
+	  // TODO: Need to remove circular mode to make polling work
     /* Polling mode not supported in circular mode */
     if ((((BDMA_Channel_TypeDef   *)hdma->Instance)->CCR & BDMA_CCR_CIRC) != 0U)
     {
