@@ -103,7 +103,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
- // MX_SAI4_Init();
+  MX_SAI4_Init();
  // MX_SAI1_Init();
 
   MX_CRC_Init();
@@ -120,14 +120,13 @@ int main(void)
   haudio_in.BitsPerSample = AUDIO_RESOLUTION_8B;
   haudio_in.Volume = 50;
   BSP_AUDIO_IN_Init(PDM, &haudio_in);
-
-  uint8_t mic_buffer[PDM_BUFFER_SIZE];
+  BSP_AUDIO_IN_PDMToPCM_Init(PDM, SAI_AUDIO_FREQUENCY_16K, 1, 1);
+  // CKEN2
+  uint8_t mic_buffer[PDM_BUFFER_SIZE] = {0};
   // uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
 
-
   BSP_AUDIO_IN_RecordPDM(PDM, mic_buffer, 64);
-  // uint32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(PDM, SAI_AUDIO_FREQUENCY_16K, 1, 1);
   //int32_t status_convert = BSP_AUDIO_IN_PDMToPCM(PDM, mic_buffer, speaker_buffer);
   /* USER CODE END 2 */
 
@@ -143,10 +142,6 @@ int main(void)
   /* USER CODE END 3 */
 }
 
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -199,11 +194,7 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief CRC Initialization Function
-  * @param None
-  * @retval None
-  */
+
 static void MX_CRC_Init(void)
 {
 
@@ -234,11 +225,6 @@ static void MX_CRC_Init(void)
 
 }
 
-/**
-  * @brief DFSDM1 Initialization Function
-  * @param None
-  * @retval None
-  */
 //static void MX_DFSDM1_Init(void)
 //{
 //
@@ -308,11 +294,7 @@ static void MX_SAI1_Init(void)
 
 }
 
-/**
-  * @brief SAI4 Initialization Function
-  * @param None
-  * @retval None
-  */
+
 static void MX_SAI4_Init(void)
 {
 
@@ -321,7 +303,6 @@ static void MX_SAI4_Init(void)
   /* USER CODE END SAI4_Init 0 */
 
   /* USER CODE BEGIN SAI4_Init 1 */
-
   /* USER CODE END SAI4_Init 1 */
 
   /* USER CODE BEGIN SAI4_Init 2 */
@@ -335,21 +316,21 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[PDM].Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
   haudio_in_sai[PDM].Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   haudio_in_sai[PDM].Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  haudio_in_sai[PDM].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
-  haudio_in_sai[PDM].Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_in_sai[PDM].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_16K;
+  haudio_in_sai[PDM].Init.MonoStereoMode = SAI_MONOMODE;
   haudio_in_sai[PDM].Init.CompandingMode = SAI_NOCOMPANDING;
-  haudio_in_sai[PDM].Init.PdmInit.Activation = ENABLE;
-  haudio_in_sai[PDM].Init.PdmInit.MicPairsNbr = 0;
-  haudio_in_sai[PDM].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+
   haudio_in_sai[PDM].FrameInit.FrameLength = 16;
   haudio_in_sai[PDM].FrameInit.ActiveFrameLength = 1;
   haudio_in_sai[PDM].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   haudio_in_sai[PDM].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
   haudio_in_sai[PDM].FrameInit.FSOffset = SAI_FS_FIRSTBIT;
+
   haudio_in_sai[PDM].SlotInit.FirstBitOffset = 0;
   haudio_in_sai[PDM].SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
   haudio_in_sai[PDM].SlotInit.SlotNumber = 0;
   haudio_in_sai[PDM].SlotInit.SlotActive = 0x0000FFFF;
+
   haudio_in_sai[PDM].Init.PdmInit.Activation = ENABLE;
   haudio_in_sai[PDM].Init.PdmInit.MicPairsNbr = 1;
   haudio_in_sai[PDM].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
@@ -405,11 +386,6 @@ static void MX_DMA_Init(void)
 
 }
 
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
 static void MX_GPIO_Init(void)
 {
 
@@ -437,10 +413,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
