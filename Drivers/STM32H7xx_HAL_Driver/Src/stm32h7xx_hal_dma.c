@@ -1769,6 +1769,10 @@ static void DMA_SetConfig(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t
   DMA_Base_Registers  *regs_dma  = (DMA_Base_Registers *)hdma->StreamBaseAddress;
   BDMA_Base_Registers *regs_bdma = (BDMA_Base_Registers *)hdma->StreamBaseAddress;
 
+  uint32_t srcdata = &SrcAddress;
+  uint32_t srcaddr = SrcAddress;
+  uint32_t destdata = &DstAddress;
+  uint32_t destaddr = DstAddress;
   if(IS_DMA_DMAMUX_ALL_INSTANCE(hdma->Instance) != 0U) /* No DMAMUX available for BDMA1 */
   {
     /* Clear the DMAMUX synchro overrun flag */
@@ -1834,6 +1838,8 @@ static void DMA_SetConfig(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t
     /* Memory to Peripheral */
     else
     {
+    	// src = peripheral = CPAR
+    	// dest = memory = CM0AR
       /* Configure DMA Channel source address */
       ((BDMA_Channel_TypeDef *)hdma->Instance)->CPAR = SrcAddress;
 

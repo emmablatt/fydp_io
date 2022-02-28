@@ -114,8 +114,8 @@ int main(void)
   //MX_DFSDM1_Init();
   /* USER CODE BEGIN 2 */
 
-  uint8_t mic_buffer[PDM_BUFFER_SIZE] = {0};
-  uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
+  uint8_t mic_buffer[PDM_BUFFER_SIZE];
+ // uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
 
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
 

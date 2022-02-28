@@ -1760,7 +1760,7 @@ HAL_StatusTypeDef HAL_SAI_Receive_DMA(SAI_HandleTypeDef *hsai, uint8_t *pData, u
     hsai->hdmarx->XferAbortCallback = NULL;
 
     /* Enable the Rx DMA Stream */ //TODO
-    if (HAL_DMA_Start_IT(hsai->hdmarx, (uint32_t)&hsai->Instance->DR, (uint32_t)hsai->pBuffPtr, hsai->XferSize) != HAL_OK)
+    if (HAL_DMA_Start_IT(hsai->hdmarx, (uint32_t)&hsai->Instance->DR, (uint32_t)&hsai->pBuffPtr, hsai->XferSize) != HAL_OK)
     {
       __HAL_UNLOCK(hsai);
       return  HAL_ERROR;
