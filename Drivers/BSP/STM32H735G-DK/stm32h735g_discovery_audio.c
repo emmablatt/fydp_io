@@ -225,7 +225,7 @@ AUDIO_OUT_Ctx_t                        Audio_Out_Ctx[AUDIO_OUT_INSTANCES_NBR];
 DFSDM_Filter_HandleTypeDef             haudio_in_dfsdm_filter[DFSDM_MIC_NUMBER];
 DFSDM_Channel_HandleTypeDef            haudio_in_dfsdm_channel[DFSDM_MIC_NUMBER];
 SAI_HandleTypeDef                      haudio_in_sai[2] = {0};
-AUDIO_IN_Ctx_t                         Audio_In_Ctx[AUDIO_IN_INSTANCES_NBR];
+AUDIO_IN_Ctx_t                         Audio_In_Ctx[PDMS_NBR];
 /**
   * @}
   */
@@ -1668,7 +1668,6 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
   {
      /* Enable SAI clock */
     AUDIO_IN_SAI_PDMx_CLK_ENABLE();
-
     AUDIO_IN_SAI_PDMx_CLK_IN_ENABLE();
     AUDIO_IN_SAI_PDMx_DATA_IN_ENABLE();
 
@@ -1694,8 +1693,6 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     gpio_init_structure.Alternate = AUDIO_IN_SAI_PDMx_FS_SCK_AF;
     HAL_GPIO_Init(AUDIO_IN_SAI_PDMx_FS_SCK_GPIO_PORT, &gpio_init_structure);
 
-    /* Enable the DMA clock */
-    AUDIO_IN_SAI_PDMx_DMAx_CLK_ENABLE();
 
     /* Configure the hdma_sai_rx handle parameters */
     hdma_sai_rx.Init.Request             = AUDIO_IN_SAI_PDMx_DMAx_REQUEST;
@@ -1832,7 +1829,7 @@ int32_t BSP_AUDIO_IN_Init(uint32_t Instance, BSP_AUDIO_Init_t* AudioInit)
   uint32_t i;
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -2122,7 +2119,7 @@ int32_t BSP_AUDIO_IN_DeInit(uint32_t Instance)
   int32_t ret = BSP_ERROR_NONE;
   uint32_t i;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -2569,7 +2566,7 @@ int32_t BSP_AUDIO_IN_RegisterMspCallbacks (uint32_t Instance, BSP_AUDIO_IN_Cb_t 
   int32_t ret = BSP_ERROR_NONE;
   uint32_t i;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -2715,7 +2712,7 @@ int32_t BSP_AUDIO_IN_Record(uint32_t Instance, uint8_t* pBuf, uint32_t NbrOfByte
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -2780,7 +2777,7 @@ int32_t BSP_AUDIO_IN_Stop(uint32_t Instance)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -2847,7 +2844,7 @@ int32_t BSP_AUDIO_IN_Pause(uint32_t Instance)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -2904,7 +2901,7 @@ int32_t BSP_AUDIO_IN_Resume(uint32_t Instance)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3163,7 +3160,7 @@ int32_t BSP_AUDIO_IN_SetDevice(uint32_t Instance, uint32_t Device)
   uint32_t i;
   BSP_AUDIO_Init_t audio_init;
 
-  if((Instance >= AUDIO_IN_INSTANCES_NBR) || ((Instance == 0U) && (Device != AUDIO_IN_DEVICE_ANALOG_LINE1) &&\
+  if((Instance >= PDMS_NBR) || ((Instance == 0U) && (Device != AUDIO_IN_DEVICE_ANALOG_LINE1) &&\
                                                (Device != AUDIO_IN_DEVICE_DIGITAL_MIC1))\
                                           || ((Instance == 1U) && (Device != AUDIO_IN_DEVICE_DIGITAL_MIC1))\
                                           || ((Instance == 2U) && (Device < AUDIO_IN_DEVICE_DIGITAL_MIC1) &&\
@@ -3216,7 +3213,7 @@ int32_t BSP_AUDIO_IN_GetDevice(uint32_t Instance, uint32_t *Device)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3238,7 +3235,7 @@ int32_t BSP_AUDIO_IN_SetSampleRate(uint32_t Instance, uint32_t  SampleRate)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if (Instance >= AUDIO_IN_INSTANCES_NBR)
+  if (Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3341,7 +3338,7 @@ int32_t BSP_AUDIO_IN_GetSampleRate(uint32_t Instance, uint32_t *SampleRate)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3367,7 +3364,7 @@ int32_t BSP_AUDIO_IN_SetBitsPerSample(uint32_t Instance, uint32_t BitsPerSample)
   int32_t ret = BSP_ERROR_NONE;
   BSP_AUDIO_Init_t audio_init;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3415,7 +3412,7 @@ int32_t BSP_AUDIO_IN_GetBitsPerSample(uint32_t Instance, uint32_t *BitsPerSample
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3437,7 +3434,7 @@ int32_t BSP_AUDIO_IN_SetChannelsNbr(uint32_t Instance, uint32_t ChannelNbr)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if((Instance >= AUDIO_IN_INSTANCES_NBR) || (ChannelNbr > 2U))
+  if((Instance >= PDMS_NBR) || (ChannelNbr > 2U))
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3460,7 +3457,7 @@ int32_t BSP_AUDIO_IN_GetChannelsNbr(uint32_t Instance, uint32_t *ChannelNbr)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3482,7 +3479,7 @@ int32_t BSP_AUDIO_IN_SetVolume(uint32_t Instance, uint32_t Volume)
 {
   int32_t ret;
 
-  if ((Instance >= AUDIO_IN_INSTANCES_NBR) || (Volume > 100U))
+  if ((Instance >= PDMS_NBR) || (Volume > 100U))
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3506,7 +3503,7 @@ int32_t BSP_AUDIO_IN_GetVolume(uint32_t Instance, uint32_t *Volume)
 {
   int32_t ret;
 
- if(Instance >= AUDIO_IN_INSTANCES_NBR)
+ if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
@@ -3532,7 +3529,7 @@ int32_t BSP_AUDIO_IN_GetState(uint32_t Instance, uint32_t *State)
 {
   int32_t ret = BSP_ERROR_NONE;
 
-  if(Instance >= AUDIO_IN_INSTANCES_NBR)
+  if(Instance >= PDMS_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
