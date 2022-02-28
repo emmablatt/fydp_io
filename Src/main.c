@@ -48,8 +48,8 @@ CRC_HandleTypeDef hcrc;
 
 //DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
 
-SAI_HandleTypeDef hsai_BlockB1;
-SAI_HandleTypeDef hsai_BlockA4;
+//SAI_HandleTypeDef hsai_BlockB1;
+//SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai4_a;
 
@@ -288,18 +288,18 @@ static void MX_SAI1_Init(void)
   /* USER CODE BEGIN SAI1_Init 1 */
 
   /* USER CODE END SAI1_Init 1 */
-  hsai_BlockB1.Instance = SAI1_Block_B;
-  hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
-  hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
-  hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+  haudio_out_sai.Instance = SAI1_Block_B;
+  haudio_out_sai.Init.AudioMode = SAI_MODEMASTER_TX;
+  haudio_out_sai.Init.Synchro = SAI_ASYNCHRONOUS;
+  haudio_out_sai.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  haudio_out_sai.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  haudio_out_sai.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  haudio_out_sai.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
+  haudio_out_sai.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+  haudio_out_sai.Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_out_sai.Init.CompandingMode = SAI_NOCOMPANDING;
+  haudio_out_sai.Init.TriState = SAI_OUTPUT_NOTRELEASED;
+  if (HAL_SAI_InitProtocol(&haudio_out_sai, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
   {
     Error_Handler();
   }

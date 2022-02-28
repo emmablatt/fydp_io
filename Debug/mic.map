@@ -31,9 +31,7 @@ uwTick              0x4               ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7
 pFlash              0x1c              ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.o
 haudio_in_dfsdm_filter
                     0x150             ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-hsai_BlockB1        0xb4              ./Src/main.o
 PDM1_filter_config  0x6               ./Src/pdm2pcm.o
-hsai_BlockA4        0xb4              ./Src/main.o
 hpb_exti            0x8               ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
 Audio_Out_Ctx       0x24              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
 hdma_sai4_a         0x78              ./Src/main.o
@@ -1080,8 +1078,6 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.Audio_CompObj
                 0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
- .bss.haudio_out_sai
-                0x0000000000000000       0xb4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.Audio_Drv
                 0x0000000000000000        0x4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.hDmaDfsdm
@@ -7218,7 +7214,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .igot.plt      0x0000000024000474        0x0 /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crtbegin.o
                 0x0000000024000474                . = ALIGN (0x4)
 
-.bss            0x0000000024000474      0x798 load address 0x0000000008009e1c
+.bss            0x0000000024000474      0x6e4 load address 0x0000000008009e1c
                 0x0000000024000474                _sbss = .
                 0x0000000024000474                __bss_start__ = _sbss
  *(.bss)
@@ -7226,46 +7222,46 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .bss           0x0000000024000490        0x1 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  *(.bss*)
  *fill*         0x0000000024000491        0x3 
+ .bss.haudio_out_sai
+                0x0000000024000494       0xb4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+                0x0000000024000494                haudio_out_sai
  .bss.haudio_in_sai
-                0x0000000024000494      0x168 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x0000000024000494                haudio_in_sai
+                0x0000000024000548      0x168 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+                0x0000000024000548                haudio_in_sai
  .bss.PDM_FilterHandler
-                0x00000000240005fc       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+                0x00000000240006b0       0x98 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.PDM_FilterConfig
-                0x0000000024000694        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+                0x0000000024000748        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.SAI1_client
-                0x00000000240006a0        0x4 ./Src/stm32h7xx_hal_msp.o
+                0x0000000024000754        0x4 ./Src/stm32h7xx_hal_msp.o
  .bss.SAI4_client
-                0x00000000240006a4        0x4 ./Src/stm32h7xx_hal_msp.o
+                0x0000000024000758        0x4 ./Src/stm32h7xx_hal_msp.o
  *(COMMON)
- COMMON         0x00000000240006a8      0x2e4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
-                0x00000000240006a8                haudio_in_dfsdm_channel
-                0x0000000024000788                haudio_in_dfsdm_filter
-                0x00000000240008d8                Audio_Out_Ctx
-                0x00000000240008fc                Audio_In_Ctx
- COMMON         0x000000002400098c        0x4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
-                0x000000002400098c                uwTick
- COMMON         0x0000000024000990      0x27c ./Src/main.o
-                0x0000000024000990                hcrc
-                0x00000000240009b4                hsai_BlockB1
-                0x0000000024000a68                hsai_BlockA4
-                0x0000000024000b1c                hdma_sai4_a
-                0x0000000024000b94                hdma_sai1_b
-                0x0000000024000c0c                . = ALIGN (0x4)
-                0x0000000024000c0c                _ebss = .
-                0x0000000024000c0c                __bss_end__ = _ebss
+ COMMON         0x000000002400075c      0x2e4 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
+                0x000000002400075c                haudio_in_dfsdm_channel
+                0x000000002400083c                haudio_in_dfsdm_filter
+                0x000000002400098c                Audio_Out_Ctx
+                0x00000000240009b0                Audio_In_Ctx
+ COMMON         0x0000000024000a40        0x4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+                0x0000000024000a40                uwTick
+ COMMON         0x0000000024000a44      0x114 ./Src/main.o
+                0x0000000024000a44                hcrc
+                0x0000000024000a68                hdma_sai4_a
+                0x0000000024000ae0                hdma_sai1_b
+                0x0000000024000b58                . = ALIGN (0x4)
+                0x0000000024000b58                _ebss = .
+                0x0000000024000b58                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000024000c0c      0x604 load address 0x0000000008009e1c
-                0x0000000024000c10                . = ALIGN (0x8)
- *fill*         0x0000000024000c0c        0x4 
+                0x0000000024000b58      0x600 load address 0x0000000008009e1c
+                0x0000000024000b58                . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
-                0x0000000024000c10                PROVIDE (_end = .)
-                0x0000000024000e10                . = (. + _Min_Heap_Size)
- *fill*         0x0000000024000c10      0x200 
-                0x0000000024001210                . = (. + _Min_Stack_Size)
- *fill*         0x0000000024000e10      0x400 
-                0x0000000024001210                . = ALIGN (0x8)
+                0x0000000024000b58                PROVIDE (_end = .)
+                0x0000000024000d58                . = (. + _Min_Heap_Size)
+ *fill*         0x0000000024000b58      0x200 
+                0x0000000024001158                . = (. + _Min_Stack_Size)
+ *fill*         0x0000000024000d58      0x400 
+                0x0000000024001158                . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
@@ -7339,7 +7335,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
 LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libm.a
 LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.macos64_2.0.0.202105311346/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/libgcc.a
 
-.debug_info     0x0000000000000000    0x1fac3
+.debug_info     0x0000000000000000    0x1fa9f
  .debug_info    0x0000000000000000     0x5f75 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_info    0x0000000000005f75     0x20df ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
  .debug_info    0x0000000000008054     0x1bda ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
@@ -7352,11 +7348,11 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_info    0x0000000000011386     0x1837 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
  .debug_info    0x0000000000012bbd     0x1ca6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
  .debug_info    0x0000000000014863     0x1fc4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .debug_info    0x0000000000016827     0x2f1b ./Src/main.o
- .debug_info    0x0000000000019742     0x2c84 ./Src/stm32h7xx_hal_msp.o
- .debug_info    0x000000000001c3c6     0x2155 ./Src/stm32h7xx_it.o
- .debug_info    0x000000000001e51b     0x1586 ./Src/system_stm32h7xx.o
- .debug_info    0x000000000001faa1       0x22 ./Startup/startup_stm32h735igkx.o
+ .debug_info    0x0000000000016827     0x2ef7 ./Src/main.o
+ .debug_info    0x000000000001971e     0x2c84 ./Src/stm32h7xx_hal_msp.o
+ .debug_info    0x000000000001c3a2     0x2155 ./Src/stm32h7xx_it.o
+ .debug_info    0x000000000001e4f7     0x1586 ./Src/system_stm32h7xx.o
+ .debug_info    0x000000000001fa7d       0x22 ./Startup/startup_stm32h735igkx.o
 
 .debug_abbrev   0x0000000000000000     0x2f2f
  .debug_abbrev  0x0000000000000000      0x409 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
@@ -7474,7 +7470,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_line    0x000000000001286f      0xa4a ./Src/system_stm32h7xx.o
  .debug_line    0x00000000000132b9       0x83 ./Startup/startup_stm32h735igkx.o
 
-.debug_str      0x0000000000000000   0x15031d
+.debug_str      0x0000000000000000   0x150303
  .debug_str     0x0000000000000000   0x14c9c2 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
                                      0x14d404 (size before relaxing)
  .debug_str     0x000000000014c9c2      0x93b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
@@ -7499,15 +7495,15 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                                      0x13ed3a (size before relaxing)
  .debug_str     0x000000000014f6f6      0x4b7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
                                      0x13ec79 (size before relaxing)
- .debug_str     0x000000000014fbad      0x563 ./Src/main.o
-                                     0x14c41d (size before relaxing)
- .debug_str     0x0000000000150110       0x8a ./Src/stm32h7xx_hal_msp.o
+ .debug_str     0x000000000014fbad      0x549 ./Src/main.o
+                                     0x14c403 (size before relaxing)
+ .debug_str     0x00000000001500f6       0x8a ./Src/stm32h7xx_hal_msp.o
                                      0x14bd62 (size before relaxing)
- .debug_str     0x000000000015019a      0x117 ./Src/stm32h7xx_it.o
+ .debug_str     0x0000000000150180      0x117 ./Src/stm32h7xx_it.o
                                      0x14b5fa (size before relaxing)
- .debug_str     0x00000000001502b1       0x3b ./Src/system_stm32h7xx.o
+ .debug_str     0x0000000000150297       0x3b ./Src/system_stm32h7xx.o
                                      0x13e4bd (size before relaxing)
- .debug_str     0x00000000001502ec       0x31 ./Startup/startup_stm32h735igkx.o
+ .debug_str     0x00000000001502d2       0x31 ./Startup/startup_stm32h735igkx.o
                                          0x57 (size before relaxing)
 
 .comment        0x0000000000000000       0xd1
