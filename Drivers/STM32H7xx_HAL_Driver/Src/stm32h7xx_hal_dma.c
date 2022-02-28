@@ -699,7 +699,8 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *hdma, uint32_t SrcAddress,
     /* Disable the peripheral */
     __HAL_DMA_DISABLE(hdma);
 
-    /* Configure the source, destination address and the data length */    DMA_SetConfig(hdma, SrcAddress, DstAddress, DataLength);
+    /* Configure the source, destination address and the data length */
+    DMA_SetConfig(hdma, SrcAddress, DstAddress, DataLength);
     if(IS_DMA_STREAM_INSTANCE(hdma->Instance) != 0U) /* DMA1 or DMA2 instance */
     {
       /* Enable Common interrupts*/

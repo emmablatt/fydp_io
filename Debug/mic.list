@@ -31,13 +31,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  13 .debug_macro  000035a3  00000000  00000000  00044800  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_line   00013340  00000000  00000000  00047da3  2**0
+ 14 .debug_line   0001333e  00000000  00000000  00047da3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    0015031d  00000000  00000000  0005b0e3  2**0
+ 15 .debug_str    0015031d  00000000  00000000  0005b0e1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      000000d1  00000000  00000000  001ab400  2**0
+ 16 .comment      000000d1  00000000  00000000  001ab3fe  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  000036a8  00000000  00000000  001ab4d4  2**2
+ 17 .debug_frame  000036a8  00000000  00000000  001ab4d0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2451,7 +2451,8 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *hdma, uint32_t SrcAddress,
  800119a:	f022 0201 	bic.w	r2, r2, #1
  800119e:	601a      	str	r2, [r3, #0]
 
-    /* Configure the source, destination address and the data length */    DMA_SetConfig(hdma, SrcAddress, DstAddress, DataLength);
+    /* Configure the source, destination address and the data length */
+    DMA_SetConfig(hdma, SrcAddress, DstAddress, DataLength);
  80011a0:	683b      	ldr	r3, [r7, #0]
  80011a2:	687a      	ldr	r2, [r7, #4]
  80011a4:	68b9      	ldr	r1, [r7, #8]
