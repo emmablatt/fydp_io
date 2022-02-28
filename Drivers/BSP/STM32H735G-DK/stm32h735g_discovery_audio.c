@@ -1666,11 +1666,12 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
 
   if(hsai->Instance == AUDIO_IN_SAI_PDMx)
   {
-     /* Enable SAI clock */
+     /* Enable SAI clocks */
     AUDIO_IN_SAI_PDMx_CLK_ENABLE();
     AUDIO_IN_SAI_PDMx_CLK_IN_ENABLE();
     AUDIO_IN_SAI_PDMx_DATA_IN_ENABLE();
 
+    /* Configure GPIOs */
     gpio_init_structure.Pin = AUDIO_IN_SAI_PDMx_CLK_IN_PIN;
     gpio_init_structure.Mode = GPIO_MODE_AF_PP;
     gpio_init_structure.Pull = GPIO_NOPULL;
@@ -3126,7 +3127,7 @@ int32_t BSP_AUDIO_IN_ResumeChannels(uint32_t Instance, uint32_t Device)
   * @param  pbuf     Main buffer pointer for the recorded data storing
   * @param  Size     Size of the record buffer
   * @retval BSP status
-  */
+  */ // TODO
 int32_t BSP_AUDIO_IN_RecordPDM(uint32_t Instance, uint8_t* pBuf, uint32_t NbrOfBytes)
 {
   int32_t ret = BSP_ERROR_NONE;

@@ -288,6 +288,7 @@ typedef struct
 #define AUDIO_IN_SAIx_DMAx_MEM_DATA_SIZE        DMA_MDATAALIGN_HALFWORD
 #define AUDIO_IN_SAIx_DMAx_IRQHandler           DMA2_Stream4_IRQHandler
 
+// TODO
 /* SAI PDM input definitions */
 #define AUDIO_IN_SAI_PDMx                            SAI4_Block_A
 #define AUDIO_IN_SAI_PDMx_CLK_ENABLE()               __HAL_RCC_SAI4_CLK_ENABLE()

@@ -45,9 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 CRC_HandleTypeDef hcrc;
-
 //DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
-
 //SAI_HandleTypeDef hsai_BlockB1;
 //SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai1_b;
@@ -103,11 +101,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_SAI4_Init();
- // MX_SAI1_Init();
-
   MX_CRC_Init();
- // MX_BDMA_Init();
+
+  MX_SAI4_Init();
+  MX_BDMA_Init();
+  // MX_SAI1_Init();
   //MX_DMA_Init();
   //MX_PDM2PCM_Init();
   //MX_DFSDM1_Init();
@@ -121,7 +119,7 @@ int main(void)
   haudio_in.Volume = 50;
   BSP_AUDIO_IN_Init(PDM, &haudio_in);
   BSP_AUDIO_IN_PDMToPCM_Init(PDM, SAI_AUDIO_FREQUENCY_16K, 1, 1);
-  // CKEN2
+
   uint8_t mic_buffer[PDM_BUFFER_SIZE] = {0};
   // uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
@@ -334,16 +332,12 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[PDM].Init.PdmInit.Activation = ENABLE;
   haudio_in_sai[PDM].Init.PdmInit.MicPairsNbr = 1;
   haudio_in_sai[PDM].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+
   if (HAL_SAI_Init(&haudio_in_sai[PDM]) != HAL_OK)
   {
     Error_Handler();
   }
-  // microphone sampling rate 48khz
-  // up to 2 microphones
-  // 3.072 sysclk freq
-  // 6.144 mhz bit clk frequency
-  // 384khz frame sync frequency
-  // 0 slots, 16 bits per frame
+
   /* USER CODE END SAI4_Init 2 */
 
 }
@@ -398,19 +392,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-/**
-  * @brief  Register Bus IOs if component ID is OK
-  * @retval error status
-  */
-
-
-/**
-  * @brief  Playback initialization
-  * @param  None
-  * @retval None
-  */
-
 /* USER CODE END 4 */
 
 

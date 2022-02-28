@@ -27,7 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
