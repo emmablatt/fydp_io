@@ -252,7 +252,8 @@ void BDMA_Channel0_IRQHandler(void)
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
   //HAL_DMA_IRQHandler(&hdma_sai4_a);
-	HAL_DMA_IRQHandler(&haudio_in_sai[PDM].hdmarx);
+//	HAL_DMA_IRQHandler(&haudio_in_sai[PDM].hdmarx);
+	BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 
   /* USER CODE END BDMA_Channel0_IRQn 1 */
