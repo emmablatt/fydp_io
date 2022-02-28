@@ -11,7 +11,7 @@ stm32h7xx_hal_dma.c:1639:19:HAL_DMA_UnRegisterCallback	24	static
 stm32h7xx_hal_dma.c:1730:22:HAL_DMA_GetState	16	static
 stm32h7xx_hal_dma.c:1741:10:HAL_DMA_GetError	16	static
 stm32h7xx_hal_dma.c:1767:13:DMA_SetConfig	32	static
-stm32h7xx_hal_dma.c:1854:17:DMA_CalcBaseAndBitshift	24	static
-stm32h7xx_hal_dma.c:1890:26:DMA_CheckFifoParam	24	static
-stm32h7xx_hal_dma.c:1984:13:DMA_CalcDMAMUXChannelBaseAndMask	24	static
-stm32h7xx_hal_dma.c:2019:13:DMA_CalcDMAMUXRequestGenBaseAndMask	24	static
+stm32h7xx_hal_dma.c:1857:17:DMA_CalcBaseAndBitshift	24	static
+stm32h7xx_hal_dma.c:1893:26:DMA_CheckFifoParam	24	static
+stm32h7xx_hal_dma.c:1987:13:DMA_CalcDMAMUXChannelBaseAndMask	24	static
+stm32h7xx_hal_dma.c:2022:13:DMA_CalcDMAMUXRequestGenBaseAndMask	24	static

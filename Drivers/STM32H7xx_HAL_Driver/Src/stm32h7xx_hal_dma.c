@@ -1820,10 +1820,13 @@ static void DMA_SetConfig(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t
     /* Configure DMA Channel data length */
     ((BDMA_Channel_TypeDef *)hdma->Instance)->CNDTR = DataLength;
 
-    /* Peripheral to Memory */
-    if((hdma->Init.Direction) == DMA_MEMORY_TO_PERIPH)
+    /* Peripheral to Memory */ // TODO: changed direction
+    if((hdma->Init.Direction) == DMA_PERIPH_TO_MEMORY)
     {
       /* Configure DMA Channel destination address */
+    	//Set the peripheral register address in the BDMA_CPARx register.
+    	//The data is moved from/to this address to/from the memory after
+    	//the peripheral event, or after the channel is enabled in memory-to-memory mode.
       ((BDMA_Channel_TypeDef *)hdma->Instance)->CPAR = DstAddress;
 
       /* Configure DMA Channel source address */
