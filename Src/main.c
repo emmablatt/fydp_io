@@ -123,7 +123,6 @@ int main(void)
   uint8_t mic_buffer[PDM_BUFFER_SIZE] = {0};
   // uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
-  BSP_AUDIO_IN_AllocScratch (Scratch_, SCRATCH_BUFF_SIZE);
   BSP_AUDIO_IN_RecordPDM(PDM, mic_buffer, 64);
   //int32_t status_convert = BSP_AUDIO_IN_PDMToPCM(PDM, mic_buffer, speaker_buffer);
   /* USER CODE END 2 */
