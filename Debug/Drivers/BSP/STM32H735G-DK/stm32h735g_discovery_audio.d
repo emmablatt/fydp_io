@@ -41,7 +41,8 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o: \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
  ../Inc/../Drivers/BSP/Components/Common/audio.h \
  ../Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h \
- ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.h
+ ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.h \
+ ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h
 
 ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h:
 
@@ -126,3 +127,5 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o: \
 ../Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h:
 
 ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.h:
+
+../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h:

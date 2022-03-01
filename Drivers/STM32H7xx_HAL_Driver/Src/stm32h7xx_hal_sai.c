@@ -214,6 +214,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7xx_hal.h"
+#include "main.h"
 
 /** @addtogroup STM32H7xx_HAL_Driver
   * @{
@@ -1760,7 +1761,7 @@ HAL_StatusTypeDef HAL_SAI_Receive_DMA(SAI_HandleTypeDef *hsai, uint8_t *pData, u
     hsai->hdmarx->XferAbortCallback = NULL;
 
     /* Enable the Rx DMA Stream */ //todo
-    if (HAL_DMA_Start_IT(hsai->hdmarx, (uint32_t)&hsai->Instance->DR, (uint32_t)&hsai->pBuffPtr, (uint32_t)&hsai->XferSize) != HAL_OK)
+    if (HAL_DMA_Start_IT(hsai->hdmarx, (uint32_t)&hsai->Instance->DR, (uint32_t)hsai->pBuffPtr, (uint32_t)hsai->XferSize) != HAL_OK)
     {
       __HAL_UNLOCK(hsai);
       return  HAL_ERROR;
@@ -2817,6 +2818,7 @@ static void SAI_DMATxHalfCplt(DMA_HandleTypeDef *hdma)
 // TODO: Add a function for when it's complete
 static void SAI_DMARxCplt(DMA_HandleTypeDef *hdma)
 {
+	BSP_LED_On(LED1);
   SAI_HandleTypeDef *hsai = (SAI_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
   if (hdma->Init.Mode != DMA_CIRCULAR)

@@ -143,6 +143,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h735g_discovery_audio.h"
 #include "stm32h735g_discovery_bus.h"
+#include "stm32h735g_discovery.h"
+
 
 /** @addtogroup BSP
   * @{
@@ -3781,8 +3783,9 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
 __weak void BSP_AUDIO_IN_TransferComplete_CallBack(uint32_t Instance)
 {
   /* Prevent unused argument(s) compilation warning */
-  UNUSED(Instance);
+  //UNUSED(Instance);
 
+	BSP_LED_On(LED1);
   /* This function should be implemented by the user application.
      It is called into this driver when the current buffer is filled
      to prepare the next buffer pointer and its size. */
