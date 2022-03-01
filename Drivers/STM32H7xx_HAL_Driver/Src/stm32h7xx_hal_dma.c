@@ -424,6 +424,7 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *hdma)
     /* Initialize parameters for DMAMUX request generator :
     if the DMA request is DMA_REQUEST_GENERATOR0 to DMA_REQUEST_GENERATOR7
     */
+    // TODO: Enable BDMA Request Generator0 -
     if((hdma->Init.Request >= DMA_REQUEST_GENERATOR0) && (hdma->Init.Request <= DMA_REQUEST_GENERATOR7))
     {
       /* Initialize parameters for DMAMUX request generator :

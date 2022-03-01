@@ -53,6 +53,8 @@ SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai4_a;
 
+// TODO: Link or replace hsai from here and from bsp
+
 /* USER CODE BEGIN PV */
 /* USER CODE END PV */
 
@@ -105,6 +107,9 @@ int main(void)
   MX_CRC_Init();
 
   MX_SAI4_Init();
+
+  // TODO: fix hsai 4a
+  //HAL_SAI_MspInit(&hsai_sai_4_a);
   //MX_SAI1_Init();
   MX_BDMA_Init();
   //MX_DMA_Init();
