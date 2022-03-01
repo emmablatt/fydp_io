@@ -112,6 +112,8 @@ int main(void)
   MX_SAI1_Init();
   //MX_DFSDM1_Init();
 
+
+
   /* USER CODE BEGIN 2 */
   BSP_LED_Init(LED_GREEN);
   BSP_LED_Init(LED_RED);
@@ -335,13 +337,15 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
   hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
-  hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
+//  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+
+  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_FULL;
+  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_16K;
+  hsai_BlockA4.Init.MonoStereoMode = SAI_MONOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
 
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
 
   hsai_BlockA4.FrameInit.FrameLength = 16;

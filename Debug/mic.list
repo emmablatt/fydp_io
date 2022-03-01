@@ -2979,6 +2979,7 @@ int32_t BSP_AUDIO_IN_RecordPDM(uint32_t Instance, uint8_t* pBuf, uint32_t NbrOfB
   else
   {
     /* Start the process receive DMA */
+	  // setup SAI4 in receive DMA mode - set a callback when buffer full?
     if(HAL_SAI_Receive_DMA(&haudio_in_sai[PDM], (uint8_t*)pBuf, (uint16_t)(NbrOfBytes/(Audio_In_Ctx[PDM].BitsPerSample/8U))) != HAL_OK)
  80015fe:	4b0b      	ldr	r3, [pc, #44]	; (800162c <BSP_AUDIO_IN_RecordPDM+0x4c>)
  8001600:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
@@ -22839,6 +22840,7 @@ HAL_StatusTypeDef HAL_SAI_Receive_DMA(SAI_HandleTypeDef *hsai, uint8_t *pData, u
     }
 
     /* Enable the interrupts for error handling */
+
     __HAL_SAI_ENABLE_IT(hsai, SAI_InterruptFlag(hsai, SAI_MODE_DMA));
  8009476:	2100      	movs	r1, #0
  8009478:	68f8      	ldr	r0, [r7, #12]
@@ -24874,90 +24876,91 @@ static void MX_SAI4_Init(void)
  8009f8c:	4b20      	ldr	r3, [pc, #128]	; (800a010 <MX_SAI4_Init+0xb8>)
  8009f8e:	2200      	movs	r2, #0
  8009f90:	619a      	str	r2, [r3, #24]
-  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+//  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+
+  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_FULL;
  8009f92:	4b1f      	ldr	r3, [pc, #124]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009f94:	2200      	movs	r2, #0
+ 8009f94:	2204      	movs	r2, #4
  8009f96:	61da      	str	r2, [r3, #28]
-  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_16K;
  8009f98:	4b1d      	ldr	r3, [pc, #116]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009f9a:	f64b 3280 	movw	r2, #48000	; 0xbb80
+ 8009f9a:	f44f 527a 	mov.w	r2, #16000	; 0x3e80
  8009f9e:	621a      	str	r2, [r3, #32]
-  hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockA4.Init.MonoStereoMode = SAI_MONOMODE;
  8009fa0:	4b1b      	ldr	r3, [pc, #108]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fa2:	2200      	movs	r2, #0
- 8009fa4:	62da      	str	r2, [r3, #44]	; 0x2c
+ 8009fa2:	f44f 5280 	mov.w	r2, #4096	; 0x1000
+ 8009fa6:	62da      	str	r2, [r3, #44]	; 0x2c
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
- 8009fa6:	4b1a      	ldr	r3, [pc, #104]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fa8:	2200      	movs	r2, #0
- 8009faa:	631a      	str	r2, [r3, #48]	; 0x30
+ 8009fa8:	4b19      	ldr	r3, [pc, #100]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009faa:	2200      	movs	r2, #0
+ 8009fac:	631a      	str	r2, [r3, #48]	; 0x30
 
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
- 8009fac:	4b18      	ldr	r3, [pc, #96]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fae:	2201      	movs	r2, #1
- 8009fb0:	f883 2038 	strb.w	r2, [r3, #56]	; 0x38
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
- 8009fb4:	4b16      	ldr	r3, [pc, #88]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fb6:	2202      	movs	r2, #2
- 8009fb8:	63da      	str	r2, [r3, #60]	; 0x3c
+ 8009fae:	4b18      	ldr	r3, [pc, #96]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fb0:	2201      	movs	r2, #1
+ 8009fb2:	f883 2038 	strb.w	r2, [r3, #56]	; 0x38
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
+ 8009fb6:	4b16      	ldr	r3, [pc, #88]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fb8:	2201      	movs	r2, #1
+ 8009fba:	63da      	str	r2, [r3, #60]	; 0x3c
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
- 8009fba:	4b15      	ldr	r3, [pc, #84]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fbc:	f44f 7200 	mov.w	r2, #512	; 0x200
- 8009fc0:	641a      	str	r2, [r3, #64]	; 0x40
+ 8009fbc:	4b14      	ldr	r3, [pc, #80]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fbe:	f44f 7200 	mov.w	r2, #512	; 0x200
+ 8009fc2:	641a      	str	r2, [r3, #64]	; 0x40
 
   hsai_BlockA4.FrameInit.FrameLength = 16;
- 8009fc2:	4b13      	ldr	r3, [pc, #76]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fc4:	2210      	movs	r2, #16
- 8009fc6:	655a      	str	r2, [r3, #84]	; 0x54
+ 8009fc4:	4b12      	ldr	r3, [pc, #72]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fc6:	2210      	movs	r2, #16
+ 8009fc8:	655a      	str	r2, [r3, #84]	; 0x54
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
- 8009fc8:	4b11      	ldr	r3, [pc, #68]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fca:	2201      	movs	r2, #1
- 8009fcc:	659a      	str	r2, [r3, #88]	; 0x58
+ 8009fca:	4b11      	ldr	r3, [pc, #68]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fcc:	2201      	movs	r2, #1
+ 8009fce:	659a      	str	r2, [r3, #88]	; 0x58
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
- 8009fce:	4b10      	ldr	r3, [pc, #64]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fd0:	2200      	movs	r2, #0
- 8009fd2:	65da      	str	r2, [r3, #92]	; 0x5c
+ 8009fd0:	4b0f      	ldr	r3, [pc, #60]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fd2:	2200      	movs	r2, #0
+ 8009fd4:	65da      	str	r2, [r3, #92]	; 0x5c
   hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
- 8009fd4:	4b0e      	ldr	r3, [pc, #56]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fd6:	2200      	movs	r2, #0
- 8009fd8:	661a      	str	r2, [r3, #96]	; 0x60
+ 8009fd6:	4b0e      	ldr	r3, [pc, #56]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fd8:	2200      	movs	r2, #0
+ 8009fda:	661a      	str	r2, [r3, #96]	; 0x60
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
- 8009fda:	4b0d      	ldr	r3, [pc, #52]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fdc:	2200      	movs	r2, #0
- 8009fde:	665a      	str	r2, [r3, #100]	; 0x64
+ 8009fdc:	4b0c      	ldr	r3, [pc, #48]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fde:	2200      	movs	r2, #0
+ 8009fe0:	665a      	str	r2, [r3, #100]	; 0x64
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
- 8009fe0:	4b0b      	ldr	r3, [pc, #44]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fe2:	2200      	movs	r2, #0
- 8009fe4:	669a      	str	r2, [r3, #104]	; 0x68
+ 8009fe2:	4b0b      	ldr	r3, [pc, #44]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fe4:	2200      	movs	r2, #0
+ 8009fe6:	669a      	str	r2, [r3, #104]	; 0x68
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
- 8009fe6:	4b0a      	ldr	r3, [pc, #40]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fe8:	2200      	movs	r2, #0
- 8009fea:	66da      	str	r2, [r3, #108]	; 0x6c
+ 8009fe8:	4b09      	ldr	r3, [pc, #36]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009fea:	2200      	movs	r2, #0
+ 8009fec:	66da      	str	r2, [r3, #108]	; 0x6c
   hsai_BlockA4.SlotInit.SlotNumber = 1;
- 8009fec:	4b08      	ldr	r3, [pc, #32]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009fee:	2201      	movs	r2, #1
- 8009ff0:	671a      	str	r2, [r3, #112]	; 0x70
+ 8009fee:	4b08      	ldr	r3, [pc, #32]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009ff0:	2201      	movs	r2, #1
+ 8009ff2:	671a      	str	r2, [r3, #112]	; 0x70
   hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
- 8009ff2:	4b07      	ldr	r3, [pc, #28]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009ff4:	f64f 72ff 	movw	r2, #65535	; 0xffff
- 8009ff8:	675a      	str	r2, [r3, #116]	; 0x74
+ 8009ff4:	4b06      	ldr	r3, [pc, #24]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009ff6:	f64f 72ff 	movw	r2, #65535	; 0xffff
+ 8009ffa:	675a      	str	r2, [r3, #116]	; 0x74
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
- 8009ffa:	4805      	ldr	r0, [pc, #20]	; (800a010 <MX_SAI4_Init+0xb8>)
- 8009ffc:	f7fe ff38 	bl	8008e70 <HAL_SAI_Init>
- 800a000:	4603      	mov	r3, r0
- 800a002:	2b00      	cmp	r3, #0
- 800a004:	d001      	beq.n	800a00a <MX_SAI4_Init+0xb2>
+ 8009ffc:	4804      	ldr	r0, [pc, #16]	; (800a010 <MX_SAI4_Init+0xb8>)
+ 8009ffe:	f7fe ff37 	bl	8008e70 <HAL_SAI_Init>
+ 800a002:	4603      	mov	r3, r0
+ 800a004:	2b00      	cmp	r3, #0
+ 800a006:	d001      	beq.n	800a00c <MX_SAI4_Init+0xb4>
   {
     Error_Handler();
- 800a006:	f000 f89f 	bl	800a148 <Error_Handler>
+ 800a008:	f000 f89e 	bl	800a148 <Error_Handler>
   }
   /* USER CODE BEGIN SAI4_Init 2 */
 
   /* USER CODE END SAI4_Init 2 */
 
 }
- 800a00a:	bf00      	nop
- 800a00c:	bd80      	pop	{r7, pc}
- 800a00e:	bf00      	nop
+ 800a00c:	bf00      	nop
+ 800a00e:	bd80      	pop	{r7, pc}
  800a010:	24000db4 	.word	0x24000db4
  800a014:	58005404 	.word	0x58005404
 

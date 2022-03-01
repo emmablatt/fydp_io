@@ -1767,6 +1767,7 @@ HAL_StatusTypeDef HAL_SAI_Receive_DMA(SAI_HandleTypeDef *hsai, uint8_t *pData, u
     }
 
     /* Enable the interrupts for error handling */
+
     __HAL_SAI_ENABLE_IT(hsai, SAI_InterruptFlag(hsai, SAI_MODE_DMA));
 
     /* Enable SAI Rx DMA Request */

@@ -3143,6 +3143,7 @@ int32_t BSP_AUDIO_IN_RecordPDM(uint32_t Instance, uint8_t* pBuf, uint32_t NbrOfB
   else
   {
     /* Start the process receive DMA */
+	  // setup SAI4 in receive DMA mode - set a callback when buffer full?
     if(HAL_SAI_Receive_DMA(&haudio_in_sai[PDM], (uint8_t*)pBuf, (uint16_t)(NbrOfBytes/(Audio_In_Ctx[PDM].BitsPerSample/8U))) != HAL_OK)
     {
       ret = BSP_ERROR_PERIPH_FAILURE;
