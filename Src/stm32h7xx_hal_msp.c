@@ -248,16 +248,16 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     {
       Error_Handler();
     }
-
-    pSyncConfig.SyncSignalID = HAL_DMAMUX1_SYNC_EXTI0;
-    pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;
-    pSyncConfig.SyncEnable = DISABLE;
-    pSyncConfig.EventEnable = ENABLE;
-    pSyncConfig.RequestNumber = 1;
-    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai1_b, &pSyncConfig) != HAL_OK)
-    {
-      Error_Handler();
-    }
+//	TODO: check if removing hal mux extension code fixes
+//    pSyncConfig.SyncSignalID = HAL_DMAMUX1_SYNC_EXTI0;
+//    pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;
+//    pSyncConfig.SyncEnable = DISABLE;
+//    pSyncConfig.EventEnable = ENABLE;
+//    pSyncConfig.RequestNumber = 1;
+//    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai1_b, &pSyncConfig) != HAL_OK)
+//    {
+//      Error_Handler();
+//    }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
@@ -292,7 +292,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     PE5     ------> SAI4_CK2
     PD6     ------> SAI4_D1
     */
-    //TODO: Also defined in discovery_audio under "audio msp initialization"
+    //TODO: defined in discovery_audio under "audio msp initialization"
 //    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
 //    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 //    GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -309,20 +309,22 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
       /* Peripheral DMA init*/
 
-//    hdma_sai4_a.Instance = BDMA_Channel1;
-//    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
-//    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
-//    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
-//    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
-//    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-//    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-//    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
-//    hdma_sai4_a.Init.Priority = DMA_PRIORITY_HIGH;
-//    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
-//    {
-//      Error_Handler();
-//    }
+    hdma_sai4_a.Instance = BDMA_Channel1;
 
+    //TODO THE BDMA REQUEST LIVES HERE!
+    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
+    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
+    hdma_sai4_a.Init.Priority = DMA_PRIORITY_HIGH;
+    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
+    {
+      Error_Handler();
+    }
+//	TODO: This is the proper psync configuration
     pSyncConfig.SyncSignalID = HAL_DMAMUX2_SYNC_EXTI0;
     pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;
     pSyncConfig.SyncEnable = DISABLE;
