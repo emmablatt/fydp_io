@@ -380,9 +380,10 @@ static void MX_BDMA_Init(void)
   /* DMAMUX2_OVR_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMAMUX2_OVR_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMAMUX2_OVR_IRQn);
-  /* BDMA_Channel0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(BDMA_Channel0_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(BDMA_Channel0_IRQn);
+  // CHANGING TO CHANNEL1
+  /* BDMA_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BDMA_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(BDMA_Channel1_IRQn);
 
 }
 

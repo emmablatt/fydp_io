@@ -308,7 +308,7 @@ typedef struct
 #define AUDIO_IN_SAI_PDMx_IRQHandler                 SAI4_IRQHandler
 #define AUDIO_IN_SAI_PDMx_IRQ                        SAI4_IRQn
 
-/* SAI PDM DMA Stream definitions */
+/* SAI PDM DMA Stream definitions */ // TODO: ITS ON CHANNEL ONE BRUH
 #define AUDIO_IN_SAI_PDMx_DMAx_CLK_ENABLE()          __HAL_RCC_BDMA_CLK_ENABLE()
 #define AUDIO_IN_SAI_PDMx_DMAx_STREAM                BDMA_Channel1
 #define AUDIO_IN_SAI_PDMx_DMAx_REQUEST               BDMA_REQUEST_SAI4_A
