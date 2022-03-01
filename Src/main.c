@@ -117,26 +117,21 @@ int main(void)
   BSP_LED_Init(LED_RED);
   BSP_LED_Off(LED_GREEN);
   BSP_LED_Off(LED_RED);
-  int8_t mic_buffer[PDM_BUFFER_SIZE];
-  //int8_t speaker_buffer[PCM_BUFFER_SIZE];
 
-
-
-  // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
-// TODO: fix this to a different instance and then call BSP audio in init()
-  AUDIO_IN_Ctx_t haudio_in;
+  BSP_AUDIO_Init_t haudio_in;
   haudio_in.Device = AUDIO_IN_DEVICE_DIGITAL_MIC1;
   haudio_in.ChannelsNbr = 1;
-  haudio_in.SampleRate = SAI_AUDIO_FREQUENCY_48K;
+  haudio_in.SampleRate = AUDIO_FREQUENCY_16K;
   haudio_in.BitsPerSample = AUDIO_RESOLUTION_8B;
-  haudio_in.Volume = 80;
+  haudio_in.Volume = 50;
+  int32_t in_init_status = BSP_AUDIO_IN_Init(PDM, &haudio_in);
+  int32_t convert_status = BSP_AUDIO_IN_PDMToPCM_Init(PDM, SAI_AUDIO_FREQUENCY_16K, 1, 1);
 
-  // initialize audio instance: (NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U)
-  // needs to be HAL_OK = 0
-  // 64 bytes / mic_buffer[PDM].16bits/sample / 8
-  //int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(AUDIO_IN_INSTANCE, SAI_AUDIO_FREQUENCY_16K, 1, 1);
-  int32_t status_record = BSP_AUDIO_IN_RecordPDM(PDM, mic_buffer, 64);
-  //int32_t status BSP_AUDIO_IN_PDMToPCM(AUDIO_IN_INSTANCE, mic_buffer, speaker_buffer);
+  uint8_t mic_buffer[PDM_BUFFER_SIZE] = {0};
+  // uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
+  // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
+  uint8_t record_status = BSP_AUDIO_IN_RecordPDM(PDM, mic_buffer, PDM_BUFFER_SIZE);
+  //int32_t status_convert = BSP_AUDIO_IN_PDMToPCM(PDM, mic_buffer, speaker_buffer);
   /* USER CODE END 2 */
 
   /* Infinite loop */
