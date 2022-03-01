@@ -250,7 +250,7 @@ static void MX_CRC_Init(void)
 //  /* USER CODE END DFSDM1_Init 0 */
 //
 //  /* USER CODE BEGIN DFSDM1_Init 1 */
-////////
+////////d
 //  /* USER CODE END DFSDM1_Init 1 */
 //  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
 //  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
@@ -339,9 +339,11 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
+
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
   hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+
   hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
