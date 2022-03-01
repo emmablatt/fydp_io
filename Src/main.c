@@ -32,8 +32,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define PDM_BUFFER_SIZE 512
-#define PCM_BUFFER_SIZE 1024
+#define PDM_BUFFER_SIZE 128
+#define PCM_BUFFER_SIZE 256
 
 /* USER CODE END PD */
 
@@ -113,6 +113,10 @@ int main(void)
   //MX_DFSDM1_Init();
 
   /* USER CODE BEGIN 2 */
+  BSP_LED_Init(LED_GREEN);
+  BSP_LED_Init(LED_RED);
+  BSP_LED_Off(LED_GREEN);
+  BSP_LED_Off(LED_RED);
   int8_t mic_buffer[PDM_BUFFER_SIZE];
   //int8_t speaker_buffer[PCM_BUFFER_SIZE];
 
@@ -120,17 +124,18 @@ int main(void)
 
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
 // TODO: fix this to a different instance and then call BSP audio in init()
-  Audio_In_Ctx[AUDIO_IN_INSTANCE].Device = AUDIO_IN_DEVICE_DIGITAL_MIC1;
-  Audio_In_Ctx[AUDIO_IN_INSTANCE].ChannelsNbr = 1;
-  Audio_In_Ctx[AUDIO_IN_INSTANCE].SampleRate = SAI_AUDIO_FREQUENCY_48K;
-  Audio_In_Ctx[AUDIO_IN_INSTANCE].BitsPerSample = AUDIO_RESOLUTION_8B;
-  Audio_In_Ctx[AUDIO_IN_INSTANCE].Volume = 80;
+  AUDIO_IN_Ctx_t haudio_in;
+  haudio_in.Device = AUDIO_IN_DEVICE_DIGITAL_MIC1;
+  haudio_in.ChannelsNbr = 1;
+  haudio_in.SampleRate = SAI_AUDIO_FREQUENCY_48K;
+  haudio_in.BitsPerSample = AUDIO_RESOLUTION_8B;
+  haudio_in.Volume = 80;
 
   // initialize audio instance: (NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U)
   // needs to be HAL_OK = 0
-  // 64 bytes / mic_buffer[AUDIO_IN_INSTANCE].16bits/sample / 8
+  // 64 bytes / mic_buffer[PDM].16bits/sample / 8
   //int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(AUDIO_IN_INSTANCE, SAI_AUDIO_FREQUENCY_16K, 1, 1);
-  int32_t status_record = BSP_AUDIO_IN_RecordPDM(AUDIO_IN_INSTANCE, mic_buffer, 64);
+  int32_t status_record = BSP_AUDIO_IN_RecordPDM(PDM, mic_buffer, 64);
   //int32_t status BSP_AUDIO_IN_PDMToPCM(AUDIO_IN_INSTANCE, mic_buffer, speaker_buffer);
   /* USER CODE END 2 */
 
@@ -328,33 +333,33 @@ static void MX_SAI4_Init(void)
   /* USER CODE END SAI4_Init 1 */
 
   /* USER CODE BEGIN SAI4_Init 2 */
-  haudio_in_sai[AUDIO_IN_INSTANCE].Instance = AUDIO_IN_SAI_PDMx;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.Protocol = SAI_FREE_PROTOCOL;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.AudioMode = SAI_MODEMASTER_RX;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.DataSize = SAI_DATASIZE_16;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.FirstBit = SAI_FIRSTBIT_MSB;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.Synchro = SAI_ASYNCHRONOUS;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.MonoStereoMode = SAI_STEREOMODE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.CompandingMode = SAI_NOCOMPANDING;
+  haudio_in_sai[PDM].Instance = AUDIO_IN_SAI_PDMx;
+  haudio_in_sai[PDM].Init.Protocol = SAI_FREE_PROTOCOL;
+  haudio_in_sai[PDM].Init.AudioMode = SAI_MODEMASTER_RX;
+  haudio_in_sai[PDM].Init.DataSize = SAI_DATASIZE_16;
+  haudio_in_sai[PDM].Init.FirstBit = SAI_FIRSTBIT_MSB;
+  haudio_in_sai[PDM].Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
+  haudio_in_sai[PDM].Init.Synchro = SAI_ASYNCHRONOUS;
+  haudio_in_sai[PDM].Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  haudio_in_sai[PDM].Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  haudio_in_sai[PDM].Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  haudio_in_sai[PDM].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+  haudio_in_sai[PDM].Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_in_sai[PDM].Init.CompandingMode = SAI_NOCOMPANDING;
 
-  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FrameLength = 16;
-  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.ActiveFrameLength = 1;
-  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
-  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
-  haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FSOffset = SAI_FS_FIRSTBIT;
-  haudio_in_sai[AUDIO_IN_INSTANCE].SlotInit.FirstBitOffset = 0;
-  haudio_in_sai[AUDIO_IN_INSTANCE].SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].SlotInit.SlotNumber = 0;
-  haudio_in_sai[AUDIO_IN_INSTANCE].SlotInit.SlotActive = 0x0000FFFF;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.Activation = ENABLE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.MicPairsNbr = 1;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  if (HAL_SAI_Init(&haudio_in_sai[AUDIO_IN_INSTANCE]) != HAL_OK)
+  haudio_in_sai[PDM].FrameInit.FrameLength = 16;
+  haudio_in_sai[PDM].FrameInit.ActiveFrameLength = 1;
+  haudio_in_sai[PDM].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
+  haudio_in_sai[PDM].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
+  haudio_in_sai[PDM].FrameInit.FSOffset = SAI_FS_FIRSTBIT;
+  haudio_in_sai[PDM].SlotInit.FirstBitOffset = 0;
+  haudio_in_sai[PDM].SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  haudio_in_sai[PDM].SlotInit.SlotNumber = 0;
+  haudio_in_sai[PDM].SlotInit.SlotActive = 0x0000FFFF;
+  haudio_in_sai[PDM].Init.PdmInit.Activation = ENABLE;
+  haudio_in_sai[PDM].Init.PdmInit.MicPairsNbr = 1;
+  haudio_in_sai[PDM].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+  if (HAL_SAI_Init(&haudio_in_sai[PDM]) != HAL_OK)
   {
     Error_Handler();
   }
