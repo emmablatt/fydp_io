@@ -257,7 +257,6 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
     __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
     }
 /* SAI4 */
@@ -327,8 +326,6 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
     __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
-
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
 
     }
 }
