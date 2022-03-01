@@ -102,27 +102,26 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_SAI4_Init();
-  MX_BDMA_Init();
   MX_CRC_Init();
-  MX_DMA_Init();
-  if (HAL_SAI_Init(&haudio_in_sai[AUDIO_IN_INSTANCE]) != HAL_OK)
-  {
-    Error_Handler();
-  }
+
+  MX_SAI4_Init();
+  //MX_SAI1_Init();
+  MX_BDMA_Init();
+  //MX_DMA_Init();
+
   //MX_PDM2PCM_Init();
   //MX_DFSDM1_Init();
-  MX_SAI1_Init();
+
   /* USER CODE BEGIN 2 */
   int8_t mic_buffer[PDM_BUFFER_SIZE];
-  int8_t speaker_buffer[PCM_BUFFER_SIZE];
+  //int8_t speaker_buffer[PCM_BUFFER_SIZE];
 
 
 
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
-
-  Audio_In_Ctx[AUDIO_IN_INSTANCE].Device = AUDIO_IN_DEVICE_DIGITAL_MIC;
-  Audio_In_Ctx[AUDIO_IN_INSTANCE].ChannelsNbr = 0;
+// TODO: fix this to a different instance and then call BSP audio in init()
+  Audio_In_Ctx[AUDIO_IN_INSTANCE].Device = AUDIO_IN_DEVICE_DIGITAL_MIC1;
+  Audio_In_Ctx[AUDIO_IN_INSTANCE].ChannelsNbr = 1;
   Audio_In_Ctx[AUDIO_IN_INSTANCE].SampleRate = SAI_AUDIO_FREQUENCY_48K;
   Audio_In_Ctx[AUDIO_IN_INSTANCE].BitsPerSample = AUDIO_RESOLUTION_8B;
   Audio_In_Ctx[AUDIO_IN_INSTANCE].Volume = 80;
@@ -130,9 +129,9 @@ int main(void)
   // initialize audio instance: (NbrOfBytes/(Audio_In_Ctx[Instance].BitsPerSample/8U)
   // needs to be HAL_OK = 0
   // 64 bytes / mic_buffer[AUDIO_IN_INSTANCE].16bits/sample / 8
-  int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(AUDIO_IN_INSTANCE, SAI_AUDIO_FREQUENCY_16K, 1, 1);
+  //int32_t status_init = BSP_AUDIO_IN_PDMToPCM_Init(AUDIO_IN_INSTANCE, SAI_AUDIO_FREQUENCY_16K, 1, 1);
   int32_t status_record = BSP_AUDIO_IN_RecordPDM(AUDIO_IN_INSTANCE, mic_buffer, 64);
-  int32_t status BSP_AUDIO_IN_PDMToPCM(AUDIO_IN_INSTANCE, mic_buffer, speaker_buffer);
+  //int32_t status BSP_AUDIO_IN_PDMToPCM(AUDIO_IN_INSTANCE, mic_buffer, speaker_buffer);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -342,9 +341,7 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.MonoStereoMode = SAI_STEREOMODE;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.CompandingMode = SAI_NOCOMPANDING;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.Activation = ENABLE;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.MicPairsNbr = 0;
-  haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+
   haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FrameLength = 16;
   haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.ActiveFrameLength = 1;
   haudio_in_sai[AUDIO_IN_INSTANCE].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
@@ -357,13 +354,11 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.Activation = ENABLE;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.MicPairsNbr = 1;
   haudio_in_sai[AUDIO_IN_INSTANCE].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  // microphone sampling rate 48khz
-  // up to 2 microphones
-  // 3.072 sysclk freq
-  // 6.144 mhz bit clk frequency
-  // 384khz frame sync frequency
-  // 0 slots, 16 bits per frame
-  /* USER CODE END SAI4_Init 2 */
+  if (HAL_SAI_Init(&haudio_in_sai[AUDIO_IN_INSTANCE]) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
 
 }
 

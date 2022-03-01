@@ -1627,8 +1627,8 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     AUDIO_IN_SAIx_DMAx_CLK_ENABLE();
 
     /* Configure the hdma_sai_rx handle parameters */
-    hdma_sai_rx.Instance                 = AUDIO_IN_SAIx_DMAx_STREAM;
-    hdma_sai_rx.Init.Request             = AUDIO_IN_SAIx_DMAx_REQUEST;
+    hdma_sai_rx.Instance                 = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
+    hdma_sai_rx.Init.Request             = AUDIO_IN_SAI_PDMx_DMAx_REQUEST;
     hdma_sai_rx.Init.Mode                = DMA_CIRCULAR;
     hdma_sai_rx.Init.Priority            = DMA_PRIORITY_HIGH;
     hdma_sai_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
