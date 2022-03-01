@@ -205,6 +205,10 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
       if (SAI1_client == 0)
       {
        __HAL_RCC_SAI1_CLK_ENABLE();
+
+      /* Peripheral interrupt init*/
+      HAL_NVIC_SetPriority(SAI1_IRQn, 0, 0);
+      HAL_NVIC_EnableIRQ(SAI1_IRQn);
       }
     SAI1_client ++;
 
@@ -257,6 +261,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
     __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
     }
 /* SAI4 */
@@ -275,6 +280,10 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     if (SAI4_client == 0)
     {
        __HAL_RCC_SAI4_CLK_ENABLE();
+
+    /* Peripheral interrupt init*/
+    HAL_NVIC_SetPriority(SAI4_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(SAI4_IRQn);
     }
     SAI4_client ++;
 
@@ -327,6 +336,8 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
      Be aware that there is only one channel to perform all the requested DMAs. */
     __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
 
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai4_a);
+
     }
 }
 
@@ -340,6 +351,8 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
       {
       /* Peripheral clock disable */
       __HAL_RCC_SAI1_CLK_DISABLE();
+    /* SAI1 interrupt DeInit */
+      HAL_NVIC_DisableIRQ(SAI1_IRQn);
       }
 
     /**SAI1_B_Block_B GPIO Configuration
@@ -364,6 +377,8 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
       {
       /* Peripheral clock disable */
        __HAL_RCC_SAI4_CLK_DISABLE();
+      /* SAI4 interrupt DeInit */
+      HAL_NVIC_DisableIRQ(SAI4_IRQn);
       }
 
     /**SAI4_A_Block_A GPIO Configuration

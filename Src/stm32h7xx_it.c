@@ -57,6 +57,8 @@
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_sai1_b;
 extern DMA_HandleTypeDef hdma_sai4_a;
+extern SAI_HandleTypeDef hsai_BlockB1;
+extern SAI_HandleTypeDef hsai_BlockA4;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -214,6 +216,20 @@ void DMA1_Stream1_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles SAI1 global interrupt.
+  */
+void SAI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN SAI1_IRQn 0 */
+
+  /* USER CODE END SAI1_IRQn 0 */
+  HAL_SAI_IRQHandler(&hsai_BlockB1);
+  /* USER CODE BEGIN SAI1_IRQn 1 */
+
+  /* USER CODE END SAI1_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMAMUX1 overrun interrupt.
   */
 void DMAMUX1_OVR_IRQHandler(void)
@@ -251,12 +267,24 @@ void BDMA_Channel0_IRQHandler(void)
   /* USER CODE BEGIN BDMA_Channel0_IRQn 0 */
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-  //HAL_DMA_IRQHandler(&hdma_sai4_a);
-  BSP_AUDIO_IN_IRQHandler(1U, AUDIO_IN_DEVICE_DIGITAL_MIC1);
-  BSP_LED_On(LED1);
+  HAL_DMA_IRQHandler(&hdma_sai4_a);
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 
   /* USER CODE END BDMA_Channel0_IRQn 1 */
+}
+
+/**
+  * @brief This function handles SAI4 global interrupt.
+  */
+void SAI4_IRQHandler(void)
+{
+  /* USER CODE BEGIN SAI4_IRQn 0 */
+
+  /* USER CODE END SAI4_IRQn 0 */
+
+  /* USER CODE BEGIN SAI4_IRQn 1 */
+
+  /* USER CODE END SAI4_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
