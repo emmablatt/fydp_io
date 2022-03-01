@@ -34,11 +34,20 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o: \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h \
- ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h \
- ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
+ ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../Inc/main.h \
+ ../Inc/../Drivers/BSP/Components/Common/audio.h \
  ../Inc/../Drivers/BSP/Components/wm8994/wm8994.h \
  ../Inc/../Drivers/BSP/Components/wm8994/wm8994_reg.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
+ ../Inc/../Drivers/BSP/Components/wm8994/wm8994_reg.h \
+ ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h \
+ ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.h \
+ ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
+ ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h \
+ ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
+ ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_conf_template.h \
+ ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
+ ../Inc/../Drivers/BSP/Components/wm8994/wm8994.h \
  ../Inc/../Drivers/BSP/Components/Common/audio.h \
  ../Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h \
  ../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.h
@@ -113,13 +122,33 @@ Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o: \
 
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h:
 
-../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
+../Inc/main.h:
+
+../Inc/../Drivers/BSP/Components/Common/audio.h:
 
 ../Inc/../Drivers/BSP/Components/wm8994/wm8994.h:
 
 ../Inc/../Drivers/BSP/Components/wm8994/wm8994_reg.h:
 
 ../Drivers/CMSIS/Include/cmsis_compiler.h:
+
+../Inc/../Drivers/BSP/Components/wm8994/wm8994_reg.h:
+
+../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h:
+
+../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.h:
+
+../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
+
+../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h:
+
+../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
+
+../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_conf_template.h:
+
+../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
+
+../Inc/../Drivers/BSP/Components/wm8994/wm8994.h:
 
 ../Inc/../Drivers/BSP/Components/Common/audio.h:
 

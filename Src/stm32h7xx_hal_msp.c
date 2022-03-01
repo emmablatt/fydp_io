@@ -292,35 +292,36 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     PE5     ------> SAI4_CK2
     PD6     ------> SAI4_D1
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF10_SAI4;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF1_SAI4;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+    //TODO: Also defined in discovery_audio under "audio msp initialization"
+//    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+//    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//    GPIO_InitStruct.Alternate = GPIO_AF10_SAI4;
+//    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+////
+//    GPIO_InitStruct.Pin = GPIO_PIN_6;
+//    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//    GPIO_InitStruct.Alternate = GPIO_AF1_SAI4;
+//    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
       /* Peripheral DMA init*/
 
-    hdma_sai4_a.Instance = BDMA_Channel0;
-    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
-    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
-    hdma_sai4_a.Init.Priority = DMA_PRIORITY_HIGH;
-    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
-    {
-      Error_Handler();
-    }
+//    hdma_sai4_a.Instance = BDMA_Channel1;
+//    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
+//    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
+//    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
+//    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
+//    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+//    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+//    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
+//    hdma_sai4_a.Init.Priority = DMA_PRIORITY_HIGH;
+//    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
+//    {
+//      Error_Handler();
+//    }
 
     pSyncConfig.SyncSignalID = HAL_DMAMUX2_SYNC_EXTI0;
     pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;

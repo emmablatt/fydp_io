@@ -2445,7 +2445,7 @@ __weak HAL_StatusTypeDef MX_SAI4_Block_A_Init(SAI_HandleTypeDef* hsai, MX_SAI_Co
   hsai->Init.Mckdiv                 = 0;
   hsai->Init.PdmInit.Activation     = ENABLE;
   hsai->Init.PdmInit.MicPairsNbr    = 1;
-  hsai->Init.PdmInit.ClockEnable    = SAI_PDM_CLOCK1_ENABLE;
+  hsai->Init.PdmInit.ClockEnable    = SAI_PDM_CLOCK2_ENABLE;
 
 
   /* Configure SAI_Block_x Frame */
