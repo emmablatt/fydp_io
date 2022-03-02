@@ -251,7 +251,8 @@ void BDMA_Channel1_IRQHandler(void)
   /* USER CODE BEGIN BDMA_Channel0_IRQn 0 */
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-  //HAL_DMA_IRQHandler(&hdma_sai4_a);
+	//	HAL_DMA_IRQHandler(&hdma_sai_rx);
+
 	HAL_DMA_IRQHandler(&hdma_sai4_a);
 	BSP_LED_On(LED2);
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */

@@ -104,9 +104,9 @@ int main(void)
   MX_GPIO_Init();
   MX_CRC_Init();
 
-  MX_SAI4_Init();
+//  MX_SAI4_Init();
   //MX_SAI1_Init();
-  MX_BDMA_Init();
+//  MX_BDMA_Init();
   //MX_DMA_Init();
 
   //MX_PDM2PCM_Init();
