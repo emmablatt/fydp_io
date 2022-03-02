@@ -7182,7 +7182,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                 0x00000000240008e4        0xc ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.hdma_sai_tx.12250
                 0x00000000240008f0       0x78 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
- .bss.hdma_sai_rx.12251
+ .bss.hdma_sai4_a.12251
                 0x0000000024000968       0x78 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .bss.v_dfsdm1ChannelCounter
                 0x00000000240009e0        0x4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm.o
@@ -7489,7 +7489,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_line    0x0000000000013b45      0xa4a ./Src/system_stm32h7xx.o
  .debug_line    0x000000000001458f       0x83 ./Startup/startup_stm32h735igkx.o
 
-.debug_str      0x0000000000000000   0x150a53
+.debug_str      0x0000000000000000   0x150a47
  .debug_str     0x0000000000000000   0x13efed ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
                                      0x13f634 (size before relaxing)
  .debug_str     0x000000000013efed     0xde04 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
@@ -7514,15 +7514,15 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                                      0x13ecb2 (size before relaxing)
  .debug_str     0x00000000001501ec      0x3ef ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
                                      0x13ea53 (size before relaxing)
- .debug_str     0x00000000001505db      0x2a5 ./Src/main.o
+ .debug_str     0x00000000001505db      0x299 ./Src/main.o
                                      0x14c341 (size before relaxing)
- .debug_str     0x0000000000150880       0x69 ./Src/stm32h7xx_hal_msp.o
+ .debug_str     0x0000000000150874       0x69 ./Src/stm32h7xx_hal_msp.o
                                      0x14bc58 (size before relaxing)
- .debug_str     0x00000000001508e9       0xfe ./Src/stm32h7xx_it.o
+ .debug_str     0x00000000001508dd       0xfe ./Src/stm32h7xx_it.o
                                      0x14b521 (size before relaxing)
- .debug_str     0x00000000001509e7       0x3b ./Src/system_stm32h7xx.o
+ .debug_str     0x00000000001509db       0x3b ./Src/system_stm32h7xx.o
                                      0x13e435 (size before relaxing)
- .debug_str     0x0000000000150a22       0x31 ./Startup/startup_stm32h735igkx.o
+ .debug_str     0x0000000000150a16       0x31 ./Startup/startup_stm32h735igkx.o
                                          0x57 (size before relaxing)
 
 .comment        0x0000000000000000       0xd1

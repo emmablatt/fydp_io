@@ -1528,7 +1528,7 @@ static int32_t WM8994_Probe(void)
 static void SAI_MspInit(SAI_HandleTypeDef *hsai)
 {
   GPIO_InitTypeDef  gpio_init_structure;
-  static DMA_HandleTypeDef hdma_sai_tx, hdma_sai_rx;
+  static DMA_HandleTypeDef hdma_sai_tx, hdma_sai4_a;
     /* Enable SAI clock */
   AUDIO_OUT_SAIx_CLK_ENABLE();
 
@@ -1626,38 +1626,38 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     /* Enable the DMA clock */
     AUDIO_IN_SAIx_DMAx_CLK_ENABLE();
 
-    /* Configure the hdma_sai_rx handle parameters */
-    hdma_sai_rx.Instance                 = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
-    hdma_sai_rx.Init.Request             = AUDIO_IN_SAI_PDMx_DMAx_REQUEST;
-    hdma_sai_rx.Init.Mode                = DMA_CIRCULAR;
-    hdma_sai_rx.Init.Priority            = DMA_PRIORITY_HIGH;
-    hdma_sai_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-    hdma_sai_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
-    hdma_sai_rx.Init.MemInc              = DMA_MINC_ENABLE;
-    hdma_sai_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-    hdma_sai_rx.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-    hdma_sai_rx.Init.MemBurst            = DMA_MBURST_SINGLE;
-    hdma_sai_rx.Init.PeriphBurst         = DMA_MBURST_SINGLE;
+    /* Configure the hdma_sai4_a handle parameters */
+    hdma_sai4_a.Instance                 = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
+    hdma_sai4_a.Init.Request             = AUDIO_IN_SAI_PDMx_DMAx_REQUEST;
+    hdma_sai4_a.Init.Mode                = DMA_CIRCULAR;
+    hdma_sai4_a.Init.Priority            = DMA_PRIORITY_HIGH;
+    hdma_sai4_a.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+    hdma_sai4_a.Init.PeriphInc           = DMA_PINC_DISABLE;
+    hdma_sai4_a.Init.MemInc              = DMA_MINC_ENABLE;
+    hdma_sai4_a.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    hdma_sai4_a.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    hdma_sai4_a.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_sai4_a.Init.PeriphBurst         = DMA_MBURST_SINGLE;
 
     if(Audio_In_Ctx[0].BitsPerSample == AUDIO_RESOLUTION_16B)
     {
-      hdma_sai_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-      hdma_sai_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_HALFWORD;
+      hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+      hdma_sai4_a.Init.MemDataAlignment    = DMA_MDATAALIGN_HALFWORD;
     }
     else
     {
-      hdma_sai_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-      hdma_sai_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+      hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+      hdma_sai4_a.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
     }
 
     /* Associate the DMA handle */
-    __HAL_LINKDMA(hsai, hdmarx, hdma_sai_rx);
+    __HAL_LINKDMA(hsai, hdmarx, hdma_sai4_a);
 
     /* Deinitialize the Stream for new transfer */
-    (void)HAL_DMA_DeInit(&hdma_sai_rx);
+    (void)HAL_DMA_DeInit(&hdma_sai4_a);
 
     /* Configure the DMA Stream */
-    (void)HAL_DMA_Init(&hdma_sai_rx);
+    (void)HAL_DMA_Init(&hdma_sai4_a);
 
     /* SAI DMA IRQ Channel configuration */
     HAL_NVIC_SetPriority(AUDIO_IN_SAIx_DMAx_IRQ, BSP_AUDIO_IN_IT_PRIORITY, 0);
@@ -1697,30 +1697,30 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     /* Enable the DMA clock */
     AUDIO_IN_SAI_PDMx_DMAx_CLK_ENABLE();
 
-    /* Configure the hdma_sai_rx handle parameters */
-    hdma_sai_rx.Init.Request             = AUDIO_IN_SAI_PDMx_DMAx_REQUEST;
-    hdma_sai_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-    hdma_sai_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
-    hdma_sai_rx.Init.MemInc              = DMA_MINC_ENABLE;
-    hdma_sai_rx.Init.PeriphDataAlignment = AUDIO_IN_SAI_PDMx_DMAx_PERIPH_DATA_SIZE;
-    hdma_sai_rx.Init.MemDataAlignment    = AUDIO_IN_SAI_PDMx_DMAx_MEM_DATA_SIZE;
-    hdma_sai_rx.Init.Mode                = DMA_CIRCULAR;
-    hdma_sai_rx.Init.Priority            = DMA_PRIORITY_HIGH;
-    hdma_sai_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-    hdma_sai_rx.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-    hdma_sai_rx.Init.MemBurst            = DMA_MBURST_SINGLE;
-    hdma_sai_rx.Init.PeriphBurst         = DMA_MBURST_SINGLE;
+    /* Configure the hdma_sai4_a handle parameters */
+    hdma_sai4_a.Init.Request             = AUDIO_IN_SAI_PDMx_DMAx_REQUEST;
+    hdma_sai4_a.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+    hdma_sai4_a.Init.PeriphInc           = DMA_PINC_DISABLE;
+    hdma_sai4_a.Init.MemInc              = DMA_MINC_ENABLE;
+    hdma_sai4_a.Init.PeriphDataAlignment = AUDIO_IN_SAI_PDMx_DMAx_PERIPH_DATA_SIZE;
+    hdma_sai4_a.Init.MemDataAlignment    = AUDIO_IN_SAI_PDMx_DMAx_MEM_DATA_SIZE;
+    hdma_sai4_a.Init.Mode                = DMA_CIRCULAR;
+    hdma_sai4_a.Init.Priority            = DMA_PRIORITY_HIGH;
+    hdma_sai4_a.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    hdma_sai4_a.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    hdma_sai4_a.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_sai4_a.Init.PeriphBurst         = DMA_MBURST_SINGLE;
 
-    hdma_sai_rx.Instance = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
+    hdma_sai4_a.Instance = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
 
     /* Associate the DMA handle */
-    __HAL_LINKDMA(hsai, hdmarx, hdma_sai_rx);
+    __HAL_LINKDMA(hsai, hdmarx, hdma_sai4_a);
 
     /* Deinitialize the Stream for new transfer */
-    HAL_DMA_DeInit(&hdma_sai_rx);
+    HAL_DMA_DeInit(&hdma_sai4_a);
 
     /* Configure the DMA Stream */
-    HAL_DMA_Init(&hdma_sai_rx);
+    HAL_DMA_Init(&hdma_sai4_a);
 
     /* SAI DMA IRQ Channel configuration */
     HAL_NVIC_SetPriority(AUDIO_IN_SAI_PDMx_DMAx_IRQ, BSP_AUDIO_IN_IT_PRIORITY, 0);
