@@ -348,7 +348,7 @@ static void MX_SAI4_Init(void)
   haudio_in_sai[PDM].Init.PdmInit.MicPairsNbr = 1;
   haudio_in_sai[PDM].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
 
-  haudio_in_sai[PDM].FrameInit.FrameLength = 16;
+  haudio_in_sai[PDM].FrameInit.FrameLength = 15;
   haudio_in_sai[PDM].FrameInit.ActiveFrameLength = 1;
   haudio_in_sai[PDM].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   haudio_in_sai[PDM].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
