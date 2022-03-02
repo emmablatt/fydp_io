@@ -290,6 +290,10 @@ void SAI4_IRQHandler(void)
   /* USER CODE END SAI4_IRQn 0 */
 
   /* USER CODE BEGIN SAI4_IRQn 1 */
+	BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
+	BSP_LED_On(LED1);
+
+	//hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
 
   /* USER CODE END SAI4_IRQn 1 */
 }
