@@ -269,11 +269,11 @@ void AUDIO_IN_SAI_PDMx_DMAx_IRQHandler(void)
 	BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
 	BSP_LED_On(LED1);
 
-	hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
-
-	//TODO: BDMA_REQUEST_SAI4_A;
+	//TODO: irq handler with sai4 for channel 1!
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-  //HAL_DMA_IRQHandler(&hdma_sai4_a);
+	// is there a way to do this with channel 1 instead?
+	// need to regenerate?
+	HAL_DMA_IRQHandler(&hdma_sai4_a);
 
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 

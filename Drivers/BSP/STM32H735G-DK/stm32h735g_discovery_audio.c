@@ -1711,6 +1711,8 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     hdma_sai_rx.Init.MemBurst            = DMA_MBURST_SINGLE;
     hdma_sai_rx.Init.PeriphBurst         = DMA_MBURST_SINGLE;
 
+    // TODO CHANGE the other one this is the right one!!
+    // this is Dma type
     hdma_sai_rx.Instance = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
 
     /* Associate the DMA handle */
@@ -3564,9 +3566,8 @@ void BSP_AUDIO_IN_IRQHandler(uint32_t Instance, uint32_t InputDevice)
      ((Instance == 0U) && (InputDevice == AUDIO_IN_DEVICE_ANALOG_MIC)) ||\
      ((Instance == 1U) && (InputDevice == AUDIO_IN_DEVICE_DIGITAL_MIC1)))
   {
-//	  TODO: This is the wrong handler - this is the SAI handler not the dma.
-//    HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx);
-	  HAL_DMA_IRQHandler(&haudio_in_sai[PDM].hdmarx);
+	  //HAL_LINKDMA(hsai, hdmarx, haudio_in_sai[PDM]); // add a tx one if this works
+    //HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx);
   }
 
   else
