@@ -262,7 +262,6 @@ void DMAMUX2_OVR_IRQHandler(void)
 /**
   * @brief This function handles BDMA channel0 global interrupt.
   */
-//void AUDIO_IN_SAI_PDMx_DMAx_IRQHandler(void)
 void BDMA_Channel1_IRQHandler(void)
 {
 
@@ -271,7 +270,7 @@ void BDMA_Channel1_IRQHandler(void)
 	BSP_LED_On(LED2);
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_sai4_a);
+	HAL_DMA_IRQHandler(&hdma_sai4_a);
 
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 
@@ -286,7 +285,7 @@ void SAI4_IRQHandler(void)
   /* USER CODE BEGIN SAI4_IRQn 0 */ // TODO: check if this is right
 	HAL_SAI_IRQHandler(&hsai_BlockA4);
   /* USER CODE END SAI4_IRQn 0 */
-
+	//AUDIO_IN_SAI_PDMx_IRQHandler(&hsai_BlockA4);
   /* USER CODE BEGIN SAI4_IRQn 1 */
 	//BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
 	BSP_LED_On(LED1);

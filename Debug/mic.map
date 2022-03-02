@@ -7873,7 +7873,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_macro   0x0000000000032aa8      0x34f ./Src/stm32h7xx_it.o
  .debug_macro   0x0000000000032df7      0x345 ./Src/system_stm32h7xx.o
 
-.debug_line     0x0000000000000000    0x17d45
+.debug_line     0x0000000000000000    0x17d43
  .debug_line    0x0000000000000000      0xc54 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
  .debug_line    0x0000000000000c54     0x2e5a ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_line    0x0000000000003aae     0x1088 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
@@ -7891,9 +7891,9 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_line    0x00000000000142be      0xc26 ./Src/main.o
  .debug_line    0x0000000000014ee4      0xa70 ./Src/pdm2pcm.o
  .debug_line    0x0000000000015954      0xbf1 ./Src/stm32h7xx_hal_msp.o
- .debug_line    0x0000000000016545      0xb91 ./Src/stm32h7xx_it.o
- .debug_line    0x00000000000170d6      0xbec ./Src/system_stm32h7xx.o
- .debug_line    0x0000000000017cc2       0x83 ./Startup/startup_stm32h735igkx.o
+ .debug_line    0x0000000000016545      0xb8f ./Src/stm32h7xx_it.o
+ .debug_line    0x00000000000170d4      0xbec ./Src/system_stm32h7xx.o
+ .debug_line    0x0000000000017cc0       0x83 ./Startup/startup_stm32h735igkx.o
 
 .debug_str      0x0000000000000000   0x150be4
  .debug_str     0x0000000000000000   0x14b7de ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o

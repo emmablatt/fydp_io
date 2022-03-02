@@ -31,13 +31,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  13 .debug_macro  0003313c  00000000  00000000  0005c250  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_line   00017d45  00000000  00000000  0008f38c  2**0
+ 14 .debug_line   00017d43  00000000  00000000  0008f38c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    00150be4  00000000  00000000  000a70d1  2**0
+ 15 .debug_str    00150be4  00000000  00000000  000a70cf  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      000000d1  00000000  00000000  001f7cb5  2**0
+ 16 .comment      000000d1  00000000  00000000  001f7cb3  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  00004298  00000000  00000000  001f7d88  2**2
+ 17 .debug_frame  00004298  00000000  00000000  001f7d84  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -25215,10 +25215,10 @@ void DMAMUX2_OVR_IRQHandler(void)
  800a15c:	24000e4c 	.word	0x24000e4c
 
 0800a160 <BDMA_Channel1_IRQHandler>:
+
 /**
   * @brief This function handles BDMA channel0 global interrupt.
   */
-//void AUDIO_IN_SAI_PDMx_DMAx_IRQHandler(void)
 void BDMA_Channel1_IRQHandler(void)
 {
  800a160:	b580      	push	{r7, lr}
@@ -25231,7 +25231,7 @@ void BDMA_Channel1_IRQHandler(void)
  800a166:	f7f6 f931 	bl	80003cc <BSP_LED_On>
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_sai4_a);
+	HAL_DMA_IRQHandler(&hdma_sai4_a);
  800a16a:	4802      	ldr	r0, [pc, #8]	; (800a174 <BDMA_Channel1_IRQHandler+0x14>)
  800a16c:	f7f9 fee2 	bl	8003f34 <HAL_DMA_IRQHandler>
 
@@ -25257,7 +25257,7 @@ void SAI4_IRQHandler(void)
  800a17c:	4803      	ldr	r0, [pc, #12]	; (800a18c <SAI4_IRQHandler+0x14>)
  800a17e:	f7ff f94f 	bl	8009420 <HAL_SAI_IRQHandler>
   /* USER CODE END SAI4_IRQn 0 */
-
+	//AUDIO_IN_SAI_PDMx_IRQHandler(&hsai_BlockA4);
   /* USER CODE BEGIN SAI4_IRQn 1 */
 	//BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
 	BSP_LED_On(LED1);
