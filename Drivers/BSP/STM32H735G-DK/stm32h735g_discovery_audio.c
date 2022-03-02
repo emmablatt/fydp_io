@@ -1635,6 +1635,7 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     hdma_sai_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
     hdma_sai_rx.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_sai_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+
     hdma_sai_rx.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
     hdma_sai_rx.Init.MemBurst            = DMA_MBURST_SINGLE;
     hdma_sai_rx.Init.PeriphBurst         = DMA_MBURST_SINGLE;

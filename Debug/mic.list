@@ -15,15 +15,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   5 .data         0000047c  24000000  0800c778  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          00000b4c  2400047c  0800cbf4  0002047c  2**2
+  6 .bss          00000ab4  2400047c  0800cbf4  0002047c  2**2
                   ALLOC
-  7 ._user_heap_stack 00000600  24000fc8  0800cbf4  00020fc8  2**0
+  7 ._user_heap_stack 00000600  24000f30  0800cbf4  00020f30  2**0
                   ALLOC
   8 .ARM.attributes 0000002e  00000000  00000000  0002047c  2**0
                   CONTENTS, READONLY
-  9 .debug_info   000366d6  00000000  00000000  000204aa  2**0
+  9 .debug_info   000366c6  00000000  00000000  000204aa  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 10 .debug_abbrev 0000380b  00000000  00000000  00056b80  2**0
+ 10 .debug_abbrev 0000381a  00000000  00000000  00056b70  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  11 .debug_aranges 00000ff0  00000000  00000000  0005a390  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -33,11 +33,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_line   00017d43  00000000  00000000  0008f38c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    00150be4  00000000  00000000  000a70cf  2**0
+ 15 .debug_str    00150bd7  00000000  00000000  000a70cf  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      000000d1  00000000  00000000  001f7cb3  2**0
+ 16 .comment      000000d1  00000000  00000000  001f7ca6  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  00004298  00000000  00000000  001f7d84  2**2
+ 17 .debug_frame  00004298  00000000  00000000  001f7d78  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -24411,9 +24411,9 @@ void MX_PDM2PCM_Init(void)
  8009d3a:	bf00      	nop
  8009d3c:	bd80      	pop	{r7, pc}
  8009d3e:	bf00      	nop
- 8009d40:	24000f7c 	.word	0x24000f7c
+ 8009d40:	24000ee4 	.word	0x24000ee4
  8009d44:	7d70a3d6 	.word	0x7d70a3d6
- 8009d48:	24000f74 	.word	0x24000f74
+ 8009d48:	24000edc 	.word	0x24000edc
 
 08009d4c <HAL_MspInit>:
 /* USER CODE END 0 */
@@ -24952,11 +24952,11 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  800a098:	58024400 	.word	0x58024400
  800a09c:	58021000 	.word	0x58021000
  800a0a0:	58021400 	.word	0x58021400
- 800a0a4:	24000efc 	.word	0x24000efc
+ 800a0a4:	24000e64 	.word	0x24000e64
  800a0a8:	40020028 	.word	0x40020028
  800a0ac:	58005404 	.word	0x58005404
  800a0b0:	24000a0c 	.word	0x24000a0c
- 800a0b4:	24000e4c 	.word	0x24000e4c
+ 800a0b4:	24000db4 	.word	0x24000db4
  800a0b8:	5802541c 	.word	0x5802541c
 
 0800a0bc <NMI_Handler>:
@@ -25138,7 +25138,7 @@ void DMA1_Stream1_IRQHandler(void)
  800a11a:	bf00      	nop
  800a11c:	bd80      	pop	{r7, pc}
  800a11e:	bf00      	nop
- 800a120:	24000efc 	.word	0x24000efc
+ 800a120:	24000e64 	.word	0x24000e64
 
 0800a124 <SAI1_IRQHandler>:
 
@@ -25187,7 +25187,7 @@ void DMAMUX1_OVR_IRQHandler(void)
  800a142:	bf00      	nop
  800a144:	bd80      	pop	{r7, pc}
  800a146:	bf00      	nop
- 800a148:	24000efc 	.word	0x24000efc
+ 800a148:	24000e64 	.word	0x24000e64
 
 0800a14c <DMAMUX2_OVR_IRQHandler>:
 
@@ -25212,7 +25212,7 @@ void DMAMUX2_OVR_IRQHandler(void)
  800a156:	bf00      	nop
  800a158:	bd80      	pop	{r7, pc}
  800a15a:	bf00      	nop
- 800a15c:	24000e4c 	.word	0x24000e4c
+ 800a15c:	24000db4 	.word	0x24000db4
 
 0800a160 <BDMA_Channel1_IRQHandler>:
 
@@ -25241,7 +25241,7 @@ void BDMA_Channel1_IRQHandler(void)
 }
  800a170:	bf00      	nop
  800a172:	bd80      	pop	{r7, pc}
- 800a174:	24000e4c 	.word	0x24000e4c
+ 800a174:	24000db4 	.word	0x24000db4
 
 0800a178 <SAI4_IRQHandler>:
 
@@ -25253,11 +25253,11 @@ void SAI4_IRQHandler(void)
  800a178:	b580      	push	{r7, lr}
  800a17a:	af00      	add	r7, sp, #0
   /* USER CODE BEGIN SAI4_IRQn 0 */ // TODO: check if this is right
-	HAL_SAI_IRQHandler(&hsai_BlockA4);
+	HAL_SAI_IRQHandler(&haudio_in_sai[PDM]);
  800a17c:	4803      	ldr	r0, [pc, #12]	; (800a18c <SAI4_IRQHandler+0x14>)
  800a17e:	f7ff f94f 	bl	8009420 <HAL_SAI_IRQHandler>
   /* USER CODE END SAI4_IRQn 0 */
-	//AUDIO_IN_SAI_PDMx_IRQHandler(&hsai_BlockA4);
+	//AUDIO_IN_SAI_PDMx_IRQHandler(&haudio_in_sai[PDM]);
   /* USER CODE BEGIN SAI4_IRQn 1 */
 	//BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
 	BSP_LED_On(LED1);
@@ -25271,7 +25271,7 @@ void SAI4_IRQHandler(void)
 }
  800a188:	bf00      	nop
  800a18a:	bd80      	pop	{r7, pc}
- 800a18c:	24000db4 	.word	0x24000db4
+ 800a18c:	240005d0 	.word	0x240005d0
 
 0800a190 <SystemInit>:
   *         configuration.
@@ -25553,7 +25553,7 @@ LoopFillZerobss:
   ldr r2, =_sbss
  800a2c8:	2400047c 	.word	0x2400047c
   ldr r4, =_ebss
- 800a2cc:	24000fc8 	.word	0x24000fc8
+ 800a2cc:	24000f30 	.word	0x24000f30
 
 0800a2d0 <ADC3_IRQHandler>:
  * @retval None

@@ -49,7 +49,7 @@ CRC_HandleTypeDef hcrc;
 DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
 
 SAI_HandleTypeDef hsai_BlockB1;
-SAI_HandleTypeDef hsai_BlockA4;
+SAI_HandleTypeDef haudio_in_sai[PDM];
 DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai4_a;
 
@@ -328,36 +328,36 @@ static void MX_SAI4_Init(void)
   /* USER CODE BEGIN SAI4_Init 1 */
 
   /* USER CODE END SAI4_Init 1 */
-  hsai_BlockA4.Instance = SAI4_Block_A;
-  hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
-  hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
-  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
-  hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
-  hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-//  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  haudio_in_sai[PDM].Instance = SAI4_Block_A;
+  haudio_in_sai[PDM].Init.Protocol = SAI_FREE_PROTOCOL;
+  haudio_in_sai[PDM].Init.AudioMode = SAI_MODEMASTER_RX;
+  haudio_in_sai[PDM].Init.DataSize = SAI_DATASIZE_16;
+  haudio_in_sai[PDM].Init.FirstBit = SAI_FIRSTBIT_MSB;
+  haudio_in_sai[PDM].Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
+  haudio_in_sai[PDM].Init.Synchro = SAI_ASYNCHRONOUS;
+  haudio_in_sai[PDM].Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  haudio_in_sai[PDM].Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+//  haudio_in_sai[PDM].Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
 
-  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_FULL;
-  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_16K;
-  hsai_BlockA4.Init.MonoStereoMode = SAI_MONOMODE;
-  hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
+  haudio_in_sai[PDM].Init.FIFOThreshold = SAI_FIFOTHRESHOLD_FULL;
+  haudio_in_sai[PDM].Init.AudioFrequency = SAI_AUDIO_FREQUENCY_16K;
+  haudio_in_sai[PDM].Init.MonoStereoMode = SAI_MONOMODE;
+  haudio_in_sai[PDM].Init.CompandingMode = SAI_NOCOMPANDING;
 
-  hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
-  hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+  haudio_in_sai[PDM].Init.PdmInit.Activation = ENABLE;
+  haudio_in_sai[PDM].Init.PdmInit.MicPairsNbr = 1;
+  haudio_in_sai[PDM].Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
 
-  hsai_BlockA4.FrameInit.FrameLength = 16;
-  hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
-  hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
-  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
-  hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
-  hsai_BlockA4.SlotInit.FirstBitOffset = 0;
-  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockA4.SlotInit.SlotNumber = 1;
-  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
-  if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
+  haudio_in_sai[PDM].FrameInit.FrameLength = 16;
+  haudio_in_sai[PDM].FrameInit.ActiveFrameLength = 1;
+  haudio_in_sai[PDM].FrameInit.FSDefinition = SAI_FS_STARTFRAME;
+  haudio_in_sai[PDM].FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
+  haudio_in_sai[PDM].FrameInit.FSOffset = SAI_FS_FIRSTBIT;
+  haudio_in_sai[PDM].SlotInit.FirstBitOffset = 0;
+  haudio_in_sai[PDM].SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  haudio_in_sai[PDM].SlotInit.SlotNumber = 1;
+  haudio_in_sai[PDM].SlotInit.SlotActive = 0x0000FFFF;
+  if (HAL_SAI_Init(&haudio_in_sai[PDM]) != HAL_OK)
   {
     Error_Handler();
   }

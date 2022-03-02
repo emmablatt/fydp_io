@@ -58,7 +58,7 @@
 extern DMA_HandleTypeDef hdma_sai1_b;
 extern DMA_HandleTypeDef hdma_sai4_a;
 extern SAI_HandleTypeDef hsai_BlockB1;
-extern SAI_HandleTypeDef hsai_BlockA4;
+extern SAI_HandleTypeDef haudio_in_sai[PDM];
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -283,9 +283,9 @@ void BDMA_Channel1_IRQHandler(void)
 void SAI4_IRQHandler(void)
 {
   /* USER CODE BEGIN SAI4_IRQn 0 */ // TODO: check if this is right
-	HAL_SAI_IRQHandler(&hsai_BlockA4);
+	HAL_SAI_IRQHandler(&haudio_in_sai[PDM]);
   /* USER CODE END SAI4_IRQn 0 */
-	//AUDIO_IN_SAI_PDMx_IRQHandler(&hsai_BlockA4);
+	//AUDIO_IN_SAI_PDMx_IRQHandler(&haudio_in_sai[PDM]);
   /* USER CODE BEGIN SAI4_IRQn 1 */
 	//BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
 	BSP_LED_On(LED1);
