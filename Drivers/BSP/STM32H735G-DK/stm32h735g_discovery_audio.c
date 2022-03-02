@@ -1993,6 +1993,8 @@ int32_t BSP_AUDIO_IN_Init(uint32_t Instance, BSP_AUDIO_Init_t* AudioInit)
       mx_config.Synchro           = SAI_ASYNCHRONOUS;
       mx_config.SynchroExt        = SAI_SYNCEXT_DISABLE;
 
+
+
       if(MX_SAI4_Block_A_Init(&haudio_in_sai[PDM], &mx_config) != HAL_OK)
       {
         /* Return BSP_ERROR_PERIPH_FAILURE when operations are not correctly done */
@@ -2445,7 +2447,7 @@ __weak HAL_StatusTypeDef MX_SAI4_Block_A_Init(SAI_HandleTypeDef* hsai, MX_SAI_Co
   hsai->Init.Mckdiv                 = 0;
   hsai->Init.PdmInit.Activation     = ENABLE;
   hsai->Init.PdmInit.MicPairsNbr    = 1;
-  hsai->Init.PdmInit.ClockEnable    = SAI_PDM_CLOCK1_ENABLE;
+  hsai->Init.PdmInit.ClockEnable    = SAI_PDM_CLOCK2_ENABLE;
 
 
   /* Configure SAI_Block_x Frame */

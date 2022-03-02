@@ -1662,6 +1662,8 @@ int32_t BSP_AUDIO_IN_Init(uint32_t Instance, BSP_AUDIO_Init_t* AudioInit)
  8000d24:	2300      	movs	r3, #0
  8000d26:	627b      	str	r3, [r7, #36]	; 0x24
 
+
+
       if(MX_SAI4_Block_A_Init(&haudio_in_sai[PDM], &mx_config) != HAL_OK)
  8000d28:	f107 0308 	add.w	r3, r7, #8
  8000d2c:	4619      	mov	r1, r3
@@ -2724,9 +2726,9 @@ __weak HAL_StatusTypeDef MX_SAI4_Block_A_Init(SAI_HandleTypeDef* hsai, MX_SAI_Co
  800145c:	687b      	ldr	r3, [r7, #4]
  800145e:	2201      	movs	r2, #1
  8001460:	63da      	str	r2, [r3, #60]	; 0x3c
-  hsai->Init.PdmInit.ClockEnable    = SAI_PDM_CLOCK1_ENABLE;
+  hsai->Init.PdmInit.ClockEnable    = SAI_PDM_CLOCK2_ENABLE;
  8001462:	687b      	ldr	r3, [r7, #4]
- 8001464:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 8001464:	f44f 7200 	mov.w	r2, #512	; 0x200
  8001468:	641a      	str	r2, [r3, #64]	; 0x40
 
 
