@@ -15,29 +15,29 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   5 .data         0000047c  24000000  0800c778  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          00000ab4  2400047c  0800cbf4  0002047c  2**2
+  6 .bss          00000a1c  2400047c  0800cbf4  0002047c  2**2
                   ALLOC
-  7 ._user_heap_stack 00000600  24000f30  0800cbf4  00020f30  2**0
+  7 ._user_heap_stack 00000600  24000e98  0800cbf4  00020e98  2**0
                   ALLOC
   8 .ARM.attributes 0000002e  00000000  00000000  0002047c  2**0
                   CONTENTS, READONLY
-  9 .debug_info   000366c6  00000000  00000000  000204aa  2**0
+  9 .debug_info   000366b6  00000000  00000000  000204aa  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 10 .debug_abbrev 0000381a  00000000  00000000  00056b70  2**0
+ 10 .debug_abbrev 0000381a  00000000  00000000  00056b60  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_aranges 00000ff0  00000000  00000000  0005a390  2**3
+ 11 .debug_aranges 00000ff0  00000000  00000000  0005a380  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_ranges 00000ed0  00000000  00000000  0005b380  2**3
+ 12 .debug_ranges 00000ed0  00000000  00000000  0005b370  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_macro  0003313c  00000000  00000000  0005c250  2**0
+ 13 .debug_macro  0003313c  00000000  00000000  0005c240  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_line   00017d43  00000000  00000000  0008f38c  2**0
+ 14 .debug_line   00017d43  00000000  00000000  0008f37c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    00150bd7  00000000  00000000  000a70cf  2**0
+ 15 .debug_str    00150bb2  00000000  00000000  000a70bf  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      000000d1  00000000  00000000  001f7ca6  2**0
+ 16 .comment      000000d1  00000000  00000000  001f7c71  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  00004298  00000000  00000000  001f7d78  2**2
+ 17 .debug_frame  00004298  00000000  00000000  001f7d44  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -959,6 +959,7 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
  80008b8:	69fb      	ldr	r3, [r7, #28]
 
     /* Configure the hdma_sai_rx handle parameters */
+    //TODO is this the correct handle? what's the audio one
     hdma_sai_rx.Instance                 = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
  80008ba:	4b1d      	ldr	r3, [pc, #116]	; (8000930 <SAI_MspInit+0x310>)
  80008bc:	4a1d      	ldr	r2, [pc, #116]	; (8000934 <SAI_MspInit+0x314>)
@@ -991,6 +992,7 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
  80008ea:	4b11      	ldr	r3, [pc, #68]	; (8000930 <SAI_MspInit+0x310>)
  80008ec:	2200      	movs	r2, #0
  80008ee:	625a      	str	r2, [r3, #36]	; 0x24
+
     hdma_sai_rx.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
  80008f0:	4b0f      	ldr	r3, [pc, #60]	; (8000930 <SAI_MspInit+0x310>)
  80008f2:	2203      	movs	r2, #3
@@ -24156,7 +24158,7 @@ static void MX_CRC_Init(void)
  8009baa:	46bd      	mov	sp, r7
  8009bac:	bd80      	pop	{r7, pc}
  8009bae:	bf00      	nop
- 8009bb0:	24000cf8 	.word	0x24000cf8
+ 8009bb0:	24000de8 	.word	0x24000de8
  8009bb4:	58024c00 	.word	0x58024c00
  8009bb8:	58024400 	.word	0x58024400
 
@@ -24411,9 +24413,9 @@ void MX_PDM2PCM_Init(void)
  8009d3a:	bf00      	nop
  8009d3c:	bd80      	pop	{r7, pc}
  8009d3e:	bf00      	nop
- 8009d40:	24000ee4 	.word	0x24000ee4
+ 8009d40:	24000e4c 	.word	0x24000e4c
  8009d44:	7d70a3d6 	.word	0x7d70a3d6
- 8009d48:	24000edc 	.word	0x24000edc
+ 8009d48:	24000e44 	.word	0x24000e44
 
 08009d4c <HAL_MspInit>:
 /* USER CODE END 0 */
@@ -24708,47 +24710,47 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
       /* Peripheral DMA init*/
 
-    hdma_sai1_b.Instance = DMA1_Stream1;
+    hdma_sai_tx.Instance = DMA1_Stream1;
  8009f0e:	4b65      	ldr	r3, [pc, #404]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f10:	4a65      	ldr	r2, [pc, #404]	; (800a0a8 <HAL_SAI_MspInit+0x270>)
  8009f12:	601a      	str	r2, [r3, #0]
-    hdma_sai1_b.Init.Request = DMA_REQUEST_SAI1_B;
+    hdma_sai_tx.Init.Request = DMA_REQUEST_SAI1_B;
  8009f14:	4b63      	ldr	r3, [pc, #396]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f16:	2258      	movs	r2, #88	; 0x58
  8009f18:	605a      	str	r2, [r3, #4]
-    hdma_sai1_b.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_sai_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
  8009f1a:	4b62      	ldr	r3, [pc, #392]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f1c:	2240      	movs	r2, #64	; 0x40
  8009f1e:	609a      	str	r2, [r3, #8]
-    hdma_sai1_b.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai_tx.Init.PeriphInc = DMA_PINC_DISABLE;
  8009f20:	4b60      	ldr	r3, [pc, #384]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f22:	2200      	movs	r2, #0
  8009f24:	60da      	str	r2, [r3, #12]
-    hdma_sai1_b.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai_tx.Init.MemInc = DMA_MINC_ENABLE;
  8009f26:	4b5f      	ldr	r3, [pc, #380]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f28:	f44f 6280 	mov.w	r2, #1024	; 0x400
  8009f2c:	611a      	str	r2, [r3, #16]
-    hdma_sai1_b.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_sai_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
  8009f2e:	4b5d      	ldr	r3, [pc, #372]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f30:	f44f 6200 	mov.w	r2, #2048	; 0x800
  8009f34:	615a      	str	r2, [r3, #20]
-    hdma_sai1_b.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_sai_tx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
  8009f36:	4b5b      	ldr	r3, [pc, #364]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f38:	f44f 5200 	mov.w	r2, #8192	; 0x2000
  8009f3c:	619a      	str	r2, [r3, #24]
-    hdma_sai1_b.Init.Mode = DMA_CIRCULAR;
+    hdma_sai_tx.Init.Mode = DMA_CIRCULAR;
  8009f3e:	4b59      	ldr	r3, [pc, #356]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f40:	f44f 7280 	mov.w	r2, #256	; 0x100
  8009f44:	61da      	str	r2, [r3, #28]
-    hdma_sai1_b.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_sai_tx.Init.Priority = DMA_PRIORITY_HIGH;
  8009f46:	4b57      	ldr	r3, [pc, #348]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f48:	f44f 3200 	mov.w	r2, #131072	; 0x20000
  8009f4c:	621a      	str	r2, [r3, #32]
-    hdma_sai1_b.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+    hdma_sai_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
  8009f4e:	4b55      	ldr	r3, [pc, #340]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f50:	2200      	movs	r2, #0
  8009f52:	625a      	str	r2, [r3, #36]	; 0x24
-    if (HAL_DMA_Init(&hdma_sai1_b) != HAL_OK)
+    if (HAL_DMA_Init(&hdma_sai_tx) != HAL_OK)
  8009f54:	4853      	ldr	r0, [pc, #332]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f56:	f7f8 fb11 	bl	800257c <HAL_DMA_Init>
  8009f5a:	4603      	mov	r3, r0
@@ -24762,14 +24764,14 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai_tx);
  8009f64:	687b      	ldr	r3, [r7, #4]
  8009f66:	4a4f      	ldr	r2, [pc, #316]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f68:	f8c3 2084 	str.w	r2, [r3, #132]	; 0x84
  8009f6c:	4a4d      	ldr	r2, [pc, #308]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f6e:	687b      	ldr	r3, [r7, #4]
  8009f70:	6393      	str	r3, [r2, #56]	; 0x38
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai_tx);
  8009f72:	687b      	ldr	r3, [r7, #4]
  8009f74:	4a4b      	ldr	r2, [pc, #300]	; (800a0a4 <HAL_SAI_MspInit+0x26c>)
  8009f76:	f8c3 2080 	str.w	r2, [r3, #128]	; 0x80
@@ -24845,45 +24847,45 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
       /* Peripheral DMA init*/
 
-    hdma_sai4_a.Instance = BDMA_Channel1;
+    hdma_sai_rx.Instance = BDMA_Channel1;
  8009fea:	4b32      	ldr	r3, [pc, #200]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  8009fec:	4a32      	ldr	r2, [pc, #200]	; (800a0b8 <HAL_SAI_MspInit+0x280>)
  8009fee:	601a      	str	r2, [r3, #0]
 
     //TODO THE BDMA REQUEST LIVES HERE!
-    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
+    hdma_sai_rx.Init.Request = BDMA_REQUEST_SAI4_A;
  8009ff0:	4b30      	ldr	r3, [pc, #192]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  8009ff2:	220f      	movs	r2, #15
  8009ff4:	605a      	str	r2, [r3, #4]
-    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_sai_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
  8009ff6:	4b2f      	ldr	r3, [pc, #188]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  8009ff8:	2200      	movs	r2, #0
  8009ffa:	609a      	str	r2, [r3, #8]
-    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai_rx.Init.PeriphInc = DMA_PINC_DISABLE;
  8009ffc:	4b2d      	ldr	r3, [pc, #180]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  8009ffe:	2200      	movs	r2, #0
  800a000:	60da      	str	r2, [r3, #12]
-    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai_rx.Init.MemInc = DMA_MINC_ENABLE;
  800a002:	4b2c      	ldr	r3, [pc, #176]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a004:	f44f 6280 	mov.w	r2, #1024	; 0x400
  800a008:	611a      	str	r2, [r3, #16]
-    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_sai_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
  800a00a:	4b2a      	ldr	r3, [pc, #168]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a00c:	2200      	movs	r2, #0
  800a00e:	615a      	str	r2, [r3, #20]
-    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_sai_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
  800a010:	4b28      	ldr	r3, [pc, #160]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a012:	2200      	movs	r2, #0
  800a014:	619a      	str	r2, [r3, #24]
-    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
+    hdma_sai_rx.Init.Mode = DMA_CIRCULAR;
  800a016:	4b27      	ldr	r3, [pc, #156]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a018:	f44f 7280 	mov.w	r2, #256	; 0x100
  800a01c:	61da      	str	r2, [r3, #28]
-    hdma_sai4_a.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_sai_rx.Init.Priority = DMA_PRIORITY_HIGH;
  800a01e:	4b25      	ldr	r3, [pc, #148]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a020:	f44f 3200 	mov.w	r2, #131072	; 0x20000
  800a024:	621a      	str	r2, [r3, #32]
-    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
+    if (HAL_DMA_Init(&hdma_sai_rx) != HAL_OK)
  800a026:	4823      	ldr	r0, [pc, #140]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a028:	f7f8 faa8 	bl	800257c <HAL_DMA_Init>
  800a02c:	4603      	mov	r3, r0
@@ -24909,7 +24911,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     pSyncConfig.RequestNumber = 1;
  800a04e:	2301      	movs	r3, #1
  800a050:	f8c7 30d0 	str.w	r3, [r7, #208]	; 0xd0
-    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai4_a, &pSyncConfig) != HAL_OK)
+    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai_rx, &pSyncConfig) != HAL_OK)
  800a054:	f107 03c4 	add.w	r3, r7, #196	; 0xc4
  800a058:	4619      	mov	r1, r3
  800a05a:	4816      	ldr	r0, [pc, #88]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
@@ -24924,7 +24926,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai_rx);
  800a06a:	687b      	ldr	r3, [r7, #4]
  800a06c:	4a11      	ldr	r2, [pc, #68]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a06e:	f8c3 2084 	str.w	r2, [r3, #132]	; 0x84
@@ -24932,7 +24934,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  800a074:	687b      	ldr	r3, [r7, #4]
  800a076:	6393      	str	r3, [r2, #56]	; 0x38
 
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai4_a);
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai_rx);
  800a078:	687b      	ldr	r3, [r7, #4]
  800a07a:	4a0e      	ldr	r2, [pc, #56]	; (800a0b4 <HAL_SAI_MspInit+0x27c>)
  800a07c:	f8c3 2080 	str.w	r2, [r3, #128]	; 0x80
@@ -24952,11 +24954,11 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  800a098:	58024400 	.word	0x58024400
  800a09c:	58021000 	.word	0x58021000
  800a0a0:	58021400 	.word	0x58021400
- 800a0a4:	24000e64 	.word	0x24000e64
+ 800a0a4:	24000d70 	.word	0x24000d70
  800a0a8:	40020028 	.word	0x40020028
  800a0ac:	58005404 	.word	0x58005404
  800a0b0:	24000a0c 	.word	0x24000a0c
- 800a0b4:	24000db4 	.word	0x24000db4
+ 800a0b4:	24000cf8 	.word	0x24000cf8
  800a0b8:	5802541c 	.word	0x5802541c
 
 0800a0bc <NMI_Handler>:
@@ -25128,7 +25130,7 @@ void DMA1_Stream1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
 
   /* USER CODE END DMA1_Stream1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_sai1_b);
+  HAL_DMA_IRQHandler(&haudio_out_sai);
  800a114:	4802      	ldr	r0, [pc, #8]	; (800a120 <DMA1_Stream1_IRQHandler+0x10>)
  800a116:	f7f9 ff0d 	bl	8003f34 <HAL_DMA_IRQHandler>
   /* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
@@ -25138,7 +25140,7 @@ void DMA1_Stream1_IRQHandler(void)
  800a11a:	bf00      	nop
  800a11c:	bd80      	pop	{r7, pc}
  800a11e:	bf00      	nop
- 800a120:	24000e64 	.word	0x24000e64
+ 800a120:	240004a0 	.word	0x240004a0
 
 0800a124 <SAI1_IRQHandler>:
 
@@ -25152,7 +25154,7 @@ void SAI1_IRQHandler(void)
   /* USER CODE BEGIN SAI1_IRQn 0 */
 
   /* USER CODE END SAI1_IRQn 0 */
-  HAL_SAI_IRQHandler(&hsai_BlockB1);
+  HAL_SAI_IRQHandler(&haudio_out_sai);
  800a128:	4802      	ldr	r0, [pc, #8]	; (800a134 <SAI1_IRQHandler+0x10>)
  800a12a:	f7ff f979 	bl	8009420 <HAL_SAI_IRQHandler>
   /* USER CODE BEGIN SAI1_IRQn 1 */
@@ -25162,7 +25164,7 @@ void SAI1_IRQHandler(void)
  800a12e:	bf00      	nop
  800a130:	bd80      	pop	{r7, pc}
  800a132:	bf00      	nop
- 800a134:	24000d1c 	.word	0x24000d1c
+ 800a134:	240004a0 	.word	0x240004a0
 
 0800a138 <DMAMUX1_OVR_IRQHandler>:
 
@@ -25177,7 +25179,7 @@ void DMAMUX1_OVR_IRQHandler(void)
 
   /* USER CODE END DMAMUX1_OVR_IRQn 0 */
   // Handle DMA1_Stream1
-  HAL_DMAEx_MUX_IRQHandler(&hdma_sai1_b);
+  HAL_DMAEx_MUX_IRQHandler(&hdma_sai_rx);
  800a13c:	4802      	ldr	r0, [pc, #8]	; (800a148 <DMAMUX1_OVR_IRQHandler+0x10>)
  800a13e:	f7fb fadd 	bl	80056fc <HAL_DMAEx_MUX_IRQHandler>
   /* USER CODE BEGIN DMAMUX1_OVR_IRQn 1 */
@@ -25187,7 +25189,7 @@ void DMAMUX1_OVR_IRQHandler(void)
  800a142:	bf00      	nop
  800a144:	bd80      	pop	{r7, pc}
  800a146:	bf00      	nop
- 800a148:	24000e64 	.word	0x24000e64
+ 800a148:	24000cf8 	.word	0x24000cf8
 
 0800a14c <DMAMUX2_OVR_IRQHandler>:
 
@@ -25202,7 +25204,7 @@ void DMAMUX2_OVR_IRQHandler(void)
 
   /* USER CODE END DMAMUX2_OVR_IRQn 0 */
   // Handle BDMA_Channel0
-  HAL_DMAEx_MUX_IRQHandler(&hdma_sai4_a);
+  HAL_DMAEx_MUX_IRQHandler(&hdma_sai_rx);
  800a150:	4802      	ldr	r0, [pc, #8]	; (800a15c <DMAMUX2_OVR_IRQHandler+0x10>)
  800a152:	f7fb fad3 	bl	80056fc <HAL_DMAEx_MUX_IRQHandler>
   /* USER CODE BEGIN DMAMUX2_OVR_IRQn 1 */
@@ -25212,7 +25214,7 @@ void DMAMUX2_OVR_IRQHandler(void)
  800a156:	bf00      	nop
  800a158:	bd80      	pop	{r7, pc}
  800a15a:	bf00      	nop
- 800a15c:	24000db4 	.word	0x24000db4
+ 800a15c:	24000cf8 	.word	0x24000cf8
 
 0800a160 <BDMA_Channel1_IRQHandler>:
 
@@ -25231,7 +25233,7 @@ void BDMA_Channel1_IRQHandler(void)
  800a166:	f7f6 f931 	bl	80003cc <BSP_LED_On>
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-	HAL_DMA_IRQHandler(&hdma_sai4_a);
+	HAL_DMA_IRQHandler(&hdma_sai_rx);
  800a16a:	4802      	ldr	r0, [pc, #8]	; (800a174 <BDMA_Channel1_IRQHandler+0x14>)
  800a16c:	f7f9 fee2 	bl	8003f34 <HAL_DMA_IRQHandler>
 
@@ -25241,7 +25243,7 @@ void BDMA_Channel1_IRQHandler(void)
 }
  800a170:	bf00      	nop
  800a172:	bd80      	pop	{r7, pc}
- 800a174:	24000db4 	.word	0x24000db4
+ 800a174:	24000cf8 	.word	0x24000cf8
 
 0800a178 <SAI4_IRQHandler>:
 
@@ -25553,7 +25555,7 @@ LoopFillZerobss:
   ldr r2, =_sbss
  800a2c8:	2400047c 	.word	0x2400047c
   ldr r4, =_ebss
- 800a2cc:	24000f30 	.word	0x24000f30
+ 800a2cc:	24000e98 	.word	0x24000e98
 
 0800a2d0 <ADC3_IRQHandler>:
  * @retval None

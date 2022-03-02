@@ -55,10 +55,11 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern DMA_HandleTypeDef hdma_sai1_b;
-extern DMA_HandleTypeDef hdma_sai4_a;
-extern SAI_HandleTypeDef hsai_BlockB1;
+extern DMA_HandleTypeDef hdma_sai_tx;
+extern DMA_HandleTypeDef hdma_sai_rx;
+extern SAI_HandleTypeDef haudio_out_sai;
 extern SAI_HandleTypeDef haudio_in_sai[PDM];
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -209,7 +210,7 @@ void DMA1_Stream1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
 
   /* USER CODE END DMA1_Stream1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_sai1_b);
+  HAL_DMA_IRQHandler(&haudio_out_sai);
   /* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
 
   /* USER CODE END DMA1_Stream1_IRQn 1 */
@@ -223,7 +224,7 @@ void SAI1_IRQHandler(void)
   /* USER CODE BEGIN SAI1_IRQn 0 */
 
   /* USER CODE END SAI1_IRQn 0 */
-  HAL_SAI_IRQHandler(&hsai_BlockB1);
+  HAL_SAI_IRQHandler(&haudio_out_sai);
   /* USER CODE BEGIN SAI1_IRQn 1 */
 
   /* USER CODE END SAI1_IRQn 1 */
@@ -238,7 +239,7 @@ void DMAMUX1_OVR_IRQHandler(void)
 
   /* USER CODE END DMAMUX1_OVR_IRQn 0 */
   // Handle DMA1_Stream1
-  HAL_DMAEx_MUX_IRQHandler(&hdma_sai1_b);
+  HAL_DMAEx_MUX_IRQHandler(&hdma_sai_rx);
   /* USER CODE BEGIN DMAMUX1_OVR_IRQn 1 */
 
   /* USER CODE END DMAMUX1_OVR_IRQn 1 */
@@ -253,7 +254,7 @@ void DMAMUX2_OVR_IRQHandler(void)
 
   /* USER CODE END DMAMUX2_OVR_IRQn 0 */
   // Handle BDMA_Channel0
-  HAL_DMAEx_MUX_IRQHandler(&hdma_sai4_a);
+  HAL_DMAEx_MUX_IRQHandler(&hdma_sai_rx);
   /* USER CODE BEGIN DMAMUX2_OVR_IRQn 1 */
 
   /* USER CODE END DMAMUX2_OVR_IRQn 1 */
@@ -270,7 +271,7 @@ void BDMA_Channel1_IRQHandler(void)
 	BSP_LED_On(LED2);
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-	HAL_DMA_IRQHandler(&hdma_sai4_a);
+	HAL_DMA_IRQHandler(&hdma_sai_rx);
 
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 

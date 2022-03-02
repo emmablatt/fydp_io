@@ -176,9 +176,9 @@ void HAL_DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef* hdfsdm_channel)
 
 }
 
-extern DMA_HandleTypeDef hdma_sai1_b;
+extern DMA_HandleTypeDef hdma_sai_tx;
 
-extern DMA_HandleTypeDef hdma_sai4_a;
+extern DMA_HandleTypeDef hdma_sai_rx;
 
 static uint32_t SAI1_client =0;
 static uint32_t SAI4_client =0;
@@ -234,17 +234,17 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
       /* Peripheral DMA init*/
 
-    hdma_sai1_b.Instance = DMA1_Stream1;
-    hdma_sai1_b.Init.Request = DMA_REQUEST_SAI1_B;
-    hdma_sai1_b.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_sai1_b.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_sai1_b.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai1_b.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_sai1_b.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_sai1_b.Init.Mode = DMA_CIRCULAR;
-    hdma_sai1_b.Init.Priority = DMA_PRIORITY_HIGH;
-    hdma_sai1_b.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_sai1_b) != HAL_OK)
+    hdma_sai_tx.Instance = DMA1_Stream1;
+    hdma_sai_tx.Init.Request = DMA_REQUEST_SAI1_B;
+    hdma_sai_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_sai_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai_tx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_sai_tx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_sai_tx.Init.Mode = DMA_CIRCULAR;
+    hdma_sai_tx.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_sai_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+    if (HAL_DMA_Init(&hdma_sai_tx) != HAL_OK)
     {
       Error_Handler();
     }
@@ -254,15 +254,15 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 //    pSyncConfig.SyncEnable = DISABLE;
 //    pSyncConfig.EventEnable = ENABLE;
 //    pSyncConfig.RequestNumber = 1;
-//    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai1_b, &pSyncConfig) != HAL_OK)
+//    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai_tx, &pSyncConfig) != HAL_OK)
 //    {
 //      Error_Handler();
 //    }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai_tx);
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai_tx);
     }
 /* SAI4 */
     if(hsai->Instance==SAI4_Block_A)
@@ -309,18 +309,18 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
       /* Peripheral DMA init*/
 
-    hdma_sai4_a.Instance = BDMA_Channel1;
+    hdma_sai_rx.Instance = BDMA_Channel1;
 
     //TODO THE BDMA REQUEST LIVES HERE!
-    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
-    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
-    hdma_sai4_a.Init.Priority = DMA_PRIORITY_HIGH;
-    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
+    hdma_sai_rx.Init.Request = BDMA_REQUEST_SAI4_A;
+    hdma_sai_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_sai_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai_rx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_sai_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_sai_rx.Init.Mode = DMA_CIRCULAR;
+    hdma_sai_rx.Init.Priority = DMA_PRIORITY_HIGH;
+    if (HAL_DMA_Init(&hdma_sai_rx) != HAL_OK)
     {
       Error_Handler();
     }
@@ -330,16 +330,16 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     pSyncConfig.SyncEnable = DISABLE;
     pSyncConfig.EventEnable = ENABLE;
     pSyncConfig.RequestNumber = 1;
-    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai4_a, &pSyncConfig) != HAL_OK)
+    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai_rx, &pSyncConfig) != HAL_OK)
     {
       Error_Handler();
     }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai_rx);
 
-    __HAL_LINKDMA(hsai,hdmatx,hdma_sai4_a);
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai_rx);
 
     }
 }

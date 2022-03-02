@@ -1627,6 +1627,7 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     AUDIO_IN_SAIx_DMAx_CLK_ENABLE();
 
     /* Configure the hdma_sai_rx handle parameters */
+    //TODO is this the correct handle? what's the audio one
     hdma_sai_rx.Instance                 = AUDIO_IN_SAI_PDMx_DMAx_STREAM;
     hdma_sai_rx.Init.Request             = AUDIO_IN_SAI_PDMx_DMAx_REQUEST;
     hdma_sai_rx.Init.Mode                = DMA_CIRCULAR;
