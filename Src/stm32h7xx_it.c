@@ -254,7 +254,7 @@ void BDMA_Channel1_IRQHandler(void)
 	//	HAL_DMA_IRQHandler(&hdma_sai_rx);
 
 	HAL_DMA_IRQHandler(&hdma_sai4_a);
-	BSP_LED_On(LED2);
+	BSP_LED_On(LED_RED);
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 
   /* USER CODE END BDMA_Channel0_IRQn 1 */
@@ -269,7 +269,7 @@ void SAI4_IRQHandler(void)
 {
   /* USER CODE BEGIN SAI4_IRQn 0 */ // TODO: check if this is right
 	HAL_SAI_IRQHandler(&haudio_in_sai[PDM]);
-	BSP_LED_On(LED1);
+	BSP_LED_On(LED_GREEN);
   /* USER CODE END SAI4_IRQn 0 */
   /* USER CODE BEGIN SAI4_IRQn 1 */
 
