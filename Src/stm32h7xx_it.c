@@ -262,18 +262,16 @@ void DMAMUX2_OVR_IRQHandler(void)
 /**
   * @brief This function handles BDMA channel0 global interrupt.
   */
-void AUDIO_IN_SAI_PDMx_DMAx_IRQHandler(void)
+//void AUDIO_IN_SAI_PDMx_DMAx_IRQHandler(void)
+void BDMA_Channel1_IRQHandler(void)
 {
 
   /* USER CODE BEGIN BDMA_Channel0_IRQn 0 */
-	BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
-	BSP_LED_On(LED1);
+	//BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
+	BSP_LED_On(LED2);
 
-	//TODO: irq handler with sai4 for channel 1!
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-	// is there a way to do this with channel 1 instead?
-	// need to regenerate?
-	HAL_DMA_IRQHandler(&hdma_sai4_a);
+  HAL_DMA_IRQHandler(&hdma_sai4_a);
 
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 
@@ -286,18 +284,15 @@ void AUDIO_IN_SAI_PDMx_DMAx_IRQHandler(void)
 void SAI4_IRQHandler(void)
 {
   /* USER CODE BEGIN SAI4_IRQn 0 */ // TODO: check if this is right
-	//HAL_SAI_IRQHandler(&hsai_BlockA4);
+	HAL_SAI_IRQHandler(&hsai_BlockA4);
   /* USER CODE END SAI4_IRQn 0 */
 
-	// this is the sexiest piece of code i've ever seen in my life
-	// i could cry.
   /* USER CODE BEGIN SAI4_IRQn 1 */
-	BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
+	//BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
 	BSP_LED_On(LED1);
 
 	//NEED to add code here to empty out buffer and do something?
-	// BSP AUDIO IN IRQHANDLER -> HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx); ->
-
+	// BSP AUDIO IN IRQHANDLER -> HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx);
 
 
   /* USER CODE END SAI4_IRQn 1 */

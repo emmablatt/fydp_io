@@ -3566,8 +3566,7 @@ void BSP_AUDIO_IN_IRQHandler(uint32_t Instance, uint32_t InputDevice)
      ((Instance == 0U) && (InputDevice == AUDIO_IN_DEVICE_ANALOG_MIC)) ||\
      ((Instance == 1U) && (InputDevice == AUDIO_IN_DEVICE_DIGITAL_MIC1)))
   {
-	  //HAL_LINKDMA(hsai, hdmarx, haudio_in_sai[PDM]); // add a tx one if this works
-    //HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx);
+    HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx);
   }
 
   else
