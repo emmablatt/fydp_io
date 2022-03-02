@@ -3564,8 +3564,11 @@ void BSP_AUDIO_IN_IRQHandler(uint32_t Instance, uint32_t InputDevice)
      ((Instance == 0U) && (InputDevice == AUDIO_IN_DEVICE_ANALOG_MIC)) ||\
      ((Instance == 1U) && (InputDevice == AUDIO_IN_DEVICE_DIGITAL_MIC1)))
   {
-    HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx);
+//	  TODO: This is the wrong handler - this is the SAI handler not the dma.
+//    HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx);
+	  HAL_DMA_IRQHandler(&haudio_in_sai[PDM].hdmarx);
   }
+
   else
   {
     if((Instance == 2U) && (InputDevice >= AUDIO_IN_DEVICE_DIGITAL_MIC1) &&\

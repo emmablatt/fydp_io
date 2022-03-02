@@ -289,11 +289,16 @@ void SAI4_IRQHandler(void)
 	//HAL_SAI_IRQHandler(&hsai_BlockA4);
   /* USER CODE END SAI4_IRQn 0 */
 
+	// this is the sexiest piece of code i've ever seen in my life
+	// i could cry.
   /* USER CODE BEGIN SAI4_IRQn 1 */
 	BSP_AUDIO_IN_IRQHandler(PDM, AUDIO_IN_DEVICE_DIGITAL_MIC1);
 	BSP_LED_On(LED1);
 
-	//hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
+	//NEED to add code here to empty out buffer and do something?
+	// BSP AUDIO IN IRQHANDLER -> HAL_DMA_IRQHandler(haudio_in_sai[PDM].hdmarx); ->
+
+
 
   /* USER CODE END SAI4_IRQn 1 */
 }
