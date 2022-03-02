@@ -299,8 +299,8 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
       /* Peripheral DMA init*/
-
-    hdma_sai4_a.Instance = BDMA_Channel0;
+    // TODO: setup hdma for sai channel with request
+    hdma_sai4_a.Instance = BDMA_Channel1;
     hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
     hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;

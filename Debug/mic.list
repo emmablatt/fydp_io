@@ -33,11 +33,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_line   00015b3c  00000000  00000000  0007b5e9  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    00150ba8  00000000  00000000  00091125  2**0
+ 15 .debug_str    00150b8f  00000000  00000000  00091125  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      000000d1  00000000  00000000  001e1ccd  2**0
+ 16 .comment      000000d1  00000000  00000000  001e1cb4  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  0000420c  00000000  00000000  001e1da0  2**2
+ 17 .debug_frame  0000420c  00000000  00000000  001e1d88  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -22096,14 +22096,14 @@ static void MX_BDMA_Init(void)
   HAL_NVIC_EnableIRQ(DMAMUX2_OVR_IRQn);
  8008db2:	2080      	movs	r0, #128	; 0x80
  8008db4:	f7f9 f8e9 	bl	8001f8a <HAL_NVIC_EnableIRQ>
-  /* BDMA_Channel0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(BDMA_Channel0_IRQn, 0, 0);
+  /* BDMA_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BDMA_Channel1_IRQn, 0, 0);
  8008db8:	2200      	movs	r2, #0
  8008dba:	2100      	movs	r1, #0
- 8008dbc:	2081      	movs	r0, #129	; 0x81
+ 8008dbc:	2082      	movs	r0, #130	; 0x82
  8008dbe:	f7f9 f8ca 	bl	8001f56 <HAL_NVIC_SetPriority>
-  HAL_NVIC_EnableIRQ(BDMA_Channel0_IRQn);
- 8008dc2:	2081      	movs	r0, #129	; 0x81
+  HAL_NVIC_EnableIRQ(BDMA_Channel1_IRQn);
+ 8008dc2:	2082      	movs	r0, #130	; 0x82
  8008dc4:	f7f9 f8e1 	bl	8001f8a <HAL_NVIC_EnableIRQ>
 
 }
@@ -22679,8 +22679,8 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  8009174:	f7fb fdfe 	bl	8004d74 <HAL_GPIO_Init>
 
       /* Peripheral DMA init*/
-
-    hdma_sai4_a.Instance = BDMA_Channel0;
+    // TODO: setup hdma for sai channel with request
+    hdma_sai4_a.Instance = BDMA_Channel1;
  8009178:	4b32      	ldr	r3, [pc, #200]	; (8009244 <HAL_SAI_MspInit+0x2e8>)
  800917a:	4a33      	ldr	r2, [pc, #204]	; (8009248 <HAL_SAI_MspInit+0x2ec>)
  800917c:	601a      	str	r2, [r3, #0]
@@ -22790,7 +22790,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  800923c:	24000a0c 	.word	0x24000a0c
  8009240:	58020c00 	.word	0x58020c00
  8009244:	24000e4c 	.word	0x24000e4c
- 8009248:	58025408 	.word	0x58025408
+ 8009248:	5802541c 	.word	0x5802541c
 
 0800924c <NMI_Handler>:
 /******************************************************************************/
@@ -23023,12 +23023,12 @@ void DMAMUX2_OVR_IRQHandler(void)
  80092d6:	bf00      	nop
  80092d8:	24000e4c 	.word	0x24000e4c
 
-080092dc <BDMA_Channel0_IRQHandler>:
+080092dc <BDMA_Channel1_IRQHandler>:
 
 /**
   * @brief This function handles BDMA channel0 global interrupt.
   */
-void BDMA_Channel0_IRQHandler(void)
+void BDMA_Channel1_IRQHandler(void)
 {
  80092dc:	b580      	push	{r7, lr}
  80092de:	af00      	add	r7, sp, #0

@@ -246,7 +246,7 @@ void DMAMUX2_OVR_IRQHandler(void)
 /**
   * @brief This function handles BDMA channel0 global interrupt.
   */
-void BDMA_Channel0_IRQHandler(void)
+void BDMA_Channel1_IRQHandler(void)
 {
   /* USER CODE BEGIN BDMA_Channel0_IRQn 0 */
 

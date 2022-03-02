@@ -6802,9 +6802,9 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .text.DMAMUX2_OVR_IRQHandler
                 0x00000000080092c8       0x14 ./Src/stm32h7xx_it.o
                 0x00000000080092c8                DMAMUX2_OVR_IRQHandler
- .text.BDMA_Channel0_IRQHandler
+ .text.BDMA_Channel1_IRQHandler
                 0x00000000080092dc       0x16 ./Src/stm32h7xx_it.o
-                0x00000000080092dc                BDMA_Channel0_IRQHandler
+                0x00000000080092dc                BDMA_Channel1_IRQHandler
  *fill*         0x00000000080092f2        0x2 
  .text.SystemInit
                 0x00000000080092f4       0xf0 ./Src/system_stm32h7xx.o
@@ -6826,7 +6826,6 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                 0x0000000008009434                DMA2_Stream5_IRQHandler
                 0x0000000008009434                DMA1_Stream5_IRQHandler
                 0x0000000008009434                CORDIC_IRQHandler
-                0x0000000008009434                BDMA_Channel1_IRQHandler
                 0x0000000008009434                TAMP_STAMP_IRQHandler
                 0x0000000008009434                EXTI3_IRQHandler
                 0x0000000008009434                LPTIM4_IRQHandler
@@ -6882,6 +6881,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                 0x0000000008009434                FMAC_IRQHandler
                 0x0000000008009434                CEC_IRQHandler
                 0x0000000008009434                EXTI15_10_IRQHandler
+                0x0000000008009434                BDMA_Channel0_IRQHandler
                 0x0000000008009434                ADC_IRQHandler
                 0x0000000008009434                I2C5_ER_IRQHandler
                 0x0000000008009434                OTFDEC1_IRQHandler
@@ -7482,7 +7482,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_line    0x000000000001506f      0xa4a ./Src/system_stm32h7xx.o
  .debug_line    0x0000000000015ab9       0x83 ./Startup/startup_stm32h735igkx.o
 
-.debug_str      0x0000000000000000   0x150ba8
+.debug_str      0x0000000000000000   0x150b8f
  .debug_str     0x0000000000000000   0x13efed ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
                                      0x13f634 (size before relaxing)
  .debug_str     0x000000000013efed     0xde04 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
@@ -7515,11 +7515,11 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                                      0x14c341 (size before relaxing)
  .debug_str     0x00000000001509de       0x47 ./Src/stm32h7xx_hal_msp.o
                                      0x14bc58 (size before relaxing)
- .debug_str     0x0000000000150a25      0x117 ./Src/stm32h7xx_it.o
+ .debug_str     0x0000000000150a25       0xfe ./Src/stm32h7xx_it.o
                                      0x14b511 (size before relaxing)
- .debug_str     0x0000000000150b3c       0x3b ./Src/system_stm32h7xx.o
+ .debug_str     0x0000000000150b23       0x3b ./Src/system_stm32h7xx.o
                                      0x13e435 (size before relaxing)
- .debug_str     0x0000000000150b77       0x31 ./Startup/startup_stm32h735igkx.o
+ .debug_str     0x0000000000150b5e       0x31 ./Startup/startup_stm32h735igkx.o
                                          0x57 (size before relaxing)
 
 .comment        0x0000000000000000       0xd1
