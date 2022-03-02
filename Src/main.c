@@ -47,7 +47,7 @@
 CRC_HandleTypeDef hcrc;
 
 //DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
-
+// HDMA instance in BDMA handler doesn't have the tx and rx properties
 SAI_HandleTypeDef hsai_BlockB1;
 SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai1_b;
