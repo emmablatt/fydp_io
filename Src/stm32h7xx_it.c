@@ -252,14 +252,28 @@ void BDMA_Channel1_IRQHandler(void)
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
   //HAL_DMA_IRQHandler(&hdma_sai4_a);
-  BSP_AUDIO_IN_IRQHandler(1U, AUDIO_IN_DEVICE_DIGITAL_MIC1);
-  BSP_LED_On(LED1);
+	HAL_DMA_IRQHandler(&hdma_sai4_a);
+	BSP_LED_On(LED2);
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 
   /* USER CODE END BDMA_Channel0_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
+
+/**
+  * @brief This function handles SAI4 global interrupt.
+  */
+void SAI4_IRQHandler(void)
+{
+  /* USER CODE BEGIN SAI4_IRQn 0 */ // TODO: check if this is right
+	HAL_SAI_IRQHandler(&haudio_in_sai[PDM]);
+	BSP_LED_On(LED1);
+  /* USER CODE END SAI4_IRQn 0 */
+  /* USER CODE BEGIN SAI4_IRQn 1 */
+
+  /* USER CODE END SAI4_IRQn 1 */
+}
 
 /* USER CODE END 1 */
 
