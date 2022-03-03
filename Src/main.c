@@ -51,7 +51,7 @@ DMA_HandleTypeDef hdma_sai4_a;
 
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t PDM1_filter_handler;
-uint8_t pdm_buffer[2048] __attribute__ ((section (".DATA_RAM_D3"))) = {0};
+uint8_t pdm_buffer[256] __attribute__ ((section (".DATA_RAM_D3")));
 
 /* USER CODE END PV */
 
@@ -79,7 +79,6 @@ static void MX_SAI1_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -92,7 +91,9 @@ int main(void)
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
-
+  for(int i=0;i<256;i++) {
+	  pdm_buffer[i] = 0;
+  }
   /* Configure the system clock */
   SystemClock_Config();
 
@@ -118,7 +119,7 @@ int main(void)
 
   // for pdm: output buffer is uint16
   // with length >= 48
-  uint16_t pcm_buffer[4096] = {0};
+ // uint16_t pcm_buffer[4096] = {0};
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
