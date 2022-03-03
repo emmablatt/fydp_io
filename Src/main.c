@@ -51,6 +51,8 @@ DMA_HandleTypeDef hdma_sai4_a;
 
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t PDM1_filter_handler;
+uint8_t pdm_buffer[2048] __attribute__ ((section (".DATA_RAM_D3"))) = {0};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -111,7 +113,8 @@ int main(void)
 
   // for pdm: input buffer is uint8
   // with length >= (48 * 64 * 1/8) = 384
-  uint8_t pdm_buffer[4096] = {0};
+//  uint8_t pdm_buffer[4096] = {0};
+
 
   // for pdm: output buffer is uint16
   // with length >= 48
