@@ -20,6 +20,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32h7xx_it.h"
+//#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -252,6 +254,8 @@ void BDMA_Channel1_IRQHandler(void)
 
   /* USER CODE END BDMA_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_sai4_a);
+  BSP_LED_On(LED1);
+
   /* USER CODE BEGIN BDMA_Channel1_IRQn 1 */
 
   /* USER CODE END BDMA_Channel1_IRQn 1 */

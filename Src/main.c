@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "pdm2pcm.h"
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -83,6 +84,8 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+  BSP_LED_Init(LED1);
+  BSP_LED_Off(LED1);
 
   /* USER CODE BEGIN Init */
 
@@ -115,7 +118,6 @@ int main(void)
   uint16_t pcm_buffer[4096] = {0};
 
   /* INITIALIZE */
-  //
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
 
@@ -123,7 +125,7 @@ int main(void)
 //  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
 //  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
-  HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
+  HAL_StatusTypeDef dma_status = HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -292,7 +294,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
   hsai_BlockA4.FrameInit.FrameLength = 8;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
