@@ -31,13 +31,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  13 .debug_macro  000320f3  00000000  00000000  00046c40  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_line   0001460b  00000000  00000000  00078d33  2**0
+ 14 .debug_line   00014610  00000000  00000000  00078d33  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    00150a38  00000000  00000000  0008d33e  2**0
+ 15 .debug_str    00150a38  00000000  00000000  0008d343  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      000000d1  00000000  00000000  001ddd76  2**0
+ 16 .comment      000000d1  00000000  00000000  001ddd7b  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  0000403c  00000000  00000000  001dde48  2**2
+ 17 .debug_frame  0000403c  00000000  00000000  001dde4c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -21216,40 +21216,40 @@ int main(void)
   haudio_in.Volume = 50;
  800886a:	2332      	movs	r3, #50	; 0x32
  800886c:	f8c7 3094 	str.w	r3, [r7, #148]	; 0x94
-  int32_t in_init_status = BSP_AUDIO_IN_Init(PDM, &haudio_in);
- 8008870:	f107 0384 	add.w	r3, r7, #132	; 0x84
- 8008874:	4619      	mov	r1, r3
- 8008876:	2001      	movs	r0, #1
- 8008878:	f7f8 f94c 	bl	8000b14 <BSP_AUDIO_IN_Init>
- 800887c:	f8c7 009c 	str.w	r0, [r7, #156]	; 0x9c
-  //int32_t convert_status = BSP_AUDIO_IN_PDMToPCM_Init(PDM, SAI_AUDIO_FREQUENCY_16K, 1, 1);
+
 
   uint8_t mic_buffer[PDM_BUFFER_SIZE] = {0};
- 8008880:	2300      	movs	r3, #0
- 8008882:	607b      	str	r3, [r7, #4]
- 8008884:	f107 0308 	add.w	r3, r7, #8
- 8008888:	227c      	movs	r2, #124	; 0x7c
- 800888a:	2100      	movs	r1, #0
- 800888c:	4618      	mov	r0, r3
- 800888e:	f002 fa4b 	bl	800ad28 <memset>
+ 8008870:	2300      	movs	r3, #0
+ 8008872:	607b      	str	r3, [r7, #4]
+ 8008874:	f107 0308 	add.w	r3, r7, #8
+ 8008878:	227c      	movs	r2, #124	; 0x7c
+ 800887a:	2100      	movs	r1, #0
+ 800887c:	4618      	mov	r0, r3
+ 800887e:	f002 fa53 	bl	800ad28 <memset>
   // uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
   // @param  Instance  Audio IN instance: 0 for SAI, 1 for SAI PDM and 2 for DFSDM
-  uint8_t record_status = BSP_AUDIO_IN_RecordPDM(PDM, mic_buffer, PDM_BUFFER_SIZE);
- 8008892:	1d3b      	adds	r3, r7, #4
- 8008894:	2280      	movs	r2, #128	; 0x80
- 8008896:	4619      	mov	r1, r3
- 8008898:	2001      	movs	r0, #1
- 800889a:	f7f8 febf 	bl	800161c <BSP_AUDIO_IN_RecordPDM>
- 800889e:	4603      	mov	r3, r0
- 80088a0:	f887 309b 	strb.w	r3, [r7, #155]	; 0x9b
+  uint32_t in_init_status = BSP_AUDIO_IN_Init(PDM, &haudio_in);
+ 8008882:	f107 0384 	add.w	r3, r7, #132	; 0x84
+ 8008886:	4619      	mov	r1, r3
+ 8008888:	2001      	movs	r0, #1
+ 800888a:	f7f8 f943 	bl	8000b14 <BSP_AUDIO_IN_Init>
+ 800888e:	4603      	mov	r3, r0
+ 8008890:	f8c7 309c 	str.w	r3, [r7, #156]	; 0x9c
+  uint32_t record_status = BSP_AUDIO_IN_RecordPDM(PDM, mic_buffer, PDM_BUFFER_SIZE);
+ 8008894:	1d3b      	adds	r3, r7, #4
+ 8008896:	2280      	movs	r2, #128	; 0x80
+ 8008898:	4619      	mov	r1, r3
+ 800889a:	2001      	movs	r0, #1
+ 800889c:	f7f8 febe 	bl	800161c <BSP_AUDIO_IN_RecordPDM>
+ 80088a0:	4603      	mov	r3, r0
+ 80088a2:	f8c7 3098 	str.w	r3, [r7, #152]	; 0x98
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
   while (1)
- 80088a4:	e7fe      	b.n	80088a4 <main+0x7e>
-	...
+ 80088a6:	e7fe      	b.n	80088a6 <main+0x80>
 
 080088a8 <SystemClock_Config>:
 /**
@@ -22252,8 +22252,8 @@ void BDMA_Channel1_IRQHandler(void)
 	HAL_DMA_IRQHandler(&hdma_sai4_a);
  8008e14:	4803      	ldr	r0, [pc, #12]	; (8008e24 <BDMA_Channel1_IRQHandler+0x14>)
  8008e16:	f7fa fa41 	bl	800329c <HAL_DMA_IRQHandler>
-	BSP_LED_On(LED_RED);
- 8008e1a:	2001      	movs	r0, #1
+	BSP_LED_On(LED1);
+ 8008e1a:	2000      	movs	r0, #0
  8008e1c:	f7f7 fad6 	bl	80003cc <BSP_LED_On>
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 

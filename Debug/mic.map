@@ -6765,9 +6765,8 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
                 0x00000000080087ac       0x1c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
  .text.SAI_DMAError
                 0x00000000080087c8       0x5e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .text.main     0x0000000008008826       0x80 ./Src/main.o
+ .text.main     0x0000000008008826       0x82 ./Src/main.o
                 0x0000000008008826                main
- *fill*         0x00000000080088a6        0x2 
  .text.SystemClock_Config
                 0x00000000080088a8       0xdc ./Src/main.o
                 0x00000000080088a8                SystemClock_Config
@@ -7467,7 +7466,7 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_macro   0x0000000000031af1      0x34b ./Src/stm32h7xx_it.o
  .debug_macro   0x0000000000031e3c      0x2b7 ./Src/system_stm32h7xx.o
 
-.debug_line     0x0000000000000000    0x1460b
+.debug_line     0x0000000000000000    0x14610
  .debug_line    0x0000000000000000      0xad1 ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
  .debug_line    0x0000000000000ad1     0x2d8c ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
  .debug_line    0x000000000000385d      0xee6 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
@@ -7480,11 +7479,11 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .debug_line    0x000000000000cbba     0x1326 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
  .debug_line    0x000000000000dee0     0x1a94 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
  .debug_line    0x000000000000f974     0x1e1f ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.o
- .debug_line    0x0000000000011793      0xc27 ./Src/main.o
- .debug_line    0x00000000000123ba      0xc13 ./Src/stm32h7xx_hal_msp.o
- .debug_line    0x0000000000012fcd      0xb71 ./Src/stm32h7xx_it.o
- .debug_line    0x0000000000013b3e      0xa4a ./Src/system_stm32h7xx.o
- .debug_line    0x0000000000014588       0x83 ./Startup/startup_stm32h735igkx.o
+ .debug_line    0x0000000000011793      0xc2c ./Src/main.o
+ .debug_line    0x00000000000123bf      0xc13 ./Src/stm32h7xx_hal_msp.o
+ .debug_line    0x0000000000012fd2      0xb71 ./Src/stm32h7xx_it.o
+ .debug_line    0x0000000000013b43      0xa4a ./Src/system_stm32h7xx.o
+ .debug_line    0x000000000001458d       0x83 ./Startup/startup_stm32h735igkx.o
 
 .debug_str      0x0000000000000000   0x150a38
  .debug_str     0x0000000000000000   0x13efed ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.o
