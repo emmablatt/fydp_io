@@ -1528,7 +1528,8 @@ static int32_t WM8994_Probe(void)
 static void SAI_MspInit(SAI_HandleTypeDef *hsai)
 {
   GPIO_InitTypeDef  gpio_init_structure;
-  static DMA_HandleTypeDef hdma_sai_tx, hdma_sai4_a;
+  static DMA_HandleTypeDef hdma_sai_tx;
+  extern DMA_HandleTypeDef hdma_sai4_a;
     /* Enable SAI clock */
   AUDIO_OUT_SAIx_CLK_ENABLE();
 
@@ -1705,9 +1706,11 @@ static void SAI_MspInit(SAI_HandleTypeDef *hsai)
     hdma_sai4_a.Init.PeriphDataAlignment = AUDIO_IN_SAI_PDMx_DMAx_PERIPH_DATA_SIZE;
     hdma_sai4_a.Init.MemDataAlignment    = AUDIO_IN_SAI_PDMx_DMAx_MEM_DATA_SIZE;
     hdma_sai4_a.Init.Mode                = DMA_CIRCULAR;
-    hdma_sai4_a.Init.Priority            = DMA_PRIORITY_HIGH;
-    hdma_sai4_a.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-    hdma_sai4_a.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    hdma_sai4_a.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+    hdma_sai4_a.Init.FIFOMode            = DMA_FIFOMODE_DISABLE; // FIFOMode or Direct mode
+
+    // at least 1 item to take things out, zero items to clear the flag.
+    hdma_sai4_a.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_1QUARTERFULL;
     hdma_sai4_a.Init.MemBurst            = DMA_MBURST_SINGLE;
     hdma_sai4_a.Init.PeriphBurst         = DMA_MBURST_SINGLE;
 
@@ -1981,11 +1984,13 @@ int32_t BSP_AUDIO_IN_Init(uint32_t Instance, BSP_AUDIO_Init_t* AudioInit)
       MX_SAI_Config mx_config;
 
       /* Prepare haudio_in_sai handle */
-      mx_config.MonoStereoMode    = SAI_STEREOMODE;
-      mx_config.DataSize          = SAI_DATASIZE_16;
-      mx_config.FrameLength       = 16;
+      // TODO comment back in?
+//      mx_config.MonoStereoMode    = SAI_STEREOMODE;
+//      mx_config.DataSize          = SAI_DATASIZE_16;
+      mx_config.FrameLength       = 15;
       mx_config.ActiveFrameLength = 1;
       mx_config.OutputDrive       = SAI_OUTPUTDRIVE_DISABLE;
+
       mx_config.SlotActive        = SAI_SLOTACTIVE_0;
       mx_config.AudioFrequency    = Audio_In_Ctx[PDM].SampleRate*8;
       mx_config.AudioMode         = SAI_MODEMASTER_RX;
@@ -2386,7 +2391,10 @@ __weak HAL_StatusTypeDef MX_SAI1_Block_A_Init(SAI_HandleTypeDef* hsai, MX_SAI_Co
   hsai->Init.Mckdiv                 = 0;
   hsai->Init.MckOutput              = SAI_MCK_OUTPUT_ENABLE;
   hsai->Init.MckOverSampling        = SAI_MCK_OVERSAMPLING_DISABLE;
-  hsai->Init.PdmInit.Activation     = DISABLE;
+  hsai->Init.PdmInit.Activation     = ENABLE;
+  hsai->Init.PdmInit.MicPairsNbr	= 1;
+  hsai->Init.PdmInit.ClockEnable	= SAI_PDM_CLOCK2_ENABLE;
+
 
   /* Configure SAI_Block_x Frame */
   hsai->FrameInit.FrameLength       = MXConfig->FrameLength;
@@ -2449,7 +2457,7 @@ __weak HAL_StatusTypeDef MX_SAI4_Block_A_Init(SAI_HandleTypeDef* hsai, MX_SAI_Co
   hsai->Init.PdmInit.MicPairsNbr    = 1;
   hsai->Init.PdmInit.ClockEnable    = SAI_PDM_CLOCK2_ENABLE;
 
-
+// wrong clock config - what is master clock for
   /* Configure SAI_Block_x Frame */
   hsai->FrameInit.FrameLength       = MXConfig->FrameLength;
   hsai->FrameInit.ActiveFrameLength = MXConfig->ActiveFrameLength;

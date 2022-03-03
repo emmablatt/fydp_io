@@ -257,8 +257,8 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-//    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
-//    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai1_b);
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
     }
 /* SAI4 */
     if(hsai->Instance==SAI4_Block_A)
@@ -299,7 +299,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
       /* Peripheral DMA init*/
-    // TODO: setup hdma for sai channel with request
+
     hdma_sai4_a.Instance = BDMA_Channel1;
     hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
     hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
@@ -326,9 +326,9 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-//    __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
-//
-//    __HAL_LINKDMA(hsai,hdmatx,hdma_sai1_b);
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
+
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai4_a);
 
     }
 }
