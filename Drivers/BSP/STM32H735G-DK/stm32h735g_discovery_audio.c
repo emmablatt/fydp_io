@@ -2460,7 +2460,7 @@ __weak HAL_StatusTypeDef MX_SAI4_Block_A_Init(SAI_HandleTypeDef* hsai, MX_SAI_Co
   /* Configure SAI Block_x Slot */
   hsai->SlotInit.FirstBitOffset     = 0;
   hsai->SlotInit.SlotSize           = SAI_SLOTSIZE_DATASIZE;
-  hsai->SlotInit.SlotNumber         = 1;
+  hsai->SlotInit.SlotNumber         = 1; // TODO: =2? pg 2305 rm0468
   hsai->SlotInit.SlotActive        = MXConfig->SlotActive;
 
   if(HAL_SAI_Init(hsai) != HAL_OK)

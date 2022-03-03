@@ -267,9 +267,9 @@ void BDMA_Channel1_IRQHandler(void)
   */
 void SAI4_IRQHandler(void)
 {
-  /* USER CODE BEGIN SAI4_IRQn 0 */ // TODO: check if this is right
-	HAL_SAI_IRQHandler(&haudio_in_sai[PDM]);
-	BSP_LED_On(LED_GREEN);
+  /* USER CODE BEGIN SAI4_IRQn 0 */
+	// SAI HANDLER IS FOR INTERRUPTS NOT DMA
+
   /* USER CODE END SAI4_IRQn 0 */
   /* USER CODE BEGIN SAI4_IRQn 1 */
 

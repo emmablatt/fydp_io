@@ -89,7 +89,7 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
+  /* USER CODE BEGIN Init */r
 
   /* USER CODE END Init */
 
@@ -125,7 +125,7 @@ int main(void)
   haudio_in.BitsPerSample = AUDIO_RESOLUTION_8B;
   haudio_in.Volume = 50;
   int32_t in_init_status = BSP_AUDIO_IN_Init(PDM, &haudio_in);
-  int32_t convert_status = BSP_AUDIO_IN_PDMToPCM_Init(PDM, SAI_AUDIO_FREQUENCY_16K, 1, 1);
+  //int32_t convert_status = BSP_AUDIO_IN_PDMToPCM_Init(PDM, SAI_AUDIO_FREQUENCY_16K, 1, 1);
 
   uint8_t mic_buffer[PDM_BUFFER_SIZE] = {0};
   // uint16_t speaker_buffer[PCM_BUFFER_SIZE] = {0};
