@@ -214,6 +214,21 @@ void DMA1_Stream1_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMAMUX1 overrun interrupt.
+  */
+void DMAMUX1_OVR_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMAMUX1_OVR_IRQn 0 */
+
+  /* USER CODE END DMAMUX1_OVR_IRQn 0 */
+  // Handle DMA1_Stream1
+  HAL_DMAEx_MUX_IRQHandler(&hdma_sai1_b);
+  /* USER CODE BEGIN DMAMUX1_OVR_IRQn 1 */
+
+  /* USER CODE END DMAMUX1_OVR_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMAMUX2 overrun interrupt.
   */
 void DMAMUX2_OVR_IRQHandler(void)
@@ -221,7 +236,7 @@ void DMAMUX2_OVR_IRQHandler(void)
   /* USER CODE BEGIN DMAMUX2_OVR_IRQn 0 */
 
   /* USER CODE END DMAMUX2_OVR_IRQn 0 */
-  // Handle BDMA_Channel0
+  // Handle BDMA_Channel1
   HAL_DMAEx_MUX_IRQHandler(&hdma_sai4_a);
   /* USER CODE BEGIN DMAMUX2_OVR_IRQn 1 */
 
@@ -229,17 +244,17 @@ void DMAMUX2_OVR_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles BDMA channel0 global interrupt.
+  * @brief This function handles BDMA channel1 global interrupt.
   */
-void BDMA_Channel0_IRQHandler(void)
+void BDMA_Channel1_IRQHandler(void)
 {
-  /* USER CODE BEGIN BDMA_Channel0_IRQn 0 */
+  /* USER CODE BEGIN BDMA_Channel1_IRQn 0 */
 
-  /* USER CODE END BDMA_Channel0_IRQn 0 */
+  /* USER CODE END BDMA_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_sai4_a);
-  /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
+  /* USER CODE BEGIN BDMA_Channel1_IRQn 1 */
 
-  /* USER CODE END BDMA_Channel0_IRQn 1 */
+  /* USER CODE END BDMA_Channel1_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

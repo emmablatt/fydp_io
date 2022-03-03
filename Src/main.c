@@ -43,16 +43,11 @@
 
 CRC_HandleTypeDef hcrc;
 
-DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
-
 SAI_HandleTypeDef hsai_BlockB1;
 SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai4_a;
 
-UART_HandleTypeDef huart3;
-
-DMA_HandleTypeDef hdma_dma_generator0;
 /* USER CODE BEGIN PV */
 PDM_Filter_Handler_t PDM1_filter_handler;
 /* USER CODE END PV */
@@ -63,11 +58,8 @@ static void MX_GPIO_Init(void);
 static void MX_BDMA_Init(void);
 static void MX_SAI4_Init(void);
 static void MX_CRC_Init(void);
-static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
-static void MX_DFSDM1_Init(void);
 static void MX_SAI1_Init(void);
-
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -107,16 +99,12 @@ int main(void)
   MX_GPIO_Init();
   MX_BDMA_Init();
   MX_SAI4_Init();
+
   MX_CRC_Init();
-  MX_USART3_UART_Init();
-  MX_DMA_Init();
   MX_PDM2PCM_Init();
-  MX_DFSDM1_Init();
+  MX_DMA_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
-  /* Infinite loop */
-  // output freq (pcm freq) = 48kHz
-  // decimiation factor = 64
 
   // for pdm: input buffer is uint8
   // with length >= (48 * 64 * 1/8) = 384
@@ -127,14 +115,15 @@ int main(void)
   uint16_t pcm_buffer[4096] = {0};
 
   /* INITIALIZE */
+  //
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
 
   // polling mode - SIZE = # BYTES
-  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
-  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+//  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
+//  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
-  //HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
+  HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -241,44 +230,6 @@ static void MX_CRC_Init(void)
 }
 
 /**
-  * @brief DFSDM1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_DFSDM1_Init(void)
-{
-
-  /* USER CODE BEGIN DFSDM1_Init 0 */
-
-  /* USER CODE END DFSDM1_Init 0 */
-
-  /* USER CODE BEGIN DFSDM1_Init 1 */
-
-  /* USER CODE END DFSDM1_Init 1 */
-  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
-  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
-  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
-  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
-  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
-  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
-  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
-  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
-  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
-  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
-  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
-  hdfsdm1_channel0.Init.Offset = 0x00;
-  hdfsdm1_channel0.Init.RightBitShift = 0x00;
-  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN DFSDM1_Init 2 */
-
-  /* USER CODE END DFSDM1_Init 2 */
-
-}
-
-/**
   * @brief SAI1 Initialization Function
   * @param None
   * @retval None
@@ -297,11 +248,10 @@ static void MX_SAI1_Init(void)
   hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
   hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
   hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
   hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockB1.Init.MonoStereoMode = SAI_MONOMODE;
   hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
   if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
@@ -332,23 +282,22 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Instance = SAI4_Block_A;
   hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
   hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
+  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
   hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
   hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
   hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
   hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 16;
+  hsai_BlockA4.FrameInit.FrameLength = 8;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
-  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
+  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_HIGH;
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
@@ -365,54 +314,6 @@ static void MX_SAI4_Init(void)
 }
 
 /**
-  * @brief USART3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART3_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART3_Init 0 */
-
-  /* USER CODE END USART3_Init 0 */
-
-  /* USER CODE BEGIN USART3_Init 1 */
-
-  /* USER CODE END USART3_Init 1 */
-  huart3.Instance = USART3;
-  huart3.Init.BaudRate = 115200;
-  huart3.Init.WordLength = UART_WORDLENGTH_8B;
-  huart3.Init.StopBits = UART_STOPBITS_1;
-  huart3.Init.Parity = UART_PARITY_NONE;
-  huart3.Init.Mode = UART_MODE_TX_RX;
-  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart3.Init.ClockPrescaler = UART_PRESCALER_DIV1;
-  huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetTxFifoThreshold(&huart3, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetRxFifoThreshold(&huart3, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_DisableFifoMode(&huart3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART3_Init 2 */
-
-  /* USER CODE END USART3_Init 2 */
-
-}
-
-/**
   * Enable DMA controller clock
   */
 static void MX_BDMA_Init(void)
@@ -421,20 +322,21 @@ static void MX_BDMA_Init(void)
   /* DMA controller clock enable */
   __HAL_RCC_BDMA_CLK_ENABLE();
 
+  //(+++) Configure the declared DMA handle structure with the required Tx/Rx parameters.
+
+
   /* DMA interrupt init */
   /* DMAMUX2_OVR_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMAMUX2_OVR_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMAMUX2_OVR_IRQn);
-  /* BDMA_Channel0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(BDMA_Channel0_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(BDMA_Channel0_IRQn);
+  /* BDMA_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BDMA_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(BDMA_Channel1_IRQn);
 
 }
 
 /**
   * Enable DMA controller clock
-  * Configure DMA for memory to memory transfers
-  *   hdma_dma_generator0
   */
 static void MX_DMA_Init(void)
 {
@@ -442,29 +344,13 @@ static void MX_DMA_Init(void)
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
 
-  /* Configure DMA request hdma_dma_generator0 on DMA1_Stream0 */
-  hdma_dma_generator0.Instance = DMA1_Stream0;
-  hdma_dma_generator0.Init.Request = DMA_REQUEST_GENERATOR0;
-  hdma_dma_generator0.Init.Direction = DMA_PERIPH_TO_MEMORY;
-  hdma_dma_generator0.Init.PeriphInc = DMA_PINC_DISABLE;
-  hdma_dma_generator0.Init.MemInc = DMA_MINC_ENABLE;
-  hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-  hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-  hdma_dma_generator0.Init.Mode = DMA_CIRCULAR;
-  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_LOW;
-  hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
-  hdma_dma_generator0.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-  hdma_dma_generator0.Init.MemBurst = DMA_MBURST_SINGLE;
-  hdma_dma_generator0.Init.PeriphBurst = DMA_PBURST_SINGLE;
-  if (HAL_DMA_Init(&hdma_dma_generator0) != HAL_OK)
-  {
-    Error_Handler( );
-  }
-
   /* DMA interrupt init */
   /* DMA1_Stream1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+  /* DMAMUX1_OVR_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMAMUX1_OVR_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMAMUX1_OVR_IRQn);
 
 }
 
@@ -479,7 +365,6 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
