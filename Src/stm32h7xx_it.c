@@ -240,7 +240,7 @@ void DMAMUX2_OVR_IRQHandler(void)
   /* USER CODE END DMAMUX2_OVR_IRQn 0 */
   // Handle BDMA_Channel1
   HAL_DMAEx_MUX_IRQHandler(&hdma_sai4_a);
-  /* USER CODE BEGIN DMAMUX2_OVR_IRQn 1 */
+  /* USER CODE BEGIN DMAMUX2ri_OVR_IRQn 1 */
 
   /* USER CODE END DMAMUX2_OVR_IRQn 1 */
 }
