@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#define DMA_LOC 0x38000000
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,7 +67,6 @@ static void MX_SAI1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -111,7 +110,9 @@ int main(void)
 
   // for pdm: input buffer is uint8
   // with length >= (48 * 64 * 1/8) = 384
-  uint8_t pdm_buffer[4096] = {0};
+//  uint8_t pdm_buffer[4096] = {0};
+  *(volatile uint8_t *)DMA_LOC = 'A';
+  uint8_t *pdm_buffer = (uint8_t*)DMA_LOC;
 
   // for pdm: output buffer is uint16
   // with length >= 48
