@@ -695,7 +695,6 @@ typedef struct __DMA_HandleTypeDef
   * @retval None
   */
 #define __HAL_DMA_ENABLE(__HANDLE__) \
-((IS_DMA_STREAM_INSTANCE((__HANDLE__)->Instance))? (((DMA_Stream_TypeDef *)(__HANDLE__)->Instance)->CR |=  DMA_SxCR_EN) : \
 (((BDMA_Channel_TypeDef *)(__HANDLE__)->Instance)->CCR |=  BDMA_CCR_EN))
 
 /**
