@@ -11,4 +11,4 @@ stm32h7xx_it.c:205:6:DMA1_Stream1_IRQHandler	8	static
 stm32h7xx_it.c:219:6:DMAMUX1_OVR_IRQHandler	8	static
 stm32h7xx_it.c:234:6:DMAMUX2_OVR_IRQHandler	8	static
 stm32h7xx_it.c:249:6:BDMA_Channel1_IRQHandler	8	static
-stm32h7xx_it.c:268:6:SAI4_IRQHandler	8	static
+stm32h7xx_it.c:268:6:SAI4_IRQHandler	4	static
