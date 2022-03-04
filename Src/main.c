@@ -102,6 +102,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  /* USER CODE BEGIN 2 */
   MX_GPIO_Init();
   MX_BDMA_Init();
   MX_SAI4_Init();
@@ -110,7 +111,6 @@ int main(void)
   MX_PDM2PCM_Init();
   MX_DMA_Init();
   MX_SAI1_Init();
-  /* USER CODE BEGIN 2 */
 
   uint8_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
 
@@ -119,14 +119,15 @@ int main(void)
   HAL_SAI_Init(&hsai_BlockA4);
   uint16_t pcm_buffer[128] = {0};
 
+  // need to move data from D3 into D2 (where SAI1 is)
+  // bdma_ch1 to SRAM4 -> dma_mux2
 
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64) == HAL_OK)
   {
-//	  HAL_SAI_DeInit(&hsai_BlockA4);
-//	  HAL_SAI_MspInit(&)
-//	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+	  HAL_SAI_DeInit(&hsai_BlockA4);
+	  HAL_SAI_MspInit(&hsai_BlockB1);
+	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 	  BSP_LED_On(LED2);
-	  HAL_Delay(1000);
   }
   /* USER CODE END 2 */
 
