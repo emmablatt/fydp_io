@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#define DMA_LOC 0x38000000
+#define SRAM4_BASE 0x38000000
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,6 +86,10 @@ int main(void)
   BSP_LED_Init(LED1);
   BSP_LED_Off(LED1);
 
+  HAL_Init();
+  BSP_LED_Init(LED2);
+  BSP_LED_Off(LED2);
+
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -108,25 +112,22 @@ int main(void)
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
 
-  // for pdm: input buffer is uint8
-  // with length >= (48 * 64 * 1/8) = 384
-//  uint8_t pdm_buffer[4096] = {0};
-  *(volatile uint8_t *)DMA_LOC = 'A';
-  uint8_t *pdm_buffer = (uint8_t*)DMA_LOC;
-
-  // for pdm: output buffer is uint16
-  // with length >= 48
-  uint16_t pcm_buffer[4096] = {0};
+  uint32_t *pdm_buffer = (uint32_t*)SRAM4_BASE;
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
+  uint32_t pcm_buffer[128] = {0};
 
-  // polling mode - SIZE = # BYTES
-//  HAL_SAI_Receive(&hsai_BlockA4, pdm_buffer, 64, 1000);
-//  uint32_t pdm_status = PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
-  HAL_StatusTypeDef dma_status = HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64);
+  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64) == HAL_OK)
+  {
+//	  HAL_SAI_DeInit(&hsai_BlockA4);
+//	  HAL_SAI_MspInit(&)
+//	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+	  BSP_LED_Toggle(LED2);
+	  HAL_Delay(1000);
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
