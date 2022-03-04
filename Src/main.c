@@ -112,12 +112,12 @@ int main(void)
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
 
-  uint32_t *pdm_buffer = (uint32_t*)SRAM4_BASE;
+  uint8_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
 
   /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
-  uint32_t pcm_buffer[128] = {0};
+  uint16_t pcm_buffer[128] = {0};
 
 
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64) == HAL_OK)
@@ -125,7 +125,7 @@ int main(void)
 //	  HAL_SAI_DeInit(&hsai_BlockA4);
 //	  HAL_SAI_MspInit(&)
 //	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
-	  BSP_LED_Toggle(LED2);
+	  BSP_LED_On(LED2);
 	  HAL_Delay(1000);
   }
   /* USER CODE END 2 */
@@ -298,15 +298,15 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
   hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 8;
+  hsai_BlockA4.FrameInit.FrameLength = 32;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_HIGH;
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
-  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_32B;
   hsai_BlockA4.SlotInit.SlotNumber = 1;
-  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
+  hsai_BlockA4.SlotInit.SlotActive = SAI_SLOTACTIVE_ALL;
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
   {
     Error_Handler();
