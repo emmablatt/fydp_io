@@ -29,14 +29,15 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h \
+ ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h \
- ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h \
- ../Inc/stm32h735g_discovery_conf.h \
- ../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
  ../Inc/pdm2pcm.h ../Inc/main.h \
  ../Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h \
- ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h \
+ ../Inc/stm32h735g_discovery_conf.h \
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h
 
 ../Inc/main.h:
 
@@ -100,15 +101,11 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h:
 
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h:
+
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h:
 
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h:
-
-../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h:
-
-../Inc/stm32h735g_discovery_conf.h:
-
-../Inc/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
 
 ../Inc/pdm2pcm.h:
 
@@ -117,3 +114,9 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 ../Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h:
 
 ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h:
+
+../Inc/stm32h735g_discovery_conf.h:
+
+../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
+
+../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h:

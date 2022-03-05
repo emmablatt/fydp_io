@@ -22,7 +22,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
+
 #define SRAM4_BASE 0x38000000
+#define SRAM2_BASE 0x30004000
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -109,14 +113,6 @@ int main(void)
   MX_SAI1_Init();
   MX_RAMECC_Init();
   /* USER CODE BEGIN 2 */
-  MX_GPIO_Init();
-  MX_BDMA_Init();
-  MX_SAI4_Init();
-
-  MX_CRC_Init();
-  MX_PDM2PCM_Init();
-  MX_DMA_Init();
-  MX_SAI1_Init();
 
   uint8_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
 
