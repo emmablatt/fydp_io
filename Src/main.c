@@ -400,7 +400,6 @@ static void MX_BDMA_Init(void)
 
   /* DMA controller clock enable */
   __HAL_RCC_BDMA_CLK_ENABLE();
-
 }
 
 /**
@@ -476,10 +475,6 @@ static void MX_GPIO_Init(void)
 //stm32h7xx_hal_sai.c -> SAI_DMARxCplt(DMA_HandleTypeDef *hdma)
 //#if (USE_HAL_SAI_REGISTER_CALLBACKS == 1)
 //  hsai->RxCpltCallback(hsai);
-
-
-
-
 
 /* USER CODE END 4 */
 
