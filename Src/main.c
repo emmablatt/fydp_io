@@ -120,10 +120,10 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 
-  uint8_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
+  uint32_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
-  uint16_t pcm_buffer = (uint16_t)SRAM2_BASE;
+  uint32_t *pcm_buffer = (uint8_t*)SRAM2_BASE;
 
   // need to move data from D3 into D2 (where SAI1 is)
   // initialize dma2 to do mem2mem rx from sram4
@@ -133,6 +133,7 @@ int main(void)
   // stm32h7xx_hal_gpio.c: HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
   // stm32h7xx_hal_dma.c: no init for sram/flash
   // EXTI software interrupt from callback function
+  // look to see if this starts automatically when pdm buff is full
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, pdm_buffer, pcm_buffer, 64);
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64) == HAL_OK)
   {
@@ -361,7 +362,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Instance = SAI4_Block_A;
   hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
   hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
+  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_32;
   hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
   hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
   hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
@@ -371,9 +372,9 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 8;
+  hsai_BlockA4.FrameInit.FrameLength = 64; //TODO: 31?
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_HIGH;
