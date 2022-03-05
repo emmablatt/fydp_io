@@ -18803,9 +18803,9 @@ static void MX_SAI4_Init(void)
  8007714:	4b28      	ldr	r3, [pc, #160]	; (80077b8 <MX_SAI4_Init+0xb4>)
  8007716:	2201      	movs	r2, #1
  8007718:	605a      	str	r2, [r3, #4]
-  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_32;
+  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
  800771a:	4b27      	ldr	r3, [pc, #156]	; (80077b8 <MX_SAI4_Init+0xb4>)
- 800771c:	22e0      	movs	r2, #224	; 0xe0
+ 800771c:	2240      	movs	r2, #64	; 0x40
  800771e:	649a      	str	r2, [r3, #72]	; 0x48
   hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
  8007720:	4b25      	ldr	r3, [pc, #148]	; (80077b8 <MX_SAI4_Init+0xb4>)
@@ -18851,9 +18851,9 @@ static void MX_SAI4_Init(void)
  8007760:	4b15      	ldr	r3, [pc, #84]	; (80077b8 <MX_SAI4_Init+0xb4>)
  8007762:	f44f 7200 	mov.w	r2, #512	; 0x200
  8007766:	641a      	str	r2, [r3, #64]	; 0x40
-  hsai_BlockA4.FrameInit.FrameLength = 64; //TODO: 31?
+  hsai_BlockA4.FrameInit.FrameLength = 32;
  8007768:	4b13      	ldr	r3, [pc, #76]	; (80077b8 <MX_SAI4_Init+0xb4>)
- 800776a:	2240      	movs	r2, #64	; 0x40
+ 800776a:	2220      	movs	r2, #32
  800776c:	655a      	str	r2, [r3, #84]	; 0x54
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
  800776e:	4b12      	ldr	r3, [pc, #72]	; (80077b8 <MX_SAI4_Init+0xb4>)
@@ -18875,15 +18875,15 @@ static void MX_SAI4_Init(void)
  8007788:	4b0b      	ldr	r3, [pc, #44]	; (80077b8 <MX_SAI4_Init+0xb4>)
  800778a:	2200      	movs	r2, #0
  800778c:	669a      	str	r2, [r3, #104]	; 0x68
-  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_32B;
  800778e:	4b0a      	ldr	r3, [pc, #40]	; (80077b8 <MX_SAI4_Init+0xb4>)
- 8007790:	2200      	movs	r2, #0
+ 8007790:	2280      	movs	r2, #128	; 0x80
  8007792:	66da      	str	r2, [r3, #108]	; 0x6c
   hsai_BlockA4.SlotInit.SlotNumber = 1;
  8007794:	4b08      	ldr	r3, [pc, #32]	; (80077b8 <MX_SAI4_Init+0xb4>)
  8007796:	2201      	movs	r2, #1
  8007798:	671a      	str	r2, [r3, #112]	; 0x70
-  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
+  hsai_BlockA4.SlotInit.SlotActive = SAI_SLOTACTIVE_ALL;
  800779a:	4b07      	ldr	r3, [pc, #28]	; (80077b8 <MX_SAI4_Init+0xb4>)
  800779c:	f64f 72ff 	movw	r2, #65535	; 0xffff
  80077a0:	675a      	str	r2, [r3, #116]	; 0x74
@@ -18894,7 +18894,7 @@ static void MX_SAI4_Init(void)
  80077aa:	2b00      	cmp	r3, #0
  80077ac:	d001      	beq.n	80077b2 <MX_SAI4_Init+0xae>
   {
-    Error_Handler();
+	Error_Handler();
  80077ae:	f000 f8e7 	bl	8007980 <Error_Handler>
   }
   /* USER CODE BEGIN SAI4_Init 2 */
