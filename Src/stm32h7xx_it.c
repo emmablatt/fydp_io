@@ -20,8 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32h7xx_it.h"
-//#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -57,7 +55,6 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern DMA_HandleTypeDef hdma_sai1_b;
 extern DMA_HandleTypeDef hdma_sai4_a;
 /* USER CODE BEGIN EV */
 
@@ -202,32 +199,17 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles DMA1 stream1 global interrupt.
+  * @brief This function handles EXTI line0 interrupt.
   */
-void DMA1_Stream1_IRQHandler(void)
+void EXTI0_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
+  /* USER CODE BEGIN EXTI0_IRQn 0 */
 
-  /* USER CODE END DMA1_Stream1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_sai1_b);
-  /* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
+  /* USER CODE END EXTI0_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+  /* USER CODE BEGIN EXTI0_IRQn 1 */
 
-  /* USER CODE END DMA1_Stream1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles DMAMUX1 overrun interrupt.
-  */
-void DMAMUX1_OVR_IRQHandler(void)
-{
-  /* USER CODE BEGIN DMAMUX1_OVR_IRQn 0 */
-
-  /* USER CODE END DMAMUX1_OVR_IRQn 0 */
-  // Handle DMA1_Stream1
-  HAL_DMAEx_MUX_IRQHandler(&hdma_sai1_b);
-  /* USER CODE BEGIN DMAMUX1_OVR_IRQn 1 */
-
-  /* USER CODE END DMAMUX1_OVR_IRQn 1 */
+  /* USER CODE END EXTI0_IRQn 1 */
 }
 
 /**
@@ -240,7 +222,7 @@ void DMAMUX2_OVR_IRQHandler(void)
   /* USER CODE END DMAMUX2_OVR_IRQn 0 */
   // Handle BDMA_Channel1
   HAL_DMAEx_MUX_IRQHandler(&hdma_sai4_a);
-  /* USER CODE BEGIN DMAMUX2ri_OVR_IRQn 1 */
+  /* USER CODE BEGIN DMAMUX2_OVR_IRQn 1 */
 
   /* USER CODE END DMAMUX2_OVR_IRQn 1 */
 }
@@ -254,8 +236,6 @@ void BDMA_Channel1_IRQHandler(void)
 
   /* USER CODE END BDMA_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_sai4_a);
-  BSP_LED_On(LED1);
-
   /* USER CODE BEGIN BDMA_Channel1_IRQn 1 */
 
   /* USER CODE END BDMA_Channel1_IRQn 1 */
