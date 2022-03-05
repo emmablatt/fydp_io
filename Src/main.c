@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
-#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
+//#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
 
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
@@ -69,6 +69,7 @@ static void MX_CRC_Init(void);
 static void MX_DMA_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_RAMECC_Init(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -112,24 +113,31 @@ int main(void)
   MX_DMA_Init();
   MX_SAI1_Init();
   MX_RAMECC_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 
   uint8_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
-
-  /* INITIALIZE */
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
-  uint16_t pcm_buffer[128] = {0};
+  uint16_t pcm_buffer = (uint16_t)SRAM2_BASE;
 
   // need to move data from D3 into D2 (where SAI1 is)
-  // bdma_ch1 to SRAM4 -> dma_mux2
+  // initialize dma2 to do mem2mem rx from sram4
+  // on sync signal from sai4 callback complete transfer
 
+  // stm32h7xx_hal_exti.c: EXTI Peripheral config
+  // stm32h7xx_hal_gpio.c: HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
+  // stm32h7xx_hal_dma.c: no init for sram/flash
+
+  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, pdm_buffer, pcm_buffer, 64);
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64) == HAL_OK)
   {
 	  HAL_SAI_DeInit(&hsai_BlockA4);
 	  HAL_SAI_MspInit(&hsai_BlockB1);
-	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
-	  BSP_LED_On(LED2);
+	  //PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+	  //BSP_LED_On(LED2);
   }
   /* USER CODE END 2 */
 
@@ -199,6 +207,26 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* BDMA_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BDMA_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(BDMA_Channel1_IRQn);
+  /* DMA2_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+  /* EXTI0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+  /* DMAMUX2_OVR_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMAMUX2_OVR_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMAMUX2_OVR_IRQn);
 }
 
 /**
@@ -371,14 +399,6 @@ static void MX_BDMA_Init(void)
   /* DMA controller clock enable */
   __HAL_RCC_BDMA_CLK_ENABLE();
 
-  /* DMA interrupt init */
-  /* DMAMUX2_OVR_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMAMUX2_OVR_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMAMUX2_OVR_IRQn);
-  /* BDMA_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(BDMA_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(BDMA_Channel1_IRQn);
-
 }
 
 /**
@@ -433,10 +453,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
 }
 
