@@ -22,7 +22,7 @@
 #include "stm32h7xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "../../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,7 +59,7 @@
 extern DMA_HandleTypeDef hdma_memtomem_dma2_stream0;
 extern DMA_HandleTypeDef hdma_sai4_a;
 /* USER CODE BEGIN EV */
-
+extern EXTI_HandleTypeDef hexti0;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -206,9 +206,9 @@ void SysTick_Handler(void)
 void EXTI0_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_IRQn 0 */
-
+	BSP_LED_On(LED1);
   /* USER CODE END EXTI0_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
   /* USER CODE BEGIN EXTI0_IRQn 1 */
   /* USER CODE END EXTI0_IRQn 1 */
 }
@@ -252,11 +252,18 @@ void BDMA_Channel1_IRQHandler(void)
   /* USER CODE END BDMA_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_sai4_a);
   /* USER CODE BEGIN BDMA_Channel1_IRQn 1 */
-
+  BSP_LED_On(LED2);
   /* USER CODE END BDMA_Channel1_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
+{
+  /* Prevent unused argument(s) compilation warning */
+	HAL_EXTI_GenerateSWI(&hexti0);
 
+
+
+}
 /* USER CODE END 1 */
 

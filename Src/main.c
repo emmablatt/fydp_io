@@ -51,6 +51,8 @@ RAMECC_HandleTypeDef hramecc2_m1;
 RAMECC_HandleTypeDef hramecc2_m2;
 RAMECC_HandleTypeDef hramecc3_m1;
 
+EXTI_HandleTypeDef hexti0;
+EXTI_ConfigTypeDef hexti0_config;
 SAI_HandleTypeDef hsai_BlockB1;
 SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai4_a;
@@ -130,7 +132,7 @@ int main(void)
   // stm32h7xx_hal_exti.c: EXTI Peripheral config
   // stm32h7xx_hal_gpio.c: HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
   // stm32h7xx_hal_dma.c: no init for sram/flash
-
+  // EXTI software interrupt from callback function
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, pdm_buffer, pcm_buffer, 64);
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64) == HAL_OK)
   {
@@ -448,15 +450,36 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
-  /*Configure GPIO pin : PE0 */
+  /*Configure GPIO pin : PE0 */ // GPIO pin configuration
   GPIO_InitStruct.Pin = GPIO_PIN_0;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
+//  configure EXTI_HandleTypeDef hexti0;
+//  stm32h7xx_hal_exti.h
+//#define EXTI_D3_PENDCLR_SRC_DMACH6     0x00000001U /*!< DMA ch6 event selected as D3 domain pendclear source, PMRx register to be set to 1 */
+
+
+  hexti0_config.Line = EXTI_LINE_0;
+  hexti0_config.Mode = EXTI_MODE_INTERRUPT;
+  hexti0_config.Trigger = EXTI_TRIGGER_RISING;
+  hexti0_config.GPIOSel = EXTI_GPIOE;
+  hexti0_config.PendClearSource = EXTI_D3_PENDCLR_SRC_DMACH6;
+  HAL_EXTI_SetConfigLine(&hexti0, &hexti0_config);
+  //HAL_EXTI_D3_EventInputConfig();
 }
 
 /* USER CODE BEGIN 4 */
+
+//stm32h7xx_hal_conf.h -> USE_HAL_SAI_REGISTER_CALLBACKS
+//stm32h7xx_hal_sai.c -> SAI_DMARxCplt(DMA_HandleTypeDef *hdma)
+//#if (USE_HAL_SAI_REGISTER_CALLBACKS == 1)
+//  hsai->RxCpltCallback(hsai);
+
+
+
+
 
 /* USER CODE END 4 */
 

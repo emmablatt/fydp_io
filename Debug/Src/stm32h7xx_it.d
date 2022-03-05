@@ -32,7 +32,10 @@ Src/stm32h7xx_it.o: ../Src/stm32h7xx_it.c ../Inc/main.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h \
  ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h \
- ../Inc/stm32h7xx_it.h
+ ../Inc/stm32h7xx_it.h \
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h \
+ ../Inc/stm32h735g_discovery_conf.h \
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h
 
 ../Inc/main.h:
 
@@ -103,3 +106,9 @@ Src/stm32h7xx_it.o: ../Src/stm32h7xx_it.c ../Inc/main.h \
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h:
 
 ../Inc/stm32h7xx_it.h:
+
+../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h:
+
+../Inc/stm32h735g_discovery_conf.h:
+
+../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
