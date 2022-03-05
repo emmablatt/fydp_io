@@ -18196,9 +18196,9 @@ static void MX_SAI4_Init(void)
  8007410:	4b0b      	ldr	r3, [pc, #44]	; (8007440 <MX_SAI4_Init+0xb4>)
  8007412:	2200      	movs	r2, #0
  8007414:	669a      	str	r2, [r3, #104]	; 0x68
-  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_32B;
+  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
  8007416:	4b0a      	ldr	r3, [pc, #40]	; (8007440 <MX_SAI4_Init+0xb4>)
- 8007418:	2280      	movs	r2, #128	; 0x80
+ 8007418:	2200      	movs	r2, #0
  800741a:	66da      	str	r2, [r3, #108]	; 0x6c
   hsai_BlockA4.SlotInit.SlotNumber = 1;
  800741c:	4b08      	ldr	r3, [pc, #32]	; (8007440 <MX_SAI4_Init+0xb4>)
