@@ -101,8 +101,8 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   BSP_LED_Init(LED1);
-  BSP_LED_Init(LED1);
-  BSP_LED_Off(LED2);
+  BSP_LED_Init(LED2);
+  BSP_LED_Off(LED1);
   BSP_LED_Off(LED2);
 
   /* USER CODE END Init */
