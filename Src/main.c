@@ -147,8 +147,8 @@ int main(void)
   {
 	  HAL_SAI_DeInit(&hsai_BlockA4);
 	  HAL_SAI_MspInit(&hsai_BlockB1);
-	  //PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
-	  //BSP_LED_On(LED2);
+	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+	  BSP_LED_On(LED2);
   }
   /* USER CODE END 2 */
 
