@@ -170,69 +170,76 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
     }
-/* SAI4 */
-    if(hsai->Instance==SAI4_Block_A)
-    {
-    /* Peripheral clock enable */
-  /** Initializes the peripherals clock
-  */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI4A;
-    PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }
+    /* SAI4 */
+        if(hsai->Instance==SAI4_Block_A)
+        {
+        /* Peripheral clock enable */
+      /** Initializes the peripherals clock
+      */
+        PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI4A;
+        PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL;
+        if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+        {
+          Error_Handler();
+        }
 
-    if (SAI4_client == 0)
-    {
-       __HAL_RCC_SAI4_CLK_ENABLE();
-    }
-    SAI4_client ++;
+        if (SAI4_client == 0)
+        {
+           __HAL_RCC_SAI4_CLK_ENABLE();
+        }
+        SAI4_client ++;
 
-    /**SAI4_A_Block_A GPIO Configuration
-    PE4     ------> SAI4_D2
-    PE5     ------> SAI4_CK2
-    PD6     ------> SAI4_D1
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF10_SAI4;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+        /**SAI4_A_Block_A GPIO Configuration
+        PE4     ------> SAI4_D2
+        PE5     ------> SAI4_CK2
+        PD6     ------> SAI4_D1
+        */
+        GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+    //    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
 
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF1_SAI4;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+        GPIO_InitStruct.Alternate = GPIO_AF10_SAI4;
+        HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-      /* Peripheral DMA init*/
+        GPIO_InitStruct.Pin = GPIO_PIN_6;
+    //    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
 
-    hdma_sai4_a.Instance = BDMA_Channel1;
-    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
-    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
-    hdma_sai4_a.Init.Priority = DMA_PRIORITY_VERY_HIGH;
-    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
-    {
-      Error_Handler();
-    }
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+        GPIO_InitStruct.Alternate = GPIO_AF1_SAI4;
+        HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-    pSyncConfig.SyncSignalID = HAL_DMAMUX2_SYNC_EXTI0;
-    pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;
-    pSyncConfig.SyncEnable = DISABLE;
-    pSyncConfig.EventEnable = ENABLE;
-    pSyncConfig.RequestNumber = 1;
-    if (HAL_DMAEx_ConfigMuxSync(&hdma_sai4_a, &pSyncConfig) != HAL_OK)
-    {
-      Error_Handler();
-    }
+          /* Peripheral DMA init*/
+
+        hdma_sai4_a.Instance = BDMA_Channel1;
+        hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
+        hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
+        hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
+        hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
+        hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+
+        // changed from word to byte so each word in memory
+        // so that each spot in memofry fills
+        hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+        hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
+        hdma_sai4_a.Init.Priority = DMA_PRIORITY_VERY_HIGH;
+        if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
+        {
+          Error_Handler();
+        }
+
+        pSyncConfig.SyncSignalID = HAL_DMAMUX2_SYNC_EXTI0;
+        pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;
+        pSyncConfig.SyncEnable = DISABLE;
+        pSyncConfig.EventEnable = ENABLE;
+        pSyncConfig.RequestNumber = 1;
+        if (HAL_DMAEx_ConfigMuxSync(&hdma_sai4_a, &pSyncConfig) != HAL_OK)
+        {
+          Error_Handler();
+        }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
