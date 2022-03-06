@@ -17751,11 +17751,11 @@ int main(void)
   BSP_LED_Init(LED1);
  800716a:	2000      	movs	r0, #0
  800716c:	f7f9 f8d0 	bl	8000310 <BSP_LED_Init>
-  BSP_LED_Init(LED1);
- 8007170:	2000      	movs	r0, #0
+  BSP_LED_Init(LED2);
+ 8007170:	2001      	movs	r0, #1
  8007172:	f7f9 f8cd 	bl	8000310 <BSP_LED_Init>
-  BSP_LED_Off(LED2);
- 8007176:	2001      	movs	r0, #1
+  BSP_LED_Off(LED1);
+ 8007176:	2000      	movs	r0, #0
  8007178:	f7f9 f946 	bl	8000408 <BSP_LED_Off>
   BSP_LED_Off(LED2);
  800717c:	2001      	movs	r0, #1

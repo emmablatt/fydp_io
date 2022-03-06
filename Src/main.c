@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
+#include "../Drivers/BSP/Components/wm8994/wm8994.h"
 
 //#define SRAM4_BASE 0x38000000
 //#define SRAM2_BASE 0x30004000
