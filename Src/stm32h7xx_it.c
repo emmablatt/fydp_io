@@ -256,14 +256,14 @@ void BDMA_Channel1_IRQHandler(void)
   /* USER CODE END BDMA_Channel1_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
-void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
-{
-  /* Prevent unused argument(s) compilation warning */
-	HAL_EXTI_GenerateSWI(&hexti0);
-
-
-
-}
+///* USER CODE BEGIN 1 */
+//void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
+//{
+//  /* Prevent unused argument(s) compilation warning */
+//	HAL_EXTI_GenerateSWI(&hexti0);
+//
+//
+//
+//}
 /* USER CODE END 1 */
 

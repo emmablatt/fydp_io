@@ -23,10 +23,12 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
-//#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
+
+//#define SRAM4_BASE 0x38000000
+//#define SRAM2_BASE 0x30004000
 
 #define SRAM4_BASE 0x38000000
-#define SRAM2_BASE 0x30004000
+#define SRAM2_BASE 0x30004100
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,6 +98,10 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  BSP_LED_Init(LED1);
+  BSP_LED_Init(LED1);
+  BSP_LED_Off(LED2);
+  BSP_LED_Off(LED2);
 
   /* USER CODE END Init */
 
@@ -114,7 +120,7 @@ int main(void)
   MX_PDM2PCM_Init();
   MX_DMA_Init();
   MX_SAI1_Init();
-  MX_RAMECC_Init();
+  //MX_RAMECC_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -134,8 +140,8 @@ int main(void)
   // stm32h7xx_hal_dma.c: no init for sram/flash
   // EXTI software interrupt from callback function
   // look to see if this starts automatically when pdm buff is full
-  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, pdm_buffer, pcm_buffer, 64);
-  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 64) == HAL_OK)
+  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, pdm_buffer, pcm_buffer, 32);
+  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 32) == HAL_OK)
   {
 	  HAL_SAI_DeInit(&hsai_BlockA4);
 	  HAL_SAI_MspInit(&hsai_BlockB1);
@@ -362,10 +368,10 @@ static void MX_SAI4_Init(void)
 	hsai_BlockA4.Instance = SAI4_Block_A;
 	hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
 	hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-	  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
-	  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
-	  hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
-	  hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
+	hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
+    hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
+	hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
+	hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
 	  hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
 	  hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
 	  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
@@ -450,24 +456,24 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
-  /*Configure GPIO pin : PE0 */ // GPIO pin configuration
-  GPIO_InitStruct.Pin = GPIO_PIN_0;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-//  configure EXTI_HandleTypeDef hexti0;
-//  stm32h7xx_hal_exti.h
-//#define EXTI_D3_PENDCLR_SRC_DMACH6     0x00000001U /*!< DMA ch6 event selected as D3 domain pendclear source, PMRx register to be set to 1 */
-
-
-  hexti0_config.Line = EXTI_LINE_0;
-  hexti0_config.Mode = EXTI_MODE_INTERRUPT;
-  hexti0_config.Trigger = EXTI_TRIGGER_RISING;
-  hexti0_config.GPIOSel = EXTI_GPIOE;
-  hexti0_config.PendClearSource = EXTI_D3_PENDCLR_SRC_DMACH6;
-  HAL_EXTI_SetConfigLine(&hexti0, &hexti0_config);
-  //HAL_EXTI_D3_EventInputConfig();
+//  /*Configure GPIO pin : PE0 */ // GPIO pin configuration
+//  GPIO_InitStruct.Pin = GPIO_PIN_0;
+//  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+//
+////  configure EXTI_HandleTypeDef hexti0;
+////  stm32h7xx_hal_exti.h
+////#define EXTI_D3_PENDCLR_SRC_DMACH6     0x00000001U /*!< DMA ch6 event selected as D3 domain pendclear source, PMRx register to be set to 1 */
+//
+//
+//  hexti0_config.Line = EXTI_LINE_0;
+//  hexti0_config.Mode = EXTI_MODE_INTERRUPT;
+//  hexti0_config.Trigger = EXTI_TRIGGER_RISING;
+//  hexti0_config.GPIOSel = EXTI_GPIOE;
+//  hexti0_config.PendClearSource = EXTI_D3_PENDCLR_SRC_DMACH6;
+//  HAL_EXTI_SetConfigLine(&hexti0, &hexti0_config);
+//  //HAL_EXTI_D3_EventInputConfig();
 }
 
 /* USER CODE BEGIN 4 */
