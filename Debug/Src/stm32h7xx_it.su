@@ -10,4 +10,4 @@ stm32h7xx_it.c:185:6:SysTick_Handler	8	static
 stm32h7xx_it.c:206:6:EXTI0_IRQHandler	8	static
 stm32h7xx_it.c:219:6:DMA2_Stream0_IRQHandler	8	static
 stm32h7xx_it.c:233:6:DMAMUX2_OVR_IRQHandler	8	static
-stm32h7xx_it.c:248:6:BDMA_Channel1_IRQHandler	8	static
+stm32h7xx_it.c:247:6:BDMA_Channel1_IRQHandler	8	static

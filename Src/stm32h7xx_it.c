@@ -223,7 +223,7 @@ void DMA2_Stream0_IRQHandler(void)
   /* USER CODE END DMA2_Stream0_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_memtomem_dma2_stream0);
   /* USER CODE BEGIN DMA2_Stream0_IRQn 1 */
-
+  BSP_LED_On(LED1);
   /* USER CODE END DMA2_Stream0_IRQn 1 */
 }
 
@@ -238,7 +238,6 @@ void DMAMUX2_OVR_IRQHandler(void)
   // Handle BDMA_Channel1
   HAL_DMAEx_MUX_IRQHandler(&hdma_sai4_a);
   /* USER CODE BEGIN DMAMUX2_OVR_IRQn 1 */
-
   /* USER CODE END DMAMUX2_OVR_IRQn 1 */
 }
 

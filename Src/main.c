@@ -27,8 +27,10 @@
 //#define SRAM4_BASE 0x38000000
 //#define SRAM2_BASE 0x30004000
 
+#define	NUM_BYTES  32
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004100
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,7 +63,7 @@ DMA_HandleTypeDef hdma_sai4_a;
 
 DMA_HandleTypeDef hdma_memtomem_dma2_stream0;
 /* USER CODE BEGIN PV */
-PDM_Filter_Handler_t PDM1_filter_handler;
+extern PDM_Filter_Handler_t PDM1_filter_handler;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -126,11 +128,11 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 
-  uint32_t *pdm_buffer = (uint32_t*)SRAM4_BASE;
+  uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
-  uint32_t *pcm_buffer = (uint32_t*)SRAM2_BASE;
-
+  uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
+  uint32_t pcm_buffer[NUM_BYTES] = {0};
   // need to move data from D3 into D2 (where SAI1 is)
   // initialize dma2 to do mem2mem rx from sram4
   // on sync signal from sai4 callback complete transfer
@@ -140,8 +142,8 @@ int main(void)
   // stm32h7xx_hal_dma.c: no init for sram/flash
   // EXTI software interrupt from callback function
   // look to see if this starts automatically when pdm buff is full
-  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, pdm_buffer, pcm_buffer, 32);
-  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, pdm_buffer, 32) == HAL_OK)
+  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
+  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
   {
 	  HAL_SAI_DeInit(&hsai_BlockA4);
 	  HAL_SAI_MspInit(&hsai_BlockB1);
