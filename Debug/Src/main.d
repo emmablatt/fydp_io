@@ -36,7 +36,10 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h \
  ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h \
  ../Inc/stm32h735g_discovery_conf.h \
- ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
+ ../Src/../Drivers/BSP/Components/wm8994/wm8994.h \
+ ../Src/../Drivers/BSP/Components/wm8994/wm8994_reg.h \
+ ../Drivers/CMSIS/Include/cmsis_compiler.h
 
 ../Inc/main.h:
 
@@ -117,3 +120,9 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 ../Inc/stm32h735g_discovery_conf.h:
 
 ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h:
+
+../Src/../Drivers/BSP/Components/wm8994/wm8994.h:
+
+../Src/../Drivers/BSP/Components/wm8994/wm8994_reg.h:
+
+../Drivers/CMSIS/Include/cmsis_compiler.h:

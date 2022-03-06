@@ -65,6 +65,11 @@ DMA_HandleTypeDef hdma_sai4_a;
 DMA_HandleTypeDef hdma_memtomem_dma2_stream0;
 /* USER CODE BEGIN PV */
 extern PDM_Filter_Handler_t PDM1_filter_handler;
+
+/* CODEC INIT */
+WM8994_Object_t hcodec;
+extern WM8994_Drv_t WM8994_Driver;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -77,6 +82,8 @@ static void MX_DMA_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_RAMECC_Init(void);
 static void MX_NVIC_Init(void);
+static void MX_CODEC_Init(void);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -128,6 +135,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  MX_CODEC_Init();
 
   uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
   HAL_SAI_MspInit(&hsai_BlockA4);
@@ -135,14 +143,7 @@ int main(void)
   uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
   uint32_t pcm_buffer[NUM_BYTES] = {0};
   // need to move data from D3 into D2 (where SAI1 is)
-  // initialize dma2 to do mem2mem rx from sram4
-  // on sync signal from sai4 callback complete transfer
 
-  // stm32h7xx_hal_exti.c: EXTI Peripheral config
-  // stm32h7xx_hal_gpio.c: HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
-  // stm32h7xx_hal_dma.c: no init for sram/flash
-  // EXTI software interrupt from callback function
-  // look to see if this starts automatically when pdm buff is full
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
   {
@@ -459,32 +460,38 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
-//  /*Configure GPIO pin : PE0 */ // GPIO pin configuration
-//  GPIO_InitStruct.Pin = GPIO_PIN_0;
-//  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-//  GPIO_InitStruct.Pull = GPIO_NOPULL;
-//  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-//
-////  configure EXTI_HandleTypeDef hexti0;
-////  stm32h7xx_hal_exti.h
-////#define EXTI_D3_PENDCLR_SRC_DMACH6     0x00000001U /*!< DMA ch6 event selected as D3 domain pendclear source, PMRx register to be set to 1 */
-//
-//
-//  hexti0_config.Line = EXTI_LINE_0;
-//  hexti0_config.Mode = EXTI_MODE_INTERRUPT;
-//  hexti0_config.Trigger = EXTI_TRIGGER_RISING;
-//  hexti0_config.GPIOSel = EXTI_GPIOE;
-//  hexti0_config.PendClearSource = EXTI_D3_PENDCLR_SRC_DMACH6;
-//  HAL_EXTI_SetConfigLine(&hexti0, &hexti0_config);
-//  //HAL_EXTI_D3_EventInputConfig();
 }
 
 /* USER CODE BEGIN 4 */
 
-//stm32h7xx_hal_conf.h -> USE_HAL_SAI_REGISTER_CALLBACKS
-//stm32h7xx_hal_sai.c -> SAI_DMARxCplt(DMA_HandleTypeDef *hdma)
-//#if (USE_HAL_SAI_REGISTER_CALLBACKS == 1)
-//  hsai->RxCpltCallback(hsai);
+static void MX_CODEC_Init(void) {
+
+	/* CONFIG WM8994_Object_t */
+	// cancel up to 1khz
+	WM8994_Init_t hcodec_init;
+	WM8994_IO_t hcodec_io;
+
+	hcodec_io.Address = pcm_buffer;
+	hcodec_io.Init = MX_SAI1_Init();
+	hcodec_io.DeInit = MX_SAI1_DeInit();
+//	hcodec_io.ReadReg =
+//	hcodec_io.WriteReg =
+	hcodec_io.GetTick = BSP_GetTick;
+
+	hcodec_init.InputDevice = WM8994_IN_NONE;
+	hcodec_init.OutputDevice = WM8994_OUT_SPEAKER;
+	// TODO: Change decimation factor on PDM to PCM function
+	hcodec_init.Frequency = WM8994_FREQUENCY_48K;
+	hcodec_init.Resolution = WM8994_RESOLUTION_32b;
+	hcodec_init.Volume = 80;
+
+	WM8994_Init(&hcodec, &hcodec_init);
+	WM8994_SetProtocol(&hcodec, WM8994_PROTOCOL_L_JUSTIFIED);
+	WM8994_RegisterBusIO(&hcodec, &hcodec_io);
+
+
+
+}
 
 /* USER CODE END 4 */
 
