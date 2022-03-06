@@ -120,10 +120,10 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 
-  uint32_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
+  uint32_t *pdm_buffer = (uint32_t*)SRAM4_BASE;
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
-  uint32_t *pcm_buffer = (uint8_t*)SRAM2_BASE;
+  uint32_t *pcm_buffer = (uint32_t*)SRAM2_BASE;
 
   // need to move data from D3 into D2 (where SAI1 is)
   // initialize dma2 to do mem2mem rx from sram4

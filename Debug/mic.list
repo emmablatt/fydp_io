@@ -18286,7 +18286,7 @@ int main(void)
  800743a:	f000 f897 	bl	800756c <MX_NVIC_Init>
   /* USER CODE BEGIN 2 */
 
-  uint32_t *pdm_buffer = (uint8_t*)SRAM4_BASE;
+  uint32_t *pdm_buffer = (uint32_t*)SRAM4_BASE;
  800743e:	f04f 5360 	mov.w	r3, #939524096	; 0x38000000
  8007442:	607b      	str	r3, [r7, #4]
   HAL_SAI_MspInit(&hsai_BlockA4);
@@ -18295,7 +18295,7 @@ int main(void)
   HAL_SAI_Init(&hsai_BlockA4);
  800744a:	480d      	ldr	r0, [pc, #52]	; (8007480 <main+0x74>)
  800744c:	f7ff fa58 	bl	8006900 <HAL_SAI_Init>
-  uint32_t *pcm_buffer = (uint8_t*)SRAM2_BASE;
+  uint32_t *pcm_buffer = (uint32_t*)SRAM2_BASE;
  8007450:	4b0c      	ldr	r3, [pc, #48]	; (8007484 <main+0x78>)
  8007452:	603b      	str	r3, [r7, #0]
   // stm32h7xx_hal_exti.c: EXTI Peripheral config
