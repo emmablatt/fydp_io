@@ -25,12 +25,11 @@
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
 #include "../Drivers/BSP/Components/wm8994/wm8994.h"
 
-//#define SRAM4_BASE 0x38000000
-//#define SRAM2_BASE 0x30004000
-
 #define	NUM_BYTES  32
 #define SRAM4_BASE 0x38000000
-#define SRAM2_BASE 0x30004100
+#define SRAM2_BASE 0x30004000
+#define AUDIO_I2C_ADDRESS                0x34U
+
 
 /* USER CODE END Includes */
 
@@ -90,6 +89,9 @@ static void MX_CODEC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
+uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
+uint32_t pcm_buffer[NUM_BYTES] = {0};
 /* USER CODE END 0 */
 
 /**
@@ -137,11 +139,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
   MX_CODEC_Init();
 
-  uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
+
   HAL_SAI_MspInit(&hsai_BlockA4);
   HAL_SAI_Init(&hsai_BlockA4);
-  uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
-  uint32_t pcm_buffer[NUM_BYTES] = {0};
+
   // need to move data from D3 into D2 (where SAI1 is)
 
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
@@ -468,28 +469,27 @@ static void MX_CODEC_Init(void) {
 
 	/* CONFIG WM8994_Object_t */
 	// cancel up to 1khz
+	int32_t ret = BSP_ERROR_NONE;
 	WM8994_Init_t hcodec_init;
 	WM8994_IO_t hcodec_io;
+	uint32_t id;
 
-	hcodec_io.Address = pcm_buffer;
-	hcodec_io.Init = MX_SAI1_Init();
-	hcodec_io.DeInit = MX_SAI1_DeInit();
-//	hcodec_io.ReadReg =
-//	hcodec_io.WriteReg =
-	hcodec_io.GetTick = BSP_GetTick;
-
-	hcodec_init.InputDevice = WM8994_IN_NONE;
-	hcodec_init.OutputDevice = WM8994_OUT_SPEAKER;
-	// TODO: Change decimation factor on PDM to PCM function
-	hcodec_init.Frequency = WM8994_FREQUENCY_48K;
-	hcodec_init.Resolution = WM8994_RESOLUTION_32b;
-	hcodec_init.Volume = 80;
-
-	WM8994_Init(&hcodec, &hcodec_init);
-	WM8994_SetProtocol(&hcodec, WM8994_PROTOCOL_L_JUSTIFIED);
-	WM8994_RegisterBusIO(&hcodec, &hcodec_io);
+	/* Configure audio driver through I2C4 */
+	hcodec_io.Address = AUDIO_I2C_ADDRESS;
+	hcodec_io.Init = BSP_;
 
 
+//	hcodec_init.InputDevice = WM8994_IN_NONE;
+//	hcodec_init.OutputDevice = WM8994_OUT_SPEAKER;
+//	// TODO: Change decimation factor on PDM to PCM function
+//	hcodec_init.Frequency = WM8994_FREQUENCY_48K;
+//	hcodec_init.Resolution = WM8994_RESOLUTION_32b;
+//	hcodec_init.Volume = 80;
+//
+//	WM8994_Init(&hcodec, &hcodec_init);
+//	WM8994_SetProtocol(&hcodec, WM8994_PROTOCOL_L_JUSTIFIED);
+//	WM8994_RegisterBusIO(&hcodec, &hcodec_io);
+//	WM8994_Play(&hcodec);
 
 }
 
