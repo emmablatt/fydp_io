@@ -2827,7 +2827,6 @@ static void SAI_DMARxCplt(DMA_HandleTypeDef *hdma)
 
     hsai->State = HAL_SAI_STATE_READY;
   }
-  // TODO how to implement RxCpltCallback on SAI
 #if (USE_HAL_SAI_REGISTER_CALLBACKS == 1)
   hsai->RxCpltCallback(hsai);
 #else

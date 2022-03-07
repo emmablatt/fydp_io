@@ -28,7 +28,7 @@
 #define	NUM_BYTES  32
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
-#define AUDIO_I2C_ADDRESS                0x34U
+#define CODEC_I2C  0x34U
 
 
 /* USER CODE END Includes */
@@ -51,17 +51,21 @@
 
 CRC_HandleTypeDef hcrc;
 
+DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
+
+I2C_HandleTypeDef hi2c4;
+
 RAMECC_HandleTypeDef hramecc2_m1;
 RAMECC_HandleTypeDef hramecc2_m2;
 RAMECC_HandleTypeDef hramecc3_m1;
 
-EXTI_HandleTypeDef hexti0;
-EXTI_ConfigTypeDef hexti0_config;
 SAI_HandleTypeDef hsai_BlockB1;
 SAI_HandleTypeDef hsai_BlockA4;
+DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai4_a;
 
 DMA_HandleTypeDef hdma_memtomem_dma2_stream0;
+DMA_HandleTypeDef hdma_dma_generator0;
 /* USER CODE BEGIN PV */
 extern PDM_Filter_Handler_t PDM1_filter_handler;
 
@@ -80,11 +84,11 @@ static void MX_CRC_Init(void);
 static void MX_DMA_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_RAMECC_Init(void);
+static void MX_I2C4_Init(void);
+static void MX_DFSDM1_Init(void);
 static void MX_NVIC_Init(void);
-static void MX_CODEC_Init(void);
-
 /* USER CODE BEGIN PFP */
-
+static void CODEC_Init(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -132,12 +136,14 @@ int main(void)
   MX_PDM2PCM_Init();
   MX_DMA_Init();
   MX_SAI1_Init();
-  //MX_RAMECC_Init();
+  MX_RAMECC_Init();
+  MX_I2C4_Init();
+  MX_DFSDM1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  MX_CODEC_Init();
+  CODEC_Init();
 
 
   HAL_SAI_MspInit(&hsai_BlockA4);
@@ -279,6 +285,90 @@ static void MX_CRC_Init(void)
 }
 
 /**
+  * @brief DFSDM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_DFSDM1_Init(void)
+{
+
+  /* USER CODE BEGIN DFSDM1_Init 0 */
+
+  /* USER CODE END DFSDM1_Init 0 */
+
+  /* USER CODE BEGIN DFSDM1_Init 1 */
+
+  /* USER CODE END DFSDM1_Init 1 */
+  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
+  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
+  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
+  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
+  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
+  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
+  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
+  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
+  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
+  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
+  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
+  hdfsdm1_channel0.Init.Offset = 0x00;
+  hdfsdm1_channel0.Init.RightBitShift = 0x00;
+  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN DFSDM1_Init 2 */
+
+  /* USER CODE END DFSDM1_Init 2 */
+
+}
+
+/**
+  * @brief I2C4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C4_Init(void)
+{
+
+  /* USER CODE BEGIN I2C4_Init 0 */
+
+  /* USER CODE END I2C4_Init 0 */
+
+  /* USER CODE BEGIN I2C4_Init 1 */
+
+  /* USER CODE END I2C4_Init 1 */
+  hi2c4.Instance = I2C4;
+  hi2c4.Init.Timing = 0x10B0DCFB;
+  hi2c4.Init.OwnAddress1 = 104;
+  hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c4.Init.OwnAddress2 = 0;
+  hi2c4.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c4.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c4.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Analogue filter
+  */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Digital filter
+  */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c4, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C4_Init 2 */
+
+  /* USER CODE END I2C4_Init 2 */
+
+}
+
+/**
   * @brief RAMECC Initialization Function
   * @param None
   * @retval None
@@ -339,10 +429,11 @@ static void MX_SAI1_Init(void)
   hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
   hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
+  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
   hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.MonoStereoMode = SAI_MONOMODE;
+  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
   if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
@@ -370,34 +461,34 @@ static void MX_SAI4_Init(void)
   /* USER CODE BEGIN SAI4_Init 1 */
 
   /* USER CODE END SAI4_Init 1 */
-	hsai_BlockA4.Instance = SAI4_Block_A;
-	hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
-	hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-	hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
-    hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
-	hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
-	hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
-	  hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-	  hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
-	  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-	  hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
-	  hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
-	  hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-	  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
-	  hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-	  hsai_BlockA4.FrameInit.FrameLength = 32;
-	  hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
-	  hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
-	  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_HIGH;
-	  hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
-	  hsai_BlockA4.SlotInit.FirstBitOffset = 0;
-	  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_32B;
-	  hsai_BlockA4.SlotInit.SlotNumber = 1;
-	  hsai_BlockA4.SlotInit.SlotActive = SAI_SLOTACTIVE_ALL;
-	  if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
-	  {
-		Error_Handler();
-	  }
+  hsai_BlockA4.Instance = SAI4_Block_A;
+  hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
+  hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
+  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
+  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
+  hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
+  hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
+  hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+  hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
+  hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
+  hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
+  hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
+  hsai_BlockA4.FrameInit.FrameLength = 8;
+  hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
+  hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
+  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_HIGH;
+  hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
+  hsai_BlockA4.SlotInit.FirstBitOffset = 0;
+  hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  hsai_BlockA4.SlotInit.SlotNumber = 1;
+  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
+  if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN SAI4_Init 2 */
 
   /* USER CODE END SAI4_Init 2 */
@@ -412,18 +503,25 @@ static void MX_BDMA_Init(void)
 
   /* DMA controller clock enable */
   __HAL_RCC_BDMA_CLK_ENABLE();
+
 }
 
 /**
   * Enable DMA controller clock
   * Configure DMA for memory to memory transfers
   *   hdma_memtomem_dma2_stream0
+  *   hdma_dma_generator0
   */
 static void MX_DMA_Init(void)
 {
 
+  /* Local variables */
+  HAL_DMA_MuxRequestGeneratorConfigTypeDef pRequestGeneratorConfig = {0};
+  HAL_DMA_MuxSyncConfigTypeDef pSyncConfig = {0};
+
   /* DMA controller clock enable */
   __HAL_RCC_DMA2_CLK_ENABLE();
+  __HAL_RCC_DMA1_CLK_ENABLE();
 
   /* Configure DMA request hdma_memtomem_dma2_stream0 on DMA2_Stream0 */
   hdma_memtomem_dma2_stream0.Instance = DMA2_Stream0;
@@ -444,6 +542,50 @@ static void MX_DMA_Init(void)
     Error_Handler( );
   }
 
+  /* Configure DMA request hdma_dma_generator0 on DMA1_Stream0 */
+  hdma_dma_generator0.Instance = DMA1_Stream0;
+  hdma_dma_generator0.Init.Request = DMA_REQUEST_GENERATOR0;
+  hdma_dma_generator0.Init.Direction = DMA_MEMORY_TO_PERIPH;
+  hdma_dma_generator0.Init.PeriphInc = DMA_PINC_DISABLE;
+  hdma_dma_generator0.Init.MemInc = DMA_MINC_ENABLE;
+  hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+  hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+  hdma_dma_generator0.Init.Mode = DMA_NORMAL;
+  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_HIGH;
+  hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+  if (HAL_DMA_Init(&hdma_dma_generator0) != HAL_OK)
+  {
+    Error_Handler( );
+  }
+
+  /* Configure the DMAMUX request generator for the selected DMA stream */
+  pRequestGeneratorConfig.SignalID = HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH1_EVT;
+  pRequestGeneratorConfig.Polarity = HAL_DMAMUX_REQ_GEN_RISING;
+  pRequestGeneratorConfig.RequestNumber = 1;
+  if (HAL_DMAEx_ConfigMuxRequestGenerator(&hdma_dma_generator0, &pRequestGeneratorConfig) != HAL_OK)
+  {
+    Error_Handler( );
+  }
+
+  /* Configure the DMAMUX synchronization parameters for the selected DMA stream */
+  pSyncConfig.SyncSignalID = HAL_DMAMUX1_SYNC_EXTI0;
+  pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_RISING;
+  pSyncConfig.SyncEnable = DISABLE;
+  pSyncConfig.EventEnable = ENABLE;
+  pSyncConfig.RequestNumber = 1;
+  if (HAL_DMAEx_ConfigMuxSync(&hdma_dma_generator0, &pSyncConfig) != HAL_OK)
+  {
+    Error_Handler( );
+  }
+
+  /* DMA interrupt init */
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+  /* DMAMUX1_OVR_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMAMUX1_OVR_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMAMUX1_OVR_IRQn);
+
 }
 
 /**
@@ -456,16 +598,23 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
+  /*Configure GPIO pin : PE0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
 
-static void MX_CODEC_Init(void) {
+static void CODEC_Init(void) {
 
 	/* CONFIG WM8994_Object_t */
 	// cancel up to 1khz
@@ -475,9 +624,33 @@ static void MX_CODEC_Init(void) {
 	uint32_t id;
 
 	/* Configure audio driver through I2C4 */
-	hcodec_io.Address = AUDIO_I2C_ADDRESS;
-	hcodec_io.Init = BSP_;
+	hcodec_io.Address = CODEC_I2C;
+	hcodec_io.Init = MX_I2C4_Init;
+//	hcodec_io.DeInit = BSP_I2C4_DeInit;
+	hcodec_io.ReadReg = HAL_I2C_Mem_Read;
+	hcodec_io.WriteReg = HAL_I2C_Mem_Write;
+	hcodec_io.GetTick = HAL_GetTick();
 
+	WM8994_Init(&hcodec,&hcodec_io);
+	if(WM8994_RegisterBusIO(&hcodec, &hcodec_io) != WM8994_OK) {
+		ret = BSP_ERROR_BUS_FAILURE;
+	} else {
+
+		if(WM8994_Reset(&hcodec) != WM8994_OK)
+		{
+			ret = BSP_ERROR_COMPONENT_FAILURE;
+		}
+		else if(WM8994_ReadID(&hcodec, &id) != WM8994_OK)
+		{
+			ret = BSP_ERROR_COMPONENT_FAILURE;
+		}
+		else if(id != WM8994_ID) {
+			ret = BSP_ERROR_UNKNOWN_COMPONENT;
+		}
+		// WM8994_Driver;
+		// WM8994Obj;
+		return ret;
+	}
 
 //	hcodec_init.InputDevice = WM8994_IN_NONE;
 //	hcodec_init.OutputDevice = WM8994_OUT_SPEAKER;

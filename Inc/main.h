@@ -41,6 +41,9 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+/** @defgroup STM32H735G_DISCO_AUDIO_Exported_Constants AUDIO Exported Constants
+  * @{
+  */
 
 /* USER CODE END EC */
 

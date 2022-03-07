@@ -222,8 +222,8 @@
 //AUDIO_OUT_Ctx_t                        Audio_Out_Ctx[AUDIO_OUT_INSTANCES_NBR];
 //
 ///* Record */
-//DFSDM_Filter_HandleTypeDef             haudio_in_dfsdm_filter[DFSDM_MIC_NUMBER];
-//DFSDM_Channel_HandleTypeDef            haudio_in_dfsdm_channel[DFSDM_MIC_NUMBER];
+////DFSDM_Filter_HandleTypeDef             haudio_in_dfsdm_filter[DFSDM_MIC_NUMBER];
+////DFSDM_Channel_HandleTypeDef            haudio_in_dfsdm_channel[DFSDM_MIC_NUMBER];
 //SAI_HandleTypeDef                      haudio_in_sai[2] = {0};
 //AUDIO_IN_Ctx_t                         Audio_In_Ctx[AUDIO_IN_INSTANCES_NBR];
 ///**
@@ -237,7 +237,7 @@
 //static AUDIO_Drv_t *Audio_Drv = NULL;
 //
 ///* Recording DFSDM DMA handles */
-//static DMA_HandleTypeDef               hDmaDfsdm[DFSDM_MIC_NUMBER];
+////static DMA_HandleTypeDef               hDmaDfsdm[DFSDM_MIC_NUMBER];
 //
 ///* Recording Buffer Trigger */
 //static __IO uint32_t                   RecBuffTrigger          = 0;
@@ -273,18 +273,18 @@
 //#endif /* (USE_HAL_SAI_REGISTER_CALLBACKS == 1) */
 //
 ///* DFSDM Channel Msp config */
-//static void DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef *hDfsdmChannel);
-//static void DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef *hDfsdmChannel);
+////static void DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef *hDfsdmChannel);
+////static void DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef *hDfsdmChannel);
 //
 ///* DFSDM Filter Msp config */
-//static void DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef *hDfsdmFilter);
-//static void DFSDM_FilterMspDeInit(DFSDM_Filter_HandleTypeDef *hDfsdmFilter);
+////static void DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef *hDfsdmFilter);
+////static void DFSDM_FilterMspDeInit(DFSDM_Filter_HandleTypeDef *hDfsdmFilter);
 //
 ///* DFSDM Filter conversion callbacks */
-//#if (USE_HAL_DFSDM_REGISTER_CALLBACKS == 1)
-//static void DFSDM_FilterRegConvHalfCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter);
-//static void DFSDM_FilterRegConvCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter);
-//#endif /* (USE_HAL_DFSDM_REGISTER_CALLBACKS == 1) */
+////#if (USE_HAL_DFSDM_REGISTER_CALLBACKS == 1)
+////static void DFSDM_FilterRegConvHalfCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter);
+////static void DFSDM_FilterRegConvCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter);
+////#endif /* (USE_HAL_DFSDM_REGISTER_CALLBACKS == 1) */
 //
 //#if (USE_AUDIO_CODEC_WM8994 == 1)
 //static int32_t WM8994_Probe(void);

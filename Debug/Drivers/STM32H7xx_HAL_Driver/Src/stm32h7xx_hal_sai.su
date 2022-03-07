@@ -39,6 +39,6 @@ stm32h7xx_hal_sai.c:2729:13:SAI_Receive_IT32Bit	24	static
 stm32h7xx_hal_sai.c:2769:13:SAI_DMATxCplt	24	static
 stm32h7xx_hal_sai.c:2798:13:SAI_DMATxHalfCplt	24	static
 stm32h7xx_hal_sai.c:2815:13:SAI_DMARxCplt	24	static
-stm32h7xx_hal_sai.c:2844:13:SAI_DMARxHalfCplt	24	static
-stm32h7xx_hal_sai.c:2861:13:SAI_DMAError	24	static
-stm32h7xx_hal_sai.c:2899:13:SAI_DMAAbort	24	static
+stm32h7xx_hal_sai.c:2843:13:SAI_DMARxHalfCplt	24	static
+stm32h7xx_hal_sai.c:2860:13:SAI_DMAError	24	static
+stm32h7xx_hal_sai.c:2898:13:SAI_DMAAbort	24	static
