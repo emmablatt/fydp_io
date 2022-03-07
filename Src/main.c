@@ -24,12 +24,12 @@
 /* USER CODE BEGIN Includes */
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
 #include "../Drivers/BSP/Components/wm8994/wm8994.h"
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
 
 #define	NUM_BYTES  32
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
 #define CODEC_I2C  0x34U
-
 
 /* USER CODE END Includes */
 
@@ -85,7 +85,7 @@ static void MX_DMA_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_RAMECC_Init(void);
 static void MX_I2C4_Init(void);
-static void MX_DFSDM1_Init(void);
+//static void MX_DFSDM1_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 static void CODEC_Init(void);
@@ -138,24 +138,18 @@ int main(void)
   MX_SAI1_Init();
   MX_RAMECC_Init();
   MX_I2C4_Init();
-  MX_DFSDM1_Init();
+//  MX_DFSDM1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   CODEC_Init();
 
-
-  HAL_SAI_MspInit(&hsai_BlockA4);
-  HAL_SAI_Init(&hsai_BlockA4);
-
   // need to move data from D3 into D2 (where SAI1 is)
 
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
   {
-	  HAL_SAI_DeInit(&hsai_BlockA4);
-	  HAL_SAI_MspInit(&hsai_BlockB1);
 	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 	  BSP_LED_On(LED2);
   }
@@ -289,38 +283,38 @@ static void MX_CRC_Init(void)
   * @param None
   * @retval None
   */
-static void MX_DFSDM1_Init(void)
-{
-
-  /* USER CODE BEGIN DFSDM1_Init 0 */
-
-  /* USER CODE END DFSDM1_Init 0 */
-
-  /* USER CODE BEGIN DFSDM1_Init 1 */
-
-  /* USER CODE END DFSDM1_Init 1 */
-  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
-  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
-  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
-  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
-  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
-  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
-  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
-  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
-  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
-  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
-  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
-  hdfsdm1_channel0.Init.Offset = 0x00;
-  hdfsdm1_channel0.Init.RightBitShift = 0x00;
-  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN DFSDM1_Init 2 */
-
-  /* USER CODE END DFSDM1_Init 2 */
-
-}
+//static void MX_DFSDM1_Init(void)
+//{
+//
+//  /* USER CODE BEGIN DFSDM1_Init 0 */
+//
+//  /* USER CODE END DFSDM1_Init 0 */
+//
+//  /* USER CODE BEGIN DFSDM1_Init 1 */
+//
+//  /* USER CODE END DFSDM1_Init 1 */
+//  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
+//  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
+//  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
+//  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
+//  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
+//  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
+//  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
+//  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
+//  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
+//  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
+//  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
+//  hdfsdm1_channel0.Init.Offset = 0x00;
+//  hdfsdm1_channel0.Init.RightBitShift = 0x00;
+//  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN DFSDM1_Init 2 */
+//
+//  /* USER CODE END DFSDM1_Init 2 */
+//
+//}
 
 /**
   * @brief I2C4 Initialization Function
@@ -616,54 +610,24 @@ static void MX_GPIO_Init(void)
 
 static void CODEC_Init(void) {
 
-	/* CONFIG WM8994_Object_t */
 	// cancel up to 1khz
 	int32_t ret = BSP_ERROR_NONE;
+	// WM8994_Object_t hcodec;
 	WM8994_Init_t hcodec_init;
-	WM8994_IO_t hcodec_io;
+	WM8994_IO_t	  hcodec_io;
 	uint32_t id;
 
-	/* Configure audio driver through I2C4 */
-	hcodec_io.Address = CODEC_I2C;
-	hcodec_io.Init = MX_I2C4_Init;
-//	hcodec_io.DeInit = BSP_I2C4_DeInit;
-	hcodec_io.ReadReg = HAL_I2C_Mem_Read;
-	hcodec_io.WriteReg = HAL_I2C_Mem_Write;
-	hcodec_io.GetTick = HAL_GetTick();
+	hcodec_io.Address	 = CODEC_I2C;
+	hcodec_io.ReadReg	 = HAL_I2C_Mem_Read;
+	hcodec_io.WriteReg	 = HAL_I2C_Mem_Write;
+	hcodec_io.Init		 = HAL_I2C_Init;
+	hcodec_io.DeInit	 = HAL_I2C_DeInit;
+	hcodec_io.GetTick	 = HAL_GetTick;
 
-	WM8994_Init(&hcodec,&hcodec_io);
-	if(WM8994_RegisterBusIO(&hcodec, &hcodec_io) != WM8994_OK) {
-		ret = BSP_ERROR_BUS_FAILURE;
-	} else {
-
-		if(WM8994_Reset(&hcodec) != WM8994_OK)
-		{
-			ret = BSP_ERROR_COMPONENT_FAILURE;
-		}
-		else if(WM8994_ReadID(&hcodec, &id) != WM8994_OK)
-		{
-			ret = BSP_ERROR_COMPONENT_FAILURE;
-		}
-		else if(id != WM8994_ID) {
-			ret = BSP_ERROR_UNKNOWN_COMPONENT;
-		}
-		// WM8994_Driver;
-		// WM8994Obj;
-		return ret;
-	}
-
-//	hcodec_init.InputDevice = WM8994_IN_NONE;
-//	hcodec_init.OutputDevice = WM8994_OUT_SPEAKER;
-//	// TODO: Change decimation factor on PDM to PCM function
-//	hcodec_init.Frequency = WM8994_FREQUENCY_48K;
-//	hcodec_init.Resolution = WM8994_RESOLUTION_32b;
-//	hcodec_init.Volume = 80;
-//
-//	WM8994_Init(&hcodec, &hcodec_init);
-//	WM8994_SetProtocol(&hcodec, WM8994_PROTOCOL_L_JUSTIFIED);
-//	WM8994_RegisterBusIO(&hcodec, &hcodec_io);
+	WM8994_RegisterBusIO(&hcodec, &hcodec_io);
+	WM8994_Init(&hcodec, &hcodec_init);
+	WM8994_Reset(&hcodec);
 //	WM8994_Play(&hcodec);
-
 }
 
 /* USER CODE END 4 */

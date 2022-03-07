@@ -40,7 +40,10 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_errno.h \
  ../Src/../Drivers/BSP/Components/wm8994/wm8994.h \
  ../Src/../Drivers/BSP/Components/wm8994/wm8994_reg.h \
- ../Drivers/CMSIS/Include/cmsis_compiler.h
+ ../Drivers/CMSIS/Include/cmsis_compiler.h \
+ ../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h \
+ ../Inc/../Drivers/BSP/Components/wm8994/wm8994.h \
+ ../Inc/../Drivers/BSP/Components/Common/audio.h
 
 ../Inc/main.h:
 
@@ -129,3 +132,9 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 ../Src/../Drivers/BSP/Components/wm8994/wm8994_reg.h:
 
 ../Drivers/CMSIS/Include/cmsis_compiler.h:
+
+../Src/../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h:
+
+../Inc/../Drivers/BSP/Components/wm8994/wm8994.h:
+
+../Inc/../Drivers/BSP/Components/Common/audio.h:
