@@ -29,6 +29,7 @@
 #define	NUM_BYTES  32
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
+#define SRAM1_BASE 0x30000000
 #define CODEC_I2C  0x34U
 
 /* USER CODE END Includes */
@@ -65,7 +66,6 @@ DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai4_a;
 
 DMA_HandleTypeDef hdma_memtomem_dma2_stream0;
-DMA_HandleTypeDef hdma_dma_generator0;
 /* USER CODE BEGIN PV */
 extern PDM_Filter_Handler_t PDM1_filter_handler;
 
@@ -95,7 +95,7 @@ static void CODEC_Init(void);
 /* USER CODE BEGIN 0 */
 uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
 uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
-uint32_t pcm_buffer[NUM_BYTES] = {0};
+uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
 /* USER CODE END 0 */
 
 /**
@@ -134,8 +134,8 @@ int main(void)
   MX_SAI4_Init();
   MX_CRC_Init();
   MX_PDM2PCM_Init();
-  MX_DMA_Init();
   MX_SAI1_Init();
+  MX_DMA_Init();
   MX_RAMECC_Init();
   MX_I2C4_Init();
 //  MX_DFSDM1_Init();
@@ -147,11 +147,16 @@ int main(void)
 
   // need to move data from D3 into D2 (where SAI1 is)
 
-  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
   {
+//	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
 	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 	  BSP_LED_On(LED2);
+	  if(HAL_SAI_Transmit_DMA(&hsai_BlockB1, pcm_buffer, NUM_BYTES) == HAL_OK)
+	  {
+		  BSP_LED_Off(LED2);
+	  }
+
   }
   /* USER CODE END 2 */
 
@@ -287,11 +292,11 @@ static void MX_CRC_Init(void)
 //{
 //
 //  /* USER CODE BEGIN DFSDM1_Init 0 */
-//
+////
 //  /* USER CODE END DFSDM1_Init 0 */
 //
 //  /* USER CODE BEGIN DFSDM1_Init 1 */
-//
+////
 //  /* USER CODE END DFSDM1_Init 1 */
 //  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
 //  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
@@ -310,10 +315,10 @@ static void MX_CRC_Init(void)
 //  {
 //    Error_Handler();
 //  }
-//  /* USER CODE BEGIN DFSDM1_Init 2 */
+  /* USER CODE BEGIN DFSDM1_Init 2 */
 //
-//  /* USER CODE END DFSDM1_Init 2 */
-//
+  /* USER CODE END DFSDM1_Init 2 */
+
 //}
 
 /**
@@ -425,12 +430,12 @@ static void MX_SAI1_Init(void)
   hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
   hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
+  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockB1.Init.MonoStereoMode = SAI_MONOMODE;
   hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_PCM_LONG, SAI_PROTOCOL_DATASIZE_32BIT, 1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -504,14 +509,9 @@ static void MX_BDMA_Init(void)
   * Enable DMA controller clock
   * Configure DMA for memory to memory transfers
   *   hdma_memtomem_dma2_stream0
-  *   hdma_dma_generator0
   */
 static void MX_DMA_Init(void)
 {
-
-  /* Local variables */
-  HAL_DMA_MuxRequestGeneratorConfigTypeDef pRequestGeneratorConfig = {0};
-  HAL_DMA_MuxSyncConfigTypeDef pSyncConfig = {0};
 
   /* DMA controller clock enable */
   __HAL_RCC_DMA2_CLK_ENABLE();
@@ -532,42 +532,6 @@ static void MX_DMA_Init(void)
   hdma_memtomem_dma2_stream0.Init.MemBurst = DMA_MBURST_SINGLE;
   hdma_memtomem_dma2_stream0.Init.PeriphBurst = DMA_PBURST_SINGLE;
   if (HAL_DMA_Init(&hdma_memtomem_dma2_stream0) != HAL_OK)
-  {
-    Error_Handler( );
-  }
-
-  /* Configure DMA request hdma_dma_generator0 on DMA1_Stream0 */
-  hdma_dma_generator0.Instance = DMA1_Stream0;
-  hdma_dma_generator0.Init.Request = DMA_REQUEST_GENERATOR0;
-  hdma_dma_generator0.Init.Direction = DMA_MEMORY_TO_PERIPH;
-  hdma_dma_generator0.Init.PeriphInc = DMA_PINC_DISABLE;
-  hdma_dma_generator0.Init.MemInc = DMA_MINC_ENABLE;
-  hdma_dma_generator0.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-  hdma_dma_generator0.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-  hdma_dma_generator0.Init.Mode = DMA_NORMAL;
-  hdma_dma_generator0.Init.Priority = DMA_PRIORITY_HIGH;
-  hdma_dma_generator0.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-  if (HAL_DMA_Init(&hdma_dma_generator0) != HAL_OK)
-  {
-    Error_Handler( );
-  }
-
-  /* Configure the DMAMUX request generator for the selected DMA stream */
-  pRequestGeneratorConfig.SignalID = HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH1_EVT;
-  pRequestGeneratorConfig.Polarity = HAL_DMAMUX_REQ_GEN_RISING;
-  pRequestGeneratorConfig.RequestNumber = 1;
-  if (HAL_DMAEx_ConfigMuxRequestGenerator(&hdma_dma_generator0, &pRequestGeneratorConfig) != HAL_OK)
-  {
-    Error_Handler( );
-  }
-
-  /* Configure the DMAMUX synchronization parameters for the selected DMA stream */
-  pSyncConfig.SyncSignalID = HAL_DMAMUX1_SYNC_EXTI0;
-  pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_RISING;
-  pSyncConfig.SyncEnable = DISABLE;
-  pSyncConfig.EventEnable = ENABLE;
-  pSyncConfig.RequestNumber = 1;
-  if (HAL_DMAEx_ConfigMuxSync(&hdma_dma_generator0, &pSyncConfig) != HAL_OK)
   {
     Error_Handler( );
   }
@@ -627,7 +591,6 @@ static void CODEC_Init(void) {
 	WM8994_RegisterBusIO(&hcodec, &hcodec_io);
 	WM8994_Init(&hcodec, &hcodec_init);
 	WM8994_Reset(&hcodec);
-//	WM8994_Play(&hcodec);
 }
 
 /* USER CODE END 4 */
