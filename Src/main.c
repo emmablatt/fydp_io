@@ -144,6 +144,10 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   CODEC_Init();
+  HAL_SAI_MspInit(&hsai_BlockA4);
+  HAL_SAI_Init(&hsai_BlockA4);
+  HAL_SAI_MspInit(&hsai_BlockB1);
+  HAL_SAI_Init(&hsai_BlockB1);
 
   // need to move data from D3 into D2 (where SAI1 is)
 
@@ -473,7 +477,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
   hsai_BlockA4.FrameInit.FrameLength = 8;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;

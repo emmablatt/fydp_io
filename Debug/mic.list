@@ -31,13 +31,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  13 .debug_macro  00035a66  00000000  00000000  00055d50  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_line   0001dc11  00000000  00000000  0008b7b6  2**0
+ 14 .debug_line   0001dc14  00000000  00000000  0008b7b6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str    0015493f  00000000  00000000  000a93c7  2**0
+ 15 .debug_str    0015493f  00000000  00000000  000a93ca  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .comment      000000d1  00000000  00000000  001fdd06  2**0
+ 16 .comment      000000d1  00000000  00000000  001fdd09  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  000078d4  00000000  00000000  001fddd8  2**2
+ 17 .debug_frame  000078d4  00000000  00000000  001fdddc  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -25976,70 +25976,72 @@ int main(void)
   /* USER CODE BEGIN 2 */
   CODEC_Init();
  800a3a8:	f000 fb0c 	bl	800a9c4 <CODEC_Init>
+  HAL_SAI_MspInit(&hsai_BlockA4);
+ 800a3ac:	4817      	ldr	r0, [pc, #92]	; (800a40c <main+0xb0>)
+ 800a3ae:	f000 fc3b 	bl	800ac28 <HAL_SAI_MspInit>
+  HAL_SAI_Init(&hsai_BlockA4);
+ 800a3b2:	4816      	ldr	r0, [pc, #88]	; (800a40c <main+0xb0>)
+ 800a3b4:	f7ff fa22 	bl	80097fc <HAL_SAI_Init>
+  HAL_SAI_MspInit(&hsai_BlockB1);
+ 800a3b8:	4815      	ldr	r0, [pc, #84]	; (800a410 <main+0xb4>)
+ 800a3ba:	f000 fc35 	bl	800ac28 <HAL_SAI_MspInit>
+  HAL_SAI_Init(&hsai_BlockB1);
+ 800a3be:	4814      	ldr	r0, [pc, #80]	; (800a410 <main+0xb4>)
+ 800a3c0:	f7ff fa1c 	bl	80097fc <HAL_SAI_Init>
 
   // need to move data from D3 into D2 (where SAI1 is)
 
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
- 800a3ac:	4b16      	ldr	r3, [pc, #88]	; (800a408 <main+0xac>)
- 800a3ae:	681b      	ldr	r3, [r3, #0]
- 800a3b0:	2220      	movs	r2, #32
- 800a3b2:	4619      	mov	r1, r3
- 800a3b4:	4815      	ldr	r0, [pc, #84]	; (800a40c <main+0xb0>)
- 800a3b6:	f7ff fceb 	bl	8009d90 <HAL_SAI_Receive_DMA>
- 800a3ba:	4603      	mov	r3, r0
- 800a3bc:	2b00      	cmp	r3, #0
- 800a3be:	d121      	bne.n	800a404 <main+0xa8>
+ 800a3c4:	4b13      	ldr	r3, [pc, #76]	; (800a414 <main+0xb8>)
+ 800a3c6:	681b      	ldr	r3, [r3, #0]
+ 800a3c8:	2220      	movs	r2, #32
+ 800a3ca:	4619      	mov	r1, r3
+ 800a3cc:	480f      	ldr	r0, [pc, #60]	; (800a40c <main+0xb0>)
+ 800a3ce:	f7ff fcdf 	bl	8009d90 <HAL_SAI_Receive_DMA>
+ 800a3d2:	4603      	mov	r3, r0
+ 800a3d4:	2b00      	cmp	r3, #0
+ 800a3d6:	d117      	bne.n	800a408 <main+0xac>
   {
-	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
- 800a3c0:	4b11      	ldr	r3, [pc, #68]	; (800a408 <main+0xac>)
- 800a3c2:	681b      	ldr	r3, [r3, #0]
- 800a3c4:	4619      	mov	r1, r3
- 800a3c6:	4b12      	ldr	r3, [pc, #72]	; (800a410 <main+0xb4>)
- 800a3c8:	681b      	ldr	r3, [r3, #0]
- 800a3ca:	461a      	mov	r2, r3
- 800a3cc:	2320      	movs	r3, #32
- 800a3ce:	4811      	ldr	r0, [pc, #68]	; (800a414 <main+0xb8>)
- 800a3d0:	f7f8 f95e 	bl	8002690 <HAL_DMA_Start_IT>
+//	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
 	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
- 800a3d4:	4b0e      	ldr	r3, [pc, #56]	; (800a410 <main+0xb4>)
- 800a3d6:	681b      	ldr	r3, [r3, #0]
- 800a3d8:	4a0f      	ldr	r2, [pc, #60]	; (800a418 <main+0xbc>)
- 800a3da:	6811      	ldr	r1, [r2, #0]
+ 800a3d8:	4b0f      	ldr	r3, [pc, #60]	; (800a418 <main+0xbc>)
+ 800a3da:	681b      	ldr	r3, [r3, #0]
  800a3dc:	4a0f      	ldr	r2, [pc, #60]	; (800a41c <main+0xc0>)
- 800a3de:	4618      	mov	r0, r3
- 800a3e0:	f002 fd66 	bl	800ceb0 <PDM_Filter>
+ 800a3de:	6811      	ldr	r1, [r2, #0]
+ 800a3e0:	4a0f      	ldr	r2, [pc, #60]	; (800a420 <main+0xc4>)
+ 800a3e2:	4618      	mov	r0, r3
+ 800a3e4:	f002 fd64 	bl	800ceb0 <PDM_Filter>
 	  BSP_LED_On(LED2);
- 800a3e4:	2001      	movs	r0, #1
- 800a3e6:	f7f7 fa81 	bl	80018ec <BSP_LED_On>
+ 800a3e8:	2001      	movs	r0, #1
+ 800a3ea:	f7f7 fa7f 	bl	80018ec <BSP_LED_On>
 	  if(HAL_SAI_Transmit_DMA(&hsai_BlockB1, pcm_buffer, NUM_BYTES) == HAL_OK)
- 800a3ea:	4b0b      	ldr	r3, [pc, #44]	; (800a418 <main+0xbc>)
- 800a3ec:	681b      	ldr	r3, [r3, #0]
- 800a3ee:	2220      	movs	r2, #32
- 800a3f0:	4619      	mov	r1, r3
- 800a3f2:	480b      	ldr	r0, [pc, #44]	; (800a420 <main+0xc4>)
- 800a3f4:	f7ff fc16 	bl	8009c24 <HAL_SAI_Transmit_DMA>
- 800a3f8:	4603      	mov	r3, r0
- 800a3fa:	2b00      	cmp	r3, #0
- 800a3fc:	d102      	bne.n	800a404 <main+0xa8>
+ 800a3ee:	4b0b      	ldr	r3, [pc, #44]	; (800a41c <main+0xc0>)
+ 800a3f0:	681b      	ldr	r3, [r3, #0]
+ 800a3f2:	2220      	movs	r2, #32
+ 800a3f4:	4619      	mov	r1, r3
+ 800a3f6:	4806      	ldr	r0, [pc, #24]	; (800a410 <main+0xb4>)
+ 800a3f8:	f7ff fc14 	bl	8009c24 <HAL_SAI_Transmit_DMA>
+ 800a3fc:	4603      	mov	r3, r0
+ 800a3fe:	2b00      	cmp	r3, #0
+ 800a400:	d102      	bne.n	800a408 <main+0xac>
 	  {
 		  BSP_LED_Off(LED2);
- 800a3fe:	2001      	movs	r0, #1
- 800a400:	f7f7 fa92 	bl	8001928 <BSP_LED_Off>
+ 800a402:	2001      	movs	r0, #1
+ 800a404:	f7f7 fa90 	bl	8001928 <BSP_LED_Off>
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
   while (1)
- 800a404:	e7fe      	b.n	800a404 <main+0xa8>
- 800a406:	bf00      	nop
- 800a408:	24000414 	.word	0x24000414
+ 800a408:	e7fe      	b.n	800a408 <main+0xac>
+ 800a40a:	bf00      	nop
  800a40c:	24000648 	.word	0x24000648
- 800a410:	24000418 	.word	0x24000418
- 800a414:	24000514 	.word	0x24000514
- 800a418:	2400041c 	.word	0x2400041c
- 800a41c:	24000858 	.word	0x24000858
- 800a420:	240005b0 	.word	0x240005b0
+ 800a410:	240005b0 	.word	0x240005b0
+ 800a414:	24000414 	.word	0x24000414
+ 800a418:	24000418 	.word	0x24000418
+ 800a41c:	2400041c 	.word	0x2400041c
+ 800a420:	24000858 	.word	0x24000858
 
 0800a424 <SystemClock_Config>:
 /**
