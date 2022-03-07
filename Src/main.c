@@ -153,7 +153,7 @@ int main(void)
 
   if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
   {
-//	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
+	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
 	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 	  BSP_LED_On(LED2);
 	  if(HAL_SAI_Transmit_DMA(&hsai_BlockB1, pcm_buffer, NUM_BYTES) == HAL_OK)
@@ -432,7 +432,7 @@ static void MX_SAI1_Init(void)
   hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
   hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
   hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
   hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
