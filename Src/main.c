@@ -29,7 +29,6 @@
 #define	NUM_BYTES  4096
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
-#define SRAM1_BASE 0x30000000
 #define CODEC_I2C  0x34U
 
 /* USER CODE END Includes */
@@ -93,7 +92,7 @@ static void CODEC_Init(void);
 /* USER CODE BEGIN 0 */
 uint8_t *input_buffer = (uint8_t*)SRAM4_BASE;
 uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
-//uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
+uint32_t pcm_buffer[NUM_BYTES];
 
 /* USER CODE END 0 */
 
@@ -149,8 +148,11 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
+  while(!hsai_BlockA4.Ack) {}
+  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
 
   /* USER CODE END 2 */

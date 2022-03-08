@@ -307,9 +307,6 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
 //	HAL_EXTI_GenerateSWI(&hexti0);
 	hsai->Ack = 1;
 
-
-
-
 }
 /* USER CODE END 1 */
 
