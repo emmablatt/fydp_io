@@ -305,6 +305,7 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
 {
   /* Prevent unused argument(s) compilation warning */
 //	HAL_EXTI_GenerateSWI(&hexti0);
+	hsai->Ack = 1;
 
 
 

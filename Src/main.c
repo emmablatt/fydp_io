@@ -26,7 +26,7 @@
 #include "../Drivers/BSP/Components/wm8994/wm8994.h"
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
 
-#define	NUM_BYTES  32
+#define	NUM_BYTES  4096
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
 #define SRAM1_BASE 0x30000000
@@ -92,9 +92,8 @@ static void CODEC_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t *input_buffer = (uint8_t*)SRAM4_BASE;
-//uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
+uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
 //uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
-static uint16_t sexy_buffer[2048] = {0};
 
 /* USER CODE END 0 */
 
@@ -150,7 +149,9 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, 4096);
+  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
+  HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
+
 
   /* USER CODE END 2 */
 
@@ -451,6 +452,7 @@ static void MX_SAI4_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN SAI4_Init 2 */
+  hsai_BlockA4.Ack = 0;
 
   /* USER CODE END SAI4_Init 2 */
 
