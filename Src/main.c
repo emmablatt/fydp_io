@@ -52,8 +52,6 @@
 
 CRC_HandleTypeDef hcrc;
 
-DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
-
 I2C_HandleTypeDef hi2c4;
 
 RAMECC_HandleTypeDef hramecc2_m1;
@@ -86,7 +84,6 @@ static void MX_DMA_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_RAMECC_Init(void);
 static void MX_I2C4_Init(void);
-//static void MX_DFSDM1_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 static void CODEC_Init(void);
@@ -149,7 +146,6 @@ int main(void)
   MX_SAI1_Init();
   MX_RAMECC_Init();
   MX_I2C4_Init();
-//  MX_DFSDM1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -282,44 +278,6 @@ static void MX_CRC_Init(void)
   /* USER CODE END CRC_Init 2 */
 
 }
-
-/**
-  * @brief DFSDM1 Initialization Function
-  * @param None
-  * @retval None
-//  */
-//static void MX_DFSDM1_Init(void)
-//{
-//
-//  /* USER CODE BEGIN DFSDM1_Init 0 */
-//////
-//  /* USER CODE END DFSDM1_Init 0 */
-//
-//  /* USER CODE BEGIN DFSDM1_Init 1 */
-//////
-//  /* USER CODE END DFSDM1_Init 1 */
-//  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
-//  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
-//  hdfsdm1_channel0.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
-//  hdfsdm1_channel0.Init.OutputClock.Divider = 2;
-//  hdfsdm1_channel0.Init.Input.Multiplexer = DFSDM_CHANNEL_INTERNAL_REGISTER;
-//  hdfsdm1_channel0.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
-//  hdfsdm1_channel0.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
-//  hdfsdm1_channel0.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
-//  hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL;
-//  hdfsdm1_channel0.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
-//  hdfsdm1_channel0.Init.Awd.Oversampling = 1;
-//  hdfsdm1_channel0.Init.Offset = 0x00;
-//  hdfsdm1_channel0.Init.RightBitShift = 0x00;
-//  if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK)
-//  {
-//    Error_Handler();
-//  }
-//  /* USER CODE BEGIN DFSDM1_Init 2 */
-////
-//  /* USER CODE END DFSDM1_Init 2 */
-//
-//}
 
 /**
   * @brief I2C4 Initialization Function
@@ -468,26 +426,26 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
   hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
   hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
-  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_LSB;
+  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
   hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
   hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
   hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
   hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA4.Init.MonoStereoMode = SAI_MONOMODE;
+  hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
   hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 16;
-  hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
-  hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
-  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_HIGH;
+  hsai_BlockA4.FrameInit.FrameLength = 64;
+  hsai_BlockA4.FrameInit.ActiveFrameLength = 32;
+  hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_CHANNEL_IDENTIFICATION;
+  hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockA4.SlotInit.SlotNumber = 0;
-  hsai_BlockA4.SlotInit.SlotActive = SAI_SLOTACTIVE_3;
+  hsai_BlockA4.SlotInit.SlotNumber = 4;
+  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
   {
     Error_Handler();
