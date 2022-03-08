@@ -151,17 +151,17 @@ int main(void)
 
   // need to move data from D3 into D2 (where SAI1 is)
 
-  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
-  {
-	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
-	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
-	  BSP_LED_On(LED2);
-	  if(HAL_SAI_Transmit_DMA(&hsai_BlockB1, pcm_buffer, NUM_BYTES) == HAL_OK)
-	  {
-		  BSP_LED_Off(LED2);
-	  }
-
-  }
+//  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
+//  {
+////	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
+////	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+//	  BSP_LED_On(LED2);
+////	  if(HAL_SAI_Transmit_DMA(&hsai_BlockB1, pcm_buffer, NUM_BYTES) == HAL_OK)
+////	  {
+////		  BSP_LED_Off(LED2);
+////	  }
+//
+//  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -170,7 +170,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+//	  HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK;
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -458,7 +458,11 @@ static void MX_SAI4_Init(void)
 {
 
   /* USER CODE BEGIN SAI4_Init 0 */
+//	If the data size is 16 bits, then data must be mapped on SAI_xDR[23:8].
+//	The transfer is performed always with LSB first.
 
+//	The SAI first sends the adequate preamble for each sub-frame in a block.
+//	The SAI_xDR is then sent on the SD line (manchester coded).
   /* USER CODE END SAI4_Init 0 */
 
   /* USER CODE BEGIN SAI4_Init 1 */
@@ -467,8 +471,8 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Instance = SAI4_Block_A;
   hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
   hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
-  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
+  hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
+  hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_LSB;
   hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
   hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
@@ -479,14 +483,14 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
   hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
-  hsai_BlockA4.FrameInit.FrameLength = 8;
+  hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
   hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
   hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_HIGH;
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockA4.SlotInit.SlotNumber = 1;
+  hsai_BlockA4.SlotInit.SlotNumber = 3;
   hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
   {
