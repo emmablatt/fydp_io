@@ -77,6 +77,7 @@ extern WM8994_Drv_t WM8994_Driver;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+static void MPU_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_BDMA_Init(void);
 static void MX_SAI4_Init(void);
@@ -96,7 +97,7 @@ static void CODEC_Init(void);
 uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
 uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
 uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
-static uint16_t sexy_buffer[1024] = {0};
+static uint16_t sexy_buffer[2048] = {0};
 
 /* USER CODE END 0 */
 
@@ -108,6 +109,15 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
+
+  /* MPU Configuration--------------------------------------------------------*/
+  MPU_Config();
+
+  /* Enable I-Cache---------------------------------------------------------*/
+  SCB_EnableICache();
+
+  /* Enable D-Cache---------------------------------------------------------*/
+  SCB_EnableDCache();
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -135,10 +145,16 @@ int main(void)
   MX_SAI4_Init();
   MX_CRC_Init();
   MX_PDM2PCM_Init();
-  MX_SAI1_Init();
   MX_DMA_Init();
+  MX_SAI1_Init();
   MX_RAMECC_Init();
   MX_I2C4_Init();
+//  MX_DFSDM1_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
+  /* USER CODE BEGIN 2 */
+  HAL_SAI_Receive(&hsai_BlockA4, sexy_buffer, 4096, 1000);
 
   /* USER CODE END 2 */
 
@@ -148,9 +164,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  HAL_SAI_Receive(&hsai_BlockA4, (uint8_t*)sexy_buffer, 2048, 1000);
-	  BSP_LED_On(LED1);
-	 /* USER CODE BEGIN 3 */
+
+    /* USER CODE BEGIN 3 */
 
 
   }
@@ -272,16 +287,16 @@ static void MX_CRC_Init(void)
   * @brief DFSDM1 Initialization Function
   * @param None
   * @retval None
-  */
+//  */
 //static void MX_DFSDM1_Init(void)
 //{
 //
 //  /* USER CODE BEGIN DFSDM1_Init 0 */
-////
+//////
 //  /* USER CODE END DFSDM1_Init 0 */
 //
 //  /* USER CODE BEGIN DFSDM1_Init 1 */
-////
+//////
 //  /* USER CODE END DFSDM1_Init 1 */
 //  hdfsdm1_channel0.Instance = DFSDM1_Channel0;
 //  hdfsdm1_channel0.Init.OutputClock.Activation = DISABLE;
@@ -300,10 +315,10 @@ static void MX_CRC_Init(void)
 //  {
 //    Error_Handler();
 //  }
-  /* USER CODE BEGIN DFSDM1_Init 2 */
+//  /* USER CODE BEGIN DFSDM1_Init 2 */
+////
+//  /* USER CODE END DFSDM1_Init 2 */
 //
-  /* USER CODE END DFSDM1_Init 2 */
-
 //}
 
 /**
@@ -413,14 +428,14 @@ static void MX_SAI1_Init(void)
   hsai_BlockB1.Init.AudioMode = SAI_MODEMASTER_TX;
   hsai_BlockB1.Init.Synchro = SAI_ASYNCHRONOUS;
   hsai_BlockB1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
+  hsai_BlockB1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   hsai_BlockB1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
   hsai_BlockB1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB1.Init.MonoStereoMode = SAI_MONOMODE;
+  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_PCM_LONG, SAI_PROTOCOL_DATASIZE_32BIT, 1) != HAL_OK)
+  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -462,7 +477,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK2_ENABLE;
   hsai_BlockA4.FrameInit.FrameLength = 16;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
@@ -583,6 +598,34 @@ static void CODEC_Init(void) {
 }
 
 /* USER CODE END 4 */
+
+/* MPU Configuration */
+
+void MPU_Config(void)
+{
+  MPU_Region_InitTypeDef MPU_InitStruct = {0};
+
+  /* Disables the MPU */
+  HAL_MPU_Disable();
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+  MPU_InitStruct.BaseAddress = 0x30000000;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_128KB;
+  MPU_InitStruct.SubRegionDisable = 0x0;
+  MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+  MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
+  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  /* Enables the MPU */
+  HAL_MPU_Enable(MPU_HFNMI_PRIVDEF);
+
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

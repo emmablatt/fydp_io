@@ -309,7 +309,6 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
       /* Peripheral DMA init*/
-    // copied from discovery audio code
 
     hdma_sai1_b.Instance = DMA1_Stream1;
     hdma_sai1_b.Init.Request = DMA_REQUEST_SAI1_B;
@@ -321,9 +320,6 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     hdma_sai1_b.Init.Mode = DMA_CIRCULAR;
     hdma_sai1_b.Init.Priority = DMA_PRIORITY_HIGH;
     hdma_sai1_b.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    hdma_sai1_b.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-    hdma_sai1_b.Init.MemBurst = DMA_MBURST_SINGLE;
-    hdma_sai1_b.Init.PeriphBurst = DMA_PBURST_SINGLE;
     if (HAL_DMA_Init(&hdma_sai1_b) != HAL_OK)
     {
       Error_Handler();
@@ -390,7 +386,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
     hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
     hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
     hdma_sai4_a.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
