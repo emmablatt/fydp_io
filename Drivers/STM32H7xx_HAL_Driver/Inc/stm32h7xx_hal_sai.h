@@ -243,6 +243,8 @@ typedef struct __SAI_HandleTypeDef
 
   __IO uint32_t             ErrorCode;    /*!< SAI Error code */
 
+  uint8_t					Ack;
+
 #if (USE_HAL_SAI_REGISTER_CALLBACKS == 1)
   void (*RxCpltCallback)(struct __SAI_HandleTypeDef *hsai);      /*!< SAI receive complete callback */
   void (*RxHalfCpltCallback)(struct __SAI_HandleTypeDef *hsai);  /*!< SAI receive half complete callback */
