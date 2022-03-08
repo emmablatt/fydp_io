@@ -94,9 +94,9 @@ static void CODEC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
-uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
-uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
+uint8_t *input_buffer = (uint8_t*)SRAM4_BASE;
+//uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
+//uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
 static uint16_t sexy_buffer[2048] = {0};
 
 /* USER CODE END 0 */
@@ -154,7 +154,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_SAI_Receive(&hsai_BlockA4, sexy_buffer, 4096, 1000);
+  HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, 4096);
 
   /* USER CODE END 2 */
 
@@ -474,7 +474,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
   hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_DISABLE;
   hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockA4.Init.MonoStereoMode = SAI_MONOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
   hsai_BlockA4.Init.PdmInit.MicPairsNbr = 2;
@@ -486,8 +486,8 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockA4.SlotInit.SlotNumber = 1;
-  hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
+  hsai_BlockA4.SlotInit.SlotNumber = 0;
+  hsai_BlockA4.SlotInit.SlotActive = SAI_SLOTACTIVE_3;
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
   {
     Error_Handler();

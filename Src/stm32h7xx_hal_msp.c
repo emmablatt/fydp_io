@@ -370,13 +370,13 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF10_SAI4;
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF1_SAI4;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+    //TODO: fuck mic 1 :)
+//    GPIO_InitStruct.Pin = GPIO_PIN_6;
+//    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//    GPIO_InitStruct.Alternate = GPIO_AF1_SAI4;
+//    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
       /* Peripheral DMA init*/
 
@@ -385,8 +385,8 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
     hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
     hdma_sai4_a.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
