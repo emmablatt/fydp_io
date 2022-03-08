@@ -96,6 +96,8 @@ static void CODEC_Init(void);
 uint32_t *input_buffer = (uint32_t*)SRAM4_BASE;
 uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
 uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
+static uint16_t sexy_buffer[1024] = {0};
+
 /* USER CODE END 0 */
 
 /**
@@ -105,7 +107,6 @@ uint32_t *pcm_buffer = (uint32_t*)SRAM1_BASE;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -138,30 +139,7 @@ int main(void)
   MX_DMA_Init();
   MX_RAMECC_Init();
   MX_I2C4_Init();
-//  MX_DFSDM1_Init();
 
-  /* Initialize interrupts */
-  MX_NVIC_Init();
-  /* USER CODE BEGIN 2 */
-  CODEC_Init();
-  HAL_SAI_MspInit(&hsai_BlockA4);
-  HAL_SAI_Init(&hsai_BlockA4);
-  HAL_SAI_MspInit(&hsai_BlockB1);
-  HAL_SAI_Init(&hsai_BlockB1);
-
-  // need to move data from D3 into D2 (where SAI1 is)
-
-//  if(HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK)
-//  {
-////	  HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
-////	  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
-//	  BSP_LED_On(LED2);
-////	  if(HAL_SAI_Transmit_DMA(&hsai_BlockB1, pcm_buffer, NUM_BYTES) == HAL_OK)
-////	  {
-////		  BSP_LED_Off(LED2);
-////	  }
-//
-//  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -170,8 +148,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-//	  HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES) == HAL_OK;
-    /* USER CODE BEGIN 3 */
+	  HAL_SAI_Receive(&hsai_BlockA4, (uint8_t*)sexy_buffer, 2048, 1000);
+	  BSP_LED_On(LED1);
+	 /* USER CODE BEGIN 3 */
+
+
   }
   /* USER CODE END 3 */
 }
@@ -490,7 +471,7 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
   hsai_BlockA4.SlotInit.FirstBitOffset = 0;
   hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-  hsai_BlockA4.SlotInit.SlotNumber = 3;
+  hsai_BlockA4.SlotInit.SlotNumber = 1;
   hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
   if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK)
   {
