@@ -25,12 +25,8 @@
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery.h"
 #include "../Drivers/BSP/Components/wm8994/wm8994.h"
 #include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.h"
-
-#define	NUM_BYTES  4096
-#define SRAM4_BASE 0x38000000
-#define SRAM2_BASE 0x30004000
-#define CODEC_I2C  0x34U
-
+#include "../Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.h"
+#include "../Drivers/BSP/Components/Common/audio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,6 +36,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define	NUM_BYTES  4096
+#define PLAY_BUFF_SIZE 1024
+#define SRAM4_BASE 0x38000000
+#define SRAM2_BASE 0x30004000
+#define CODEC_I2C  0x34U
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,6 +52,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 CRC_HandleTypeDef hcrc;
+
+DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
 
 I2C_HandleTypeDef hi2c4;
 
@@ -67,8 +71,9 @@ DMA_HandleTypeDef hdma_memtomem_dma2_stream0;
 extern PDM_Filter_Handler_t PDM1_filter_handler;
 
 /* CODEC INIT */
-WM8994_Object_t hcodec;
-extern WM8994_Drv_t WM8994_Driver;
+static AUDIO_Drv_t *AudioDrv = NULL;
+void *AudioCompObj;
+ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
 
 /* USER CODE END PV */
 
@@ -82,17 +87,18 @@ static void MX_CRC_Init(void);
 static void MX_DMA_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_RAMECC_Init(void);
-static void MX_I2C4_Init(void);
+//static void MX_I2C4_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
-static void CODEC_Init(void);
+static void Playback_Init(void);
+static int32_t WM8994_Probe(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t *input_buffer = (uint8_t*)SRAM4_BASE;
 uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
-uint32_t pcm_buffer[NUM_BYTES];
+uint16_t pcm_buffer[NUM_BYTES];
 
 /* USER CODE END 0 */
 
@@ -143,11 +149,19 @@ int main(void)
   MX_DMA_Init();
   MX_SAI1_Init();
   MX_RAMECC_Init();
-  MX_I2C4_Init();
+//  MX_I2C4_Init();
+//  MX_DFSDM1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  Playback_Init();
+
+  /* Initialize the data buffer */
+  for(int i=0; i < PLAY_BUFF_SIZE; i+=2)
+  {
+    PlayBuff[i] = AUDIO_ZERO;
+  }
 
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
@@ -155,6 +169,15 @@ int main(void)
   PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
 
+  if(0 != AudioDrv->Play(AudioCompObj))
+   {
+     Error_Handler();
+   }
+
+   if(HAL_OK != HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)PlayBuff, PLAY_BUFF_SIZE))
+   {
+     Error_Handler();
+   }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -165,7 +188,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	/* Wait a callback event */
+	while(UpdatePointer==-1);
 
+	int position = UpdatePointer;
+	UpdatePointer = -1;
+    SCB_CleanDCache_by_Addr((uint32_t*)&PlayBuff[position], PLAY_BUFF_SIZE);
 
   }
   /* USER CODE END 3 */
@@ -283,56 +311,62 @@ static void MX_CRC_Init(void)
 }
 
 /**
+  * @brief DFSDM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+
+/**
   * @brief I2C4 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_I2C4_Init(void)
-{
-
-  /* USER CODE BEGIN I2C4_Init 0 */
-
-  /* USER CODE END I2C4_Init 0 */
-
-  /* USER CODE BEGIN I2C4_Init 1 */
-
-  /* USER CODE END I2C4_Init 1 */
-  hi2c4.Instance = I2C4;
-  hi2c4.Init.Timing = 0x10B0DCFB;
-  hi2c4.Init.OwnAddress1 = 104;
-  hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c4.Init.OwnAddress2 = 0;
-  hi2c4.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c4.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c4.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c4) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Analogue filter
-  */
-  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Digital filter
-  */
-  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c4, 0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C4_Init 2 */
-
-  /* USER CODE END I2C4_Init 2 */
-
-}
-
-/**
-  * @brief RAMECC Initialization Function
-  * @param None
-  * @retval None
-  */
+//static void MX_I2C4_Init(void)
+//{
+//
+//  /* USER CODE BEGIN I2C4_Init 0 */
+//
+//  /* USER CODE END I2C4_Init 0 */
+//
+//  /* USER CODE BEGIN I2C4_Init 1 */
+//
+//  /* USER CODE END I2C4_Init 1 */
+//  hi2c4.Instance = I2C4;
+//  hi2c4.Init.Timing = 0x10B0DCFB;
+//  hi2c4.Init.OwnAddress1 = 104;
+//  hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+//  hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+//  hi2c4.Init.OwnAddress2 = 0;
+//  hi2c4.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+//  hi2c4.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+//  hi2c4.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+//  if (HAL_I2C_Init(&hi2c4) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Configure Analogue filter
+//  */
+//  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Configure Digital filter
+//  */
+//  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c4, 0) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN I2C4_Init 2 */
+//
+//  /* USER CODE END I2C4_Init 2 */
+//
+//}
+//
+///**
+//  * @brief RAMECC Initialization Function
+//  * @param None
+//  * @retval None
+//  */
 static void MX_RAMECC_Init(void)
 {
 
@@ -502,6 +536,10 @@ static void MX_DMA_Init(void)
     Error_Handler( );
   }
 
+  // Register some callbacks for the DMA
+//    HAL_DMA_RegisterCallback(&hdma_memtomem_dma2_stream0, HAL_DMA_XFER_HALFCPLT_CB_ID, &FYDP_SAI4_RxHalfCallback);
+    HAL_DMA_RegisterCallback(&hdma_memtomem_dma2_stream0, HAL_DMA_XFER_CPLT_CB_ID, &RxAck);
+
   /* DMA interrupt init */
   /* DMA1_Stream1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
@@ -538,26 +576,139 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-static void CODEC_Init(void) {
+/**
+  * @brief  Register Bus IOs if component ID is OK
+  * @retval error status
+  */
+static int32_t WM8994_Probe(void)
+{
+  int32_t                   ret = BSP_ERROR_NONE;
+  WM8994_IO_t               IOCtx;
+  static WM8994_Object_t    WM8994Obj;
+  uint32_t                  wm8994_id;
 
-	// cancel up to 1khz
-	int32_t ret = BSP_ERROR_NONE;
-	// WM8994_Object_t hcodec;
-	WM8994_Init_t hcodec_init;
-	WM8994_IO_t	  hcodec_io;
-	uint32_t id;
+  /* Configure the audio driver */
+  IOCtx.Address     = AUDIO_I2C_ADDRESS;
+  IOCtx.Init        = BSP_I2C4_Init;
+  IOCtx.DeInit      = BSP_I2C4_DeInit;
+  IOCtx.ReadReg     = BSP_I2C4_ReadReg16;
+  IOCtx.WriteReg    = BSP_I2C4_WriteReg16;
+  IOCtx.GetTick     = BSP_GetTick;
 
-	hcodec_io.Address	 = CODEC_I2C;
-	hcodec_io.ReadReg	 = HAL_I2C_Mem_Read;
-	hcodec_io.WriteReg	 = HAL_I2C_Mem_Write;
-	hcodec_io.Init		 = HAL_I2C_Init;
-	hcodec_io.DeInit	 = HAL_I2C_DeInit;
-	hcodec_io.GetTick	 = HAL_GetTick;
+  if(WM8994_RegisterBusIO (&WM8994Obj, &IOCtx) != WM8994_OK)
+  {
+    ret = BSP_ERROR_BUS_FAILURE;
+  }
+  else if(WM8994_Reset(&WM8994Obj) != WM8994_OK)
+  {
+    ret = BSP_ERROR_COMPONENT_FAILURE;
+  }
+  else if(WM8994_ReadID(&WM8994Obj, &wm8994_id) != WM8994_OK)
+  {
+    ret = BSP_ERROR_COMPONENT_FAILURE;
+  }
+  else if(wm8994_id != WM8994_ID)
+  {
+    ret = BSP_ERROR_UNKNOWN_COMPONENT;
+  }
+  else
+  {
+    AudioDrv = (AUDIO_Drv_t *) &WM8994_Driver;
+    AudioCompObj = &WM8994Obj;
+  }
 
-	WM8994_RegisterBusIO(&hcodec, &hcodec_io);
-	WM8994_Init(&hcodec, &hcodec_init);
-	WM8994_Reset(&hcodec);
+  return ret;
 }
+
+/**
+  * @brief  Playback initialization
+  * @param  None
+  * @retval None
+  */
+static void Playback_Init(void)
+{
+  WM8994_Init_t codec_init;
+  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInitStruct;
+
+  /* Configure PLLSAI prescalers */
+  /* PLL2SAI_VCO: VCO_271M
+     SAI_CLK(first level) = PLLSAI_VCO/PLL2P = 271/24 = 11.291 Mhz */
+  RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
+  RCC_PeriphCLKInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2P = 24;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2Q = 24;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2R = 1;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2N = 271;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2FRACN = 0;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_0;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOMEDIUM;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2M = 25;
+
+  if(HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /* Initialize SAI */
+  __HAL_SAI_RESET_HANDLE_STATE(&hsai_BlockB1);
+
+  hsai_BlockB1.Instance = AUDIO_OUT_SAIx;
+
+  __HAL_SAI_DISABLE(&hsai_BlockB1);
+
+  hsai_BlockB1.Init.AudioMode      = SAI_MODEMASTER_TX;
+  hsai_BlockB1.Init.Synchro        = SAI_ASYNCHRONOUS;
+  hsai_BlockB1.Init.OutputDrive    = SAI_OUTPUTDRIVE_ENABLE;
+  hsai_BlockB1.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
+  hsai_BlockB1.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
+  hsai_BlockB1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_22K;
+  hsai_BlockB1.Init.Protocol       = SAI_FREE_PROTOCOL;
+  hsai_BlockB1.Init.DataSize       = SAI_DATASIZE_16;
+  hsai_BlockB1.Init.FirstBit       = SAI_FIRSTBIT_MSB;
+  hsai_BlockB1.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
+  hsai_BlockB1.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
+  hsai_BlockB1.Init.Mckdiv         = 0; /* N.U */
+  hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
+  hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
+  hsai_BlockB1.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
+  hsai_BlockB1.Init.MckOverSampling      = SAI_MCK_OVERSAMPLING_DISABLE;
+  hsai_BlockB1.Init.PdmInit.Activation   = DISABLE;
+
+  hsai_BlockB1.FrameInit.FrameLength       = 32;
+  hsai_BlockB1.FrameInit.ActiveFrameLength = 16;
+  hsai_BlockB1.FrameInit.FSDefinition      = SAI_FS_CHANNEL_IDENTIFICATION;
+  hsai_BlockB1.FrameInit.FSPolarity        = SAI_FS_ACTIVE_LOW;
+  hsai_BlockB1.FrameInit.FSOffset          = SAI_FS_BEFOREFIRSTBIT;
+
+  hsai_BlockB1.SlotInit.FirstBitOffset = 0;
+  hsai_BlockB1.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
+  hsai_BlockB1.SlotInit.SlotNumber     = 2;
+  hsai_BlockB1.SlotInit.SlotActive     = (SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_1);
+
+  if(HAL_OK != HAL_SAI_Init(&hsai_BlockB1))
+  {
+    Error_Handler();
+  }
+
+  /* Enable SAI to generate clock used by audio driver */
+  __HAL_SAI_ENABLE(&hsai_BlockB1);
+
+  WM8994_Probe();
+
+  /* Fill codec_init structure */
+  codec_init.InputDevice  = WM8994_IN_NONE;
+  codec_init.OutputDevice = WM8994_OUT_HEADPHONE;
+  codec_init.Frequency    = AUDIO_FREQUENCY_22K;
+  codec_init.Resolution   = WM8994_RESOLUTION_16b; /* Not used */
+  codec_init.Volume       = 80;
+
+  /* Initialize the codec internal registers */
+  if(AudioDrv->Init(AudioCompObj, &codec_init) < 0)
+  {
+     Error_Handler();
+  }
+}
+
 
 /* USER CODE END 4 */
 

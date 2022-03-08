@@ -119,6 +119,63 @@ void HAL_CRC_MspDeInit(CRC_HandleTypeDef* hcrc)
 
 }
 
+static uint32_t DFSDM1_Init = 0;
+/**
+* @brief DFSDM_Channel MSP Initialization
+* This function configures the hardware resources used in this example
+* @param hdfsdm_channel: DFSDM_Channel handle pointer
+* @retval None
+*/
+void HAL_DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef* hdfsdm_channel)
+{
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  if(DFSDM1_Init == 0)
+  {
+  /* USER CODE BEGIN DFSDM1_MspInit 0 */
+
+  /* USER CODE END DFSDM1_MspInit 0 */
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_DFSDM1;
+    PeriphClkInitStruct.Dfsdm1ClockSelection = RCC_DFSDM1CLKSOURCE_D2PCLK1;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Peripheral clock enable */
+    __HAL_RCC_DFSDM1_CLK_ENABLE();
+  /* USER CODE BEGIN DFSDM1_MspInit 1 */
+
+  /* USER CODE END DFSDM1_MspInit 1 */
+  DFSDM1_Init++;
+  }
+
+}
+
+/**
+* @brief DFSDM_Channel MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param hdfsdm_channel: DFSDM_Channel handle pointer
+* @retval None
+*/
+void HAL_DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef* hdfsdm_channel)
+{
+  DFSDM1_Init-- ;
+  if(DFSDM1_Init == 0)
+    {
+  /* USER CODE BEGIN DFSDM1_MspDeInit 0 */
+
+  /* USER CODE END DFSDM1_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_DFSDM1_CLK_DISABLE();
+  /* USER CODE BEGIN DFSDM1_MspDeInit 1 */
+
+  /* USER CODE END DFSDM1_MspDeInit 1 */
+  }
+
+}
+
 /**
 * @brief I2C MSP Initialization
 * This function configures the hardware resources used in this example
@@ -267,6 +324,9 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     {
       Error_Handler();
     }
+    // Register some callbacks for the DMA
+	HAL_DMA_RegisterCallback(&hdma_sai1_b, HAL_DMA_XFER_HALFCPLT_CB_ID, &TxHalfSpeaker);
+	HAL_DMA_RegisterCallback(&hdma_sai1_b, HAL_DMA_XFER_CPLT_CB_ID, &TxFullSpeaker);
 
     pSyncConfig.SyncSignalID = HAL_DMAMUX1_SYNC_EXTI0;
     pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;

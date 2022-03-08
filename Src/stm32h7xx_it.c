@@ -301,12 +301,34 @@ void BDMA_Channel1_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
+void RxAck(SAI_HandleTypeDef *hsai)
 {
   /* Prevent unused argument(s) compilation warning */
 //	HAL_EXTI_GenerateSWI(&hexti0);
 	hsai->Ack = 1;
 
+}
+
+/**
+  * @brief Tx Transfer completed callbacks.
+  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
+  *                the configuration information for SAI module.
+  * @retval None
+  */
+void TxHalfSpeaker(SAI_HandleTypeDef *hsai)
+{
+  UpdatePointer = PLAY_BUFF_SIZE/2;
+}
+
+/**
+  * @brief Tx Transfer Half completed callbacks
+  * @param  hsai : pointer to a SAI_HandleTypeDef structure that contains
+  *                the configuration information for SAI module.
+  * @retval None
+  */
+void TxFullSpeaker(SAI_HandleTypeDef *hsai)
+{
+  UpdatePointer = 0;
 }
 /* USER CODE END 1 */
 
