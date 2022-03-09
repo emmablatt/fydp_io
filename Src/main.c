@@ -166,7 +166,7 @@ int main(void)
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
   while(!hsai_BlockA4.Ack) {}
-  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
+  PDM_Filter(pdm_buffer, PlayBuff, &PDM1_filter_handler);
 
 
   if(0 != AudioDrv->Play(AudioCompObj))
@@ -538,8 +538,6 @@ static void MX_DMA_Init(void)
 
   // Register some callbacks for the DMA
 //    HAL_DMA_RegisterCallback(&hdma_memtomem_dma2_stream0, HAL_DMA_XFER_HALFCPLT_CB_ID, &FYDP_SAI4_RxHalfCallback);
-    HAL_DMA_RegisterCallback(&hdma_memtomem_dma2_stream0, HAL_DMA_XFER_CPLT_CB_ID, &RxAck);
-
   /* DMA interrupt init */
   /* DMA1_Stream1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
@@ -697,7 +695,7 @@ static void Playback_Init(void)
 
   /* Fill codec_init structure */
   codec_init.InputDevice  = WM8994_IN_NONE;
-  codec_init.OutputDevice = WM8994_OUT_HEADPHONE;
+  codec_init.OutputDevice = WM8994_OUT_SPEAKER;
   codec_init.Frequency    = AUDIO_FREQUENCY_22K;
   codec_init.Resolution   = WM8994_RESOLUTION_16b; /* Not used */
   codec_init.Volume       = 80;

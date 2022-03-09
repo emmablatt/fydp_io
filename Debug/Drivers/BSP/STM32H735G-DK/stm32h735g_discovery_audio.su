@@ -21,7 +21,6 @@ stm32h735g_discovery_audio.c:1216:9:BSP_AUDIO_OUT_SetChannelsNbr	24	static
 stm32h735g_discovery_audio.c:1272:9:BSP_AUDIO_OUT_GetChannelsNbr	24	static
 stm32h735g_discovery_audio.c:1300:9:BSP_AUDIO_OUT_GetState	24	static
 stm32h735g_discovery_audio.c:1323:6:BSP_AUDIO_OUT_IRQHandler	16	static
-stm32h735g_discovery_audio.c:1337:6:HAL_SAI_TxCpltCallback	16	static
 stm32h735g_discovery_audio.c:1352:6:HAL_SAI_TxHalfCpltCallback	16	static
 stm32h735g_discovery_audio.c:1367:6:HAL_SAI_ErrorCallback	16	static
 stm32h735g_discovery_audio.c:1384:13:BSP_AUDIO_OUT_TransferComplete_CallBack	16	static
@@ -63,7 +62,6 @@ stm32h735g_discovery_audio.c:3458:6:BSP_AUDIO_IN_IRQHandler	32	static,ignoring_i
 stm32h735g_discovery_audio.c:3484:6:HAL_DFSDM_FilterRegConvCpltCallback	192	static,ignoring_inline_asm
 stm32h735g_discovery_audio.c:3569:6:HAL_DFSDM_FilterRegConvHalfCpltCallback	192	static,ignoring_inline_asm
 stm32h735g_discovery_audio.c:3655:6:HAL_SAI_RxHalfCpltCallback	16	static
-stm32h735g_discovery_audio.c:3669:6:HAL_SAI_RxCpltCallback	16	static
 stm32h735g_discovery_audio.c:3683:13:BSP_AUDIO_IN_TransferComplete_CallBack	16	static
 stm32h735g_discovery_audio.c:3697:13:BSP_AUDIO_IN_HalfTransfer_CallBack	16	static
 stm32h735g_discovery_audio.c:3711:13:BSP_AUDIO_IN_Error_CallBack	16	static

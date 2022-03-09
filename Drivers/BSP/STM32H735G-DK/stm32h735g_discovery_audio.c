@@ -1334,15 +1334,15 @@ void BSP_AUDIO_OUT_IRQHandler(uint32_t Instance)
   * @param  hsai SAI handle
   * @retval None
   */
-void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hsai);
-
-  /* Manage the remaining file size and new address offset: This function
-     should be coded by user (its prototype is already declared in stm32h735g_discovery_audio.h) */
-  BSP_AUDIO_OUT_TransferComplete_CallBack(0);
-}
+//void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
+//{
+//  /* Prevent unused argument(s) compilation warning */
+//  UNUSED(hsai);
+//
+//  /* Manage the remaining file size and new address offset: This function
+//     should be coded by user (its prototype is already declared in stm32h735g_discovery_audio.h) */
+//  BSP_AUDIO_OUT_TransferComplete_CallBack(0);
+//}
 
 /**
   * @brief  Tx Half Transfer completed callbacks.
@@ -3646,7 +3646,7 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_
 }
 #endif /* (USE_HAL_DFSDM_REGISTER_CALLBACKS == 0) || !defined (USE_HAL_DFSDM_REGISTER_CALLBACKS) */
 
-#if (USE_HAL_SAI_REGISTER_CALLBACKS == 0) || !defined (USE_HAL_SAI_REGISTER_CALLBACKS)
+//#if (USE_HAL_SAI_REGISTER_CALLBACKS == 0) || !defined (USE_HAL_SAI_REGISTER_CALLBACKS)
 /**
   * @brief  Half reception complete callback.
   * @param  hsai   SAI handle.
@@ -3666,15 +3666,15 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai)
   * @param  hsai   SAI handle.
   * @retval None
   */
-void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hsai);
-
-  /* Call the record update function to get the second half */
-  BSP_AUDIO_IN_TransferComplete_CallBack(0);
-}
-#endif /* (USE_HAL_SAI_REGISTER_CALLBACKS == 0) || !defined (USE_HAL_SAI_REGISTER_CALLBACKS) */
+//void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
+//{
+//  /* Prevent unused argument(s) compilation warning */
+//  UNUSED(hsai);
+//
+//  /* Call the record update function to get the second half */
+//  BSP_AUDIO_IN_TransferComplete_CallBack(0);
+//}
+//#endif /* (USE_HAL_SAI_REGISTER_CALLBACKS == 0) || !defined (USE_HAL_SAI_REGISTER_CALLBACKS) */
 
 /**
   * @brief  User callback when record buffer is filled.

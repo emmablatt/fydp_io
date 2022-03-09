@@ -324,10 +324,6 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     {
       Error_Handler();
     }
-    // Register some callbacks for the DMA
-	HAL_DMA_RegisterCallback(&hdma_sai1_b, HAL_DMA_XFER_HALFCPLT_CB_ID, &TxHalfSpeaker);
-	HAL_DMA_RegisterCallback(&hdma_sai1_b, HAL_DMA_XFER_CPLT_CB_ID, &TxFullSpeaker);
-
     pSyncConfig.SyncSignalID = HAL_DMAMUX1_SYNC_EXTI0;
     pSyncConfig.SyncPolarity = HAL_DMAMUX_SYNC_NO_EVENT;
     pSyncConfig.SyncEnable = DISABLE;

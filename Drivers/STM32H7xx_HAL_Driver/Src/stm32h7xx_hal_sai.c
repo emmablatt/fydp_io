@@ -2149,15 +2149,15 @@ void HAL_SAI_IRQHandler(SAI_HandleTypeDef *hsai)
   *              the configuration information for SAI module.
   * @retval None
   */
-__weak void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hsai);
-
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_SAI_TxCpltCallback could be implemented in the user file
-   */
-}
+//__weak void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
+//{
+//  /* Prevent unused argument(s) compilation warning */
+//  UNUSED(hsai);
+//
+//  /* NOTE : This function should not be modified, when the callback is needed,
+//            the HAL_SAI_TxCpltCallback could be implemented in the user file
+//   */
+//}
 
 /**
   * @brief Tx Transfer Half completed callback.
@@ -2165,15 +2165,15 @@ __weak void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
   *              the configuration information for SAI module.
   * @retval None
   */
-__weak void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hsai);
-
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_SAI_TxHalfCpltCallback could be implemented in the user file
-   */
-}
+//__weak void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
+//{
+//  /* Prevent unused argument(s) compilation warning */
+//  UNUSED(hsai);
+//
+//  /* NOTE : This function should not be modified, when the callback is needed,
+//            the HAL_SAI_TxHalfCpltCallback could be implemented in the user file
+//   */
+//}
 
 /**
   * @brief Rx Transfer completed callback.

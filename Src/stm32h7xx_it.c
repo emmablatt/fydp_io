@@ -301,7 +301,7 @@ void BDMA_Channel1_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-void RxAck(SAI_HandleTypeDef *hsai)
+void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
 {
   /* Prevent unused argument(s) compilation warning */
 //	HAL_EXTI_GenerateSWI(&hexti0);
@@ -315,7 +315,7 @@ void RxAck(SAI_HandleTypeDef *hsai)
   *                the configuration information for SAI module.
   * @retval None
   */
-void TxHalfSpeaker(SAI_HandleTypeDef *hsai)
+void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 {
   UpdatePointer = PLAY_BUFF_SIZE/2;
 }
@@ -326,7 +326,7 @@ void TxHalfSpeaker(SAI_HandleTypeDef *hsai)
   *                the configuration information for SAI module.
   * @retval None
   */
-void TxFullSpeaker(SAI_HandleTypeDef *hsai)
+void HAL_SAI_TxHalfCallback(SAI_HandleTypeDef *hsai)
 {
   UpdatePointer = 0;
 }
