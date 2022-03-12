@@ -36,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define	NUM_BYTES  4096
+#define	NUM_BYTES  8192
 #define PLAY_BUFF_SIZE 1024
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
@@ -53,7 +53,7 @@
 
 CRC_HandleTypeDef hcrc;
 
-DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
+//DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
 
 I2C_HandleTypeDef hi2c4;
 
@@ -69,8 +69,8 @@ DMA_HandleTypeDef hdma_sai4_a;
 DMA_HandleTypeDef hdma_memtomem_dma2_stream0;
 /* USER CODE BEGIN PV */
 extern PDM_Filter_Handler_t PDM1_filter_handler;
-
-/* CODEC INIT */
+//
+///* CODEC INIT */
 static AUDIO_Drv_t *AudioDrv = NULL;
 void *AudioCompObj;
 ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
@@ -97,8 +97,9 @@ static int32_t WM8994_Probe(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t *input_buffer = (uint8_t*)SRAM4_BASE;
-uint32_t *pdm_buffer = (uint32_t*)SRAM2_BASE;
+uint8_t *pdm_buffer = (uint8_t*)SRAM2_BASE;
 uint16_t pcm_buffer[NUM_BYTES];
+
 
 /* USER CODE END 0 */
 
@@ -149,35 +150,25 @@ int main(void)
   MX_DMA_Init();
   MX_SAI1_Init();
   MX_RAMECC_Init();
-//  MX_I2C4_Init();
-//  MX_DFSDM1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  Playback_Init();
-
-  /* Initialize the data buffer */
-  for(int i=0; i < PLAY_BUFF_SIZE; i+=2)
-  {
-    PlayBuff[i] = AUDIO_ZERO;
-  }
 
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
   while(!hsai_BlockA4.Ack) {}
-  PDM_Filter(pdm_buffer, PlayBuff, &PDM1_filter_handler);
+  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
-
-  if(0 != AudioDrv->Play(AudioCompObj))
-   {
-     Error_Handler();
-   }
-
-   if(HAL_OK != HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)PlayBuff, PLAY_BUFF_SIZE))
-   {
-     Error_Handler();
-   }
+//  if(0 != AudioDrv->Play(AudioCompObj))
+//   {
+//     Error_Handler();
+//   }
+//
+//   if(HAL_OK != HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)PlayBuff, PLAY_BUFF_SIZE))
+//   {
+//     Error_Handler();
+//   }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -188,13 +179,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	/* Wait a callback event */
-	while(UpdatePointer==-1);
-
-	int position = UpdatePointer;
-	UpdatePointer = -1;
-    SCB_CleanDCache_by_Addr((uint32_t*)&PlayBuff[position], PLAY_BUFF_SIZE);
-
   }
   /* USER CODE END 3 */
 }

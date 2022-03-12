@@ -27,6 +27,7 @@
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai_ex.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o"
 "./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o"
+"./Src/audio_play.o"
 "./Src/main.o"
 "./Src/pdm2pcm.o"
 "./Src/stm32h7xx_hal_msp.o"

@@ -5,6 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Src/audio_play.c \
 ../Src/main.c \
 ../Src/pdm2pcm.c \
 ../Src/stm32h7xx_hal_msp.c \
@@ -14,6 +15,7 @@ C_SRCS += \
 ../Src/system_stm32h7xx.c 
 
 OBJS += \
+./Src/audio_play.o \
 ./Src/main.o \
 ./Src/pdm2pcm.o \
 ./Src/stm32h7xx_hal_msp.o \
@@ -23,6 +25,7 @@ OBJS += \
 ./Src/system_stm32h7xx.o 
 
 C_DEPS += \
+./Src/audio_play.d \
 ./Src/main.d \
 ./Src/pdm2pcm.d \
 ./Src/stm32h7xx_hal_msp.d \
@@ -39,7 +42,7 @@ Src/%.o: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/main.d ./Src/main.o ./Src/pdm2pcm.d ./Src/pdm2pcm.o ./Src/stm32h7xx_hal_msp.d ./Src/stm32h7xx_hal_msp.o ./Src/stm32h7xx_it.d ./Src/stm32h7xx_it.o ./Src/syscalls.d ./Src/syscalls.o ./Src/sysmem.d ./Src/sysmem.o ./Src/system_stm32h7xx.d ./Src/system_stm32h7xx.o
+	-$(RM) ./Src/audio_play.d ./Src/audio_play.o ./Src/main.d ./Src/main.o ./Src/pdm2pcm.d ./Src/pdm2pcm.o ./Src/stm32h7xx_hal_msp.d ./Src/stm32h7xx_hal_msp.o ./Src/stm32h7xx_it.d ./Src/stm32h7xx_it.o ./Src/syscalls.d ./Src/syscalls.o ./Src/sysmem.d ./Src/sysmem.o ./Src/system_stm32h7xx.d ./Src/system_stm32h7xx.o
 
 .PHONY: clean-Src
 
