@@ -83,7 +83,6 @@ extern PDM_Filter_Handler_t PDM1_filter_handler;
 ///* CODEC INIT */
 static AUDIO_Drv_t *AudioDrv = NULL;
 void *AudioCompObj;
-//ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
 
 /* USER CODE END PV */
 
@@ -172,15 +171,7 @@ int main(void)
 //  while(!hsai_BlockA4.Ack) {}
   PDM_Filter(pdm_buffer, audio_wav, &PDM1_filter_handler);
   AudioPlay_demo();
-//  if(0 != AudioDrv->Play(AudioCompObj))
-//   {
-//     Error_Handler();
-//   }
-//
-//   if(HAL_OK != HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)PlayBuff, PLAY_BUFF_SIZE))
-//   {
-//     Error_Handler();
-//   }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -201,42 +192,47 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct;
+  RCC_OscInitTypeDef RCC_OscInitStruct;
+  HAL_StatusTypeDef ret = HAL_OK;
 
-  /** Supply configuration update enable
-  */
+  /*!< Supply configuration update enable */
   HAL_PWREx_ConfigSupply(PWR_DIRECT_SMPS_SUPPLY);
-  /** Configure the main internal regulator output voltage
-  */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+  /* The voltage scaling allows optimizing the power consumption when the device is
+     clocked below the maximum system frequency, to update the voltage scaling value
+     regarding system frequency refer to product datasheet.  */
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_DIV1;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+
+  /* Enable HSE Oscillator and activate PLL with HSE as source */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSIState = RCC_HSI_OFF;
+  RCC_OscInitStruct.CSIState = RCC_CSI_OFF;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 4;
-  RCC_OscInitStruct.PLL.PLLN = 24;
-  RCC_OscInitStruct.PLL.PLLP = 1;
-  RCC_OscInitStruct.PLL.PLLQ = 125;
-  RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
-  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+
+  RCC_OscInitStruct.PLL.PLLM = 5;
+  RCC_OscInitStruct.PLL.PLLN = 104;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  RCC_OscInitStruct.PLL.PLLP = 1;
+  RCC_OscInitStruct.PLL.PLLR = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
+
+  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
+  ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
+  if(ret != HAL_OK)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
-                              |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1;
+
+/* Select PLL as system clock source and configure  bus clocks dividers */
+  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_D1PCLK1 | RCC_CLOCKTYPE_PCLK1 | \
+                                 RCC_CLOCKTYPE_PCLK2  | RCC_CLOCKTYPE_D3PCLK1);
+
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
@@ -244,12 +240,81 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3);
+  if(ret != HAL_OK)
   {
     Error_Handler();
   }
+
+/*
+  Note : The activation of the I/O Compensation Cell is recommended with communication  interfaces
+          (GPIO, SPI, FMC, OSPI ...)  when  operating at  high frequencies(please refer to product datasheet)
+          The I/O Compensation Cell activation  procedure requires :
+        - The activation of the CSI clock
+        - The activation of the SYSCFG clock
+        - Enabling the I/O Compensation Cell : setting bit[0] of register SYSCFG_CCCSR
+*/
+
+
+  __HAL_RCC_CSI_ENABLE() ;
+
+  __HAL_RCC_SYSCFG_CLK_ENABLE() ;
+
+  HAL_EnableCompensationCell();
+
 }
+
+//void SystemClock_Config(void)
+//{
+//  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+//  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+//
+//  /** Supply configuration update enable
+//  */
+//  HAL_PWREx_ConfigSupply(PWR_DIRECT_SMPS_SUPPLY);
+//  /** Configure the main internal regulator output voltage
+//  */
+//  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+//
+//  while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
+//  /** Initializes the RCC Oscillators according to the specified parameters
+//  * in the RCC_OscInitTypeDef structure.
+//  */
+//  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+//  RCC_OscInitStruct.HSIState = RCC_HSI_DIV1;
+//  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+//  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+//  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+//  RCC_OscInitStruct.PLL.PLLM = 4;
+//  RCC_OscInitStruct.PLL.PLLN = 24;
+//  RCC_OscInitStruct.PLL.PLLP = 1;
+//  RCC_OscInitStruct.PLL.PLLQ = 125;
+//  RCC_OscInitStruct.PLL.PLLR = 2;
+//  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
+//  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
+//  RCC_OscInitStruct.PLL.PLLFRACN = 0;
+//  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Initializes the CPU, AHB and APB buses clocks
+//  */
+//  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+//                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
+//                              |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1;
+//  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+//  RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
+//  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
+//  RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2;
+//  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
+//  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
+//  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
+//
+//  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//}
 
 /**
   * @brief NVIC Configuration.
@@ -768,3 +833,337 @@ void assert_failed(uint8_t *file, uint32_t line)
 
 
 
+
+
+
+
+
+
+
+
+
+// AUDIO PLAY CODE ________
+
+/* Private define ------------------------------------------------------------*/
+#define USE_SAI_INSTANCE
+
+/* Audio file size */
+#define AUDIO_FILE_SIZE               NUM_BYTES
+#define AUDIO_BUFFER_SIZE			  NUM_BYTES
+
+/* Private typedef -----------------------------------------------------------*/
+typedef enum {
+  AUDIO_STATE_IDLE = 0,
+  AUDIO_STATE_INIT,
+  AUDIO_STATE_PLAYING,
+}AUDIO_PLAYBACK_StateTypeDef;
+
+typedef enum {
+  BUFFER_OFFSET_NONE = 0,
+  BUFFER_OFFSET_HALF,
+  BUFFER_OFFSET_FULL,
+}BUFFER_StateTypeDef;
+
+typedef struct {
+  uint8_t buff[NUM_BYTES];
+  uint32_t fptr;
+  BUFFER_StateTypeDef state;
+  uint32_t AudioFileSize;
+  uint32_t *SrcAddress;
+}AUDIO_BufferTypeDef;
+
+//#if defined ( __ICCARM__ )
+//#pragma location=0x38000000
+//uint16_t  PlayBuffer[AUDIO_BUFFER_SIZE];
+//#elif defined ( __CC_ARM )
+//__attribute__((at(0x38000000))) uint16_t PlayBuffer[AUDIO_BUFFER_SIZE];
+//#elif defined ( __GNUC__ )
+//uint16_t __attribute__((section(".RAM_D3")))  PlayBuffer[AUDIO_BUFFER_SIZE];
+//#endif
+uint16_t  PlayBuffer[NUM_BYTES];
+
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+static AUDIO_BufferTypeDef  buffer_ctl;
+static AUDIO_PLAYBACK_StateTypeDef  audio_state;
+__IO uint32_t uwVolume = 20;
+
+uint32_t PauseEnabledStatus = 0;
+uint32_t updown = 1;
+
+uint32_t AudioFreq[8] = {96000, 48000, 44100, 32000, 22050, 16000, 11025, 8000};
+
+//TS_ActionTypeDef ts_action = TS_ACT_NONE;
+BSP_AUDIO_Init_t* AudioPlayInit;
+uint32_t AudioInstance = 0;
+uint32_t OutputDevice = 0;
+uint8_t FreqStr[256] = {0};
+
+/* Private function prototypes -----------------------------------------------*/
+//static void Audio_SetHint(uint32_t Index);
+static uint32_t GetData(void *pdata, uint32_t offset, uint8_t *pbuf, uint32_t NbrOfData);
+AUDIO_ErrorTypeDef AUDIO_Start(uint32_t *psrc_address, uint32_t file_size);
+AUDIO_ErrorTypeDef AUDIO_Stop(void);
+
+
+/* Private functions ---------------------------------------------------------*/
+/**
+  * @brief  Audio Play demo
+  * @param  None
+  * @retval None
+  */
+void AudioPlay_demo (void)
+{
+  uint32_t *AudioFreq_ptr;
+  uwVolume = 70;
+
+#ifdef USE_SAI_INSTANCE
+  AudioInstance = 0;
+  AudioFreq_ptr = &AudioFreq[5]; /* 16K*/
+#else
+  AudioInstance = 1;
+  AudioFreq_ptr = &AudioFreq[0]; /* 96K*/
+#endif
+
+//  Audio_SetHint(0);
+  AudioPlayInit->Device = AUDIO_OUT_DEVICE_HEADPHONE;
+  AudioPlayInit->ChannelsNbr = 2;
+  AudioPlayInit->SampleRate = AUDIO_FREQUENCY_16K;
+  AudioPlayInit->BitsPerSample = AUDIO_RESOLUTION_16B;
+  AudioPlayInit->Volume = uwVolume;
+
+
+  if(BSP_AUDIO_OUT_Init(AudioInstance, AudioPlayInit) != 0)
+  {
+//    ButtonState = 0;
+//    BSP_TS_DeInit(0);
+  }
+  else
+  {
+    /*
+    Start playing the file from a circular buffer, once the DMA is enabled, it is
+    always in running state. Application has to fill the buffer with the audio data
+    using Transfer complete and/or half transfer complete interrupts callbacks
+    (BSP_AUDIO_OUT_TransferComplete_CallBack() or BSP_AUDIO_OUT_HalfTransfer_CallBack()...
+    */
+    AUDIO_Start((uint32_t *)audio_wav + 11, (uint32_t)AUDIO_FILE_SIZE);
+
+    /* Infinite loop */
+    while (1)
+    {
+      /* IMPORTANT: AUDIO_Process() should be called within a periodic process */
+      AUDIO_Process();
+    }
+    }
+  }
+//}
+
+
+/**
+  * @brief  Display Audio demo hint
+  * @param  None
+  * @retval None
+  */
+//static void Audio_SetHint(uint32_t Index)
+//{
+//  uint32_t x_size, y_size;
+//
+//  BSP_LCD_GetXSize(0, &x_size);
+//  BSP_LCD_GetYSize(0, &y_size);
+//
+//  /* Clear the LCD */
+////  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
+//
+//  /* Set Audio Demo description */
+//  UTIL_LCD_FillRect(0, 0, x_size, 80, UTIL_LCD_COLOR_BLUE);
+//  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+//  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLUE);
+//  UTIL_LCD_SetFont(&Font24);
+//  if(Index == 0)
+//  {
+//    UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"SET MUTE / SET VOLUME / SET SAMPLE RATE", CENTER_MODE);
+//    UTIL_LCD_SetFont(&Font12);
+//    UTIL_LCD_DisplayStringAt(0, 30, (uint8_t *)"Press TAMPER button for next menu          ", CENTER_MODE);
+//    UTIL_LCD_DisplayStringAt(0, 45, (uint8_t *)"Use touch screen +/- to change Volume/Frequency    ", CENTER_MODE);
+//    UTIL_LCD_DisplayStringAt(0, 60, (uint8_t *)"Touch upper part of the screen to Pause/Resume    ", CENTER_MODE);
+//  }
+//
+//  UTIL_LCD_DrawRect(10, 81, x_size - 20, y_size - 81, UTIL_LCD_COLOR_BLUE);
+//  UTIL_LCD_DrawRect(11, 82, x_size - 22, y_size - 82, UTIL_LCD_COLOR_BLUE);
+//}
+
+
+/**
+  * @brief  Starts Audio streaming.
+  * @param  None
+  * @retval Audio error
+  */
+AUDIO_ErrorTypeDef AUDIO_Start(uint32_t *psrc_address, uint32_t file_size)
+{
+  uint32_t bytesread;
+
+  buffer_ctl.state = BUFFER_OFFSET_NONE;
+  buffer_ctl.AudioFileSize = file_size;
+  buffer_ctl.SrcAddress = psrc_address;
+
+  bytesread = GetData( (void *)psrc_address,
+                       0,
+                       (uint8_t*)&PlayBuffer[0],
+                       2*AUDIO_BUFFER_SIZE);
+  if(bytesread > 0)
+  {
+    BSP_AUDIO_OUT_Play(AudioInstance, (uint8_t *)PlayBuffer, 2*AUDIO_BUFFER_SIZE);
+    audio_state = AUDIO_STATE_PLAYING;
+    buffer_ctl.fptr = bytesread;
+    return AUDIO_ERROR_NONE;
+  }
+  return AUDIO_ERROR_IO;
+}
+
+/**
+  * @brief  Manages Audio process.
+  * @param  None
+  * @retval Audio error
+  */
+uint8_t AUDIO_Process(void)
+{
+  uint32_t bytesread;
+  AUDIO_ErrorTypeDef error_state = AUDIO_ERROR_NONE;
+
+  switch(audio_state)
+  {
+  case AUDIO_STATE_PLAYING:
+
+    if(buffer_ctl.fptr >= buffer_ctl.AudioFileSize)
+    {
+      /* Play audio sample again ... */
+      buffer_ctl.fptr = 0;
+      error_state = AUDIO_ERROR_EOF;
+    }
+
+    /* 1st half buffer played; so fill it and continue playing from bottom*/
+    if(buffer_ctl.state == BUFFER_OFFSET_HALF)
+    {
+      SCB_InvalidateDCache_by_Addr((uint32_t *)&PlayBuffer[0], AUDIO_BUFFER_SIZE);
+      bytesread = GetData((void *)buffer_ctl.SrcAddress,
+                          buffer_ctl.fptr,
+                          (uint8_t*)&PlayBuffer[0],
+                          AUDIO_BUFFER_SIZE );
+
+      if( bytesread >0)
+      {
+        buffer_ctl.state = BUFFER_OFFSET_NONE;
+        buffer_ctl.fptr += bytesread;
+        /* Clean Data Cache to update the content of the SRAM */
+        SCB_CleanDCache_by_Addr((uint32_t*)&PlayBuffer[0], AUDIO_BUFFER_SIZE);
+      }
+    }
+
+    /* 2nd half buffer played; so fill it and continue playing from top */
+    if(buffer_ctl.state == BUFFER_OFFSET_FULL)
+    {
+      SCB_InvalidateDCache_by_Addr((uint32_t *)&PlayBuffer[AUDIO_BUFFER_SIZE/2], AUDIO_BUFFER_SIZE);
+      bytesread = GetData((void *)buffer_ctl.SrcAddress,
+                          buffer_ctl.fptr,
+                          (uint8_t*)&PlayBuffer[AUDIO_BUFFER_SIZE /2],
+                          AUDIO_BUFFER_SIZE );
+      if( bytesread > 0)
+      {
+        buffer_ctl.state = BUFFER_OFFSET_NONE;
+        buffer_ctl.fptr += bytesread;
+
+        /* Clean Data Cache to update the content of the SRAM */
+        SCB_CleanDCache_by_Addr((uint32_t*)&PlayBuffer[AUDIO_BUFFER_SIZE/2], AUDIO_BUFFER_SIZE);
+      }
+    }
+    break;
+
+  default:
+    error_state = AUDIO_ERROR_NOTREADY;
+    break;
+  }
+  return (uint8_t) error_state;
+}
+
+/**
+  * @brief  Gets Data from storage unit.
+  * @param  None
+  * @retval None
+  */
+static uint32_t GetData(void *pdata, uint32_t offset, uint8_t *pbuf, uint32_t NbrOfData)
+{
+  uint8_t *lptr = pdata;
+  uint32_t ReadDataNbr;
+
+  ReadDataNbr = 0;
+  while(((offset + ReadDataNbr) < buffer_ctl.AudioFileSize) && (ReadDataNbr < NbrOfData))
+  {
+    pbuf[ReadDataNbr]= lptr [offset + ReadDataNbr];
+    ReadDataNbr++;
+  }
+  return ReadDataNbr;
+}
+
+/*------------------------------------------------------------------------------
+       Callbacks implementation:
+           the callbacks API are defined __weak in the stm32h735g_discovery_audio.c file
+           and their implementation should be done the user code if they are needed.
+           Below some examples of callback implementations.
+  ----------------------------------------------------------------------------*/
+/**
+  * @brief  Manages the full Transfer complete event.
+  * @param  None
+  * @retval None
+  */
+void BSP_AUDIO_OUT_TransferComplete_CallBack(uint32_t Instance)
+{
+  if(audio_state == AUDIO_STATE_PLAYING)
+  {
+    /* allows AUDIO_Process() to refill 2nd part of the buffer  */
+    buffer_ctl.state = BUFFER_OFFSET_FULL;
+  }
+}
+
+/**
+  * @brief  Manages the DMA Half Transfer complete event.
+  * @param  None
+  * @retval None
+  */
+void BSP_AUDIO_OUT_HalfTransfer_CallBack(uint32_t Instance)
+{
+  if(audio_state == AUDIO_STATE_PLAYING)
+  {
+    /* allows AUDIO_Process() to refill 1st part of the buffer  */
+    buffer_ctl.state = BUFFER_OFFSET_HALF;
+  }
+}
+
+/**
+  * @brief  Manages the DMA FIFO error event.
+  * @param  None
+  * @retval None
+  */
+void BSP_AUDIO_OUT_Error_CallBack(uint32_t Instance)
+{
+//  /* Display message on the LCD screen */
+//  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_RED);
+//  UTIL_LCD_DisplayStringAt(0, LINE(14), (uint8_t *)"       DMA  ERROR     ", CENTER_MODE);
+//  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+//
+//  /* Stop the program with an infinite loop */
+//  while (BSP_PB_GetState(BUTTON_USER) != RESET)
+//  {
+//    return;
+//  }
+
+  /* could also generate a system reset to recover from the error */
+  /* .... */
+}
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */

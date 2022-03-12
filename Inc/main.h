@@ -88,7 +88,6 @@ void RxAck(SAI_HandleTypeDef *hsai);
 void TxHalfSpeaker(SAI_HandleTypeDef *hsai);
 void TxFullSpeaker(SAI_HandleTypeDef *hsai);
 uint8_t AUDIO_Process(void);
-void AudioPlay_Demo(void);
 
 /* USER CODE BEGIN EFP */
 
