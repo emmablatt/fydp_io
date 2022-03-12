@@ -952,7 +952,10 @@ void AudioPlay_demo (void)
     while (1)
     {
       /* IMPORTANT: AUDIO_Process() should be called within a periodic process */
-      AUDIO_Process();
+        HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
+        PDM_Filter(pdm_buffer, audio_wav, &PDM1_filter_handler);
+        AUDIO_Process();
+
     }
     }
   }
