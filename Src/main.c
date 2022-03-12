@@ -31,6 +31,16 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+#define BYTES_IN_AUDIO_WAV  NUM_BYTES
+#define AUDIO_BUFFER_SIZE	NUM_BYTES
+#if defined ( __ICCARM__ )
+#pragma location=0x38000000
+uint8_t  input_buffer[AUDIO_BUFFER_SIZE];
+#elif defined ( __CC_ARM )
+__attribute__((at(0x38000000))) uint8_t input_buffer[AUDIO_BUFFER_SIZE];
+#elif defined ( __GNUC__ )
+uint16_t __attribute__((section(".RAM_D3")))  input_buffer[AUDIO_BUFFER_SIZE];
+#endif
 
 /* USER CODE END PTD */
 
@@ -73,7 +83,7 @@ extern PDM_Filter_Handler_t PDM1_filter_handler;
 ///* CODEC INIT */
 static AUDIO_Drv_t *AudioDrv = NULL;
 void *AudioCompObj;
-ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
+//ALIGN_32BYTES (uint16_t PlayBuff[PLAY_BUFF_SIZE]);
 
 /* USER CODE END PV */
 
@@ -96,9 +106,11 @@ static int32_t WM8994_Probe(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t *input_buffer = (uint8_t*)SRAM4_BASE;
-uint8_t *pdm_buffer = (uint8_t*)SRAM2_BASE;
-uint16_t pcm_buffer[NUM_BYTES];
+//uint8_t *input_buffer = (uint8_t*)SRAM4_BASE;
+//uint8_t *pdm_buffer = (uint8_t*)SRAM2_BASE;
+//uint8_t input_buffer[AUDIO_BUFFER_SIZE];
+uint8_t pdm_buffer[AUDIO_BUFFER_SIZE] = {0};
+uint16_t pcm_buffer[AUDIO_BUFFER_SIZE] = {0};
 
 
 /* USER CODE END 0 */
@@ -157,7 +169,7 @@ int main(void)
 
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
-  while(!hsai_BlockA4.Ack) {}
+//  while(!hsai_BlockA4.Ack) {}
   PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
 
 //  if(0 != AudioDrv->Play(AudioCompObj))
