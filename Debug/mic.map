@@ -30,7 +30,6 @@ hramecc3_m1         0x10              ./Src/main.o
 hdma_memtomem_dma2_stream0
                     0x78              ./Src/main.o
 hcrc                0x24              ./Src/main.o
-pdm_buffer          0x2000            ./Src/main.o
 uwTick              0x4               ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
 pFlash              0x1c              ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.o
 hsai_BlockB1        0x9c              ./Src/main.o
@@ -41,7 +40,6 @@ hramecc2_m2         0x10              ./Src/main.o
 Audio_Out_Ctx       0x24              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_audio.o
 hdma_sai4_a         0x78              ./Src/main.o
 hramecc2_m1         0x10              ./Src/main.o
-pcm_buffer          0x4000            ./Src/main.o
 PDM1_filter_handler
                     0x4c              ./Src/pdm2pcm.o
 hbus_i2c4           0x4c              ./Drivers/BSP/STM32H735G-DK/stm32h735g_discovery_bus.o
@@ -7388,26 +7386,30 @@ LOAD /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.id
  .bss           0x0000000024002498        0x1 ../Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a(pdm_filter.o)
  *(.bss*)
  *fill*         0x0000000024002499        0x3 
+ .bss.pdm_buffer
+                0x000000002400249c     0x2000 ./Src/main.o
+                0x000000002400249c                pdm_buffer
+ .bss.pcm_buffer
+                0x000000002400449c     0x4000 ./Src/main.o
+                0x000000002400449c                pcm_buffer
  .bss.SAI1_client
-                0x000000002400249c        0x4 ./Src/stm32h7xx_hal_msp.o
+                0x000000002400849c        0x4 ./Src/stm32h7xx_hal_msp.o
  .bss.SAI4_client
-                0x00000000240024a0        0x4 ./Src/stm32h7xx_hal_msp.o
+                0x00000000240084a0        0x4 ./Src/stm32h7xx_hal_msp.o
  *(COMMON)
- COMMON         0x00000000240024a4        0x4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
-                0x00000000240024a4                uwTick
- COMMON         0x00000000240024a8     0x6344 ./Src/main.o
-                0x00000000240024a8                AudioCompObj
-                0x00000000240024ac                hi2c4
-                0x00000000240024f8                hramecc3_m1
-                0x0000000024002508                hdma_memtomem_dma2_stream0
-                0x0000000024002580                hcrc
-                0x00000000240025a4                pdm_buffer
-                0x00000000240045a4                hsai_BlockB1
-                0x0000000024004640                hsai_BlockA4
-                0x00000000240046dc                hramecc2_m2
-                0x00000000240046ec                hdma_sai4_a
-                0x0000000024004764                hramecc2_m1
-                0x0000000024004774                pcm_buffer
+ COMMON         0x00000000240084a4        0x4 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+                0x00000000240084a4                uwTick
+ COMMON         0x00000000240084a8      0x344 ./Src/main.o
+                0x00000000240084a8                AudioCompObj
+                0x00000000240084ac                hi2c4
+                0x00000000240084f8                hramecc3_m1
+                0x0000000024008508                hdma_memtomem_dma2_stream0
+                0x0000000024008580                hcrc
+                0x00000000240085a4                hsai_BlockB1
+                0x0000000024008640                hsai_BlockA4
+                0x00000000240086dc                hramecc2_m2
+                0x00000000240086ec                hdma_sai4_a
+                0x0000000024008764                hramecc2_m1
                 0x0000000024008774                hdma_sai1_b
  COMMON         0x00000000240087ec       0x54 ./Src/pdm2pcm.o
                 0x00000000240087ec                PDM1_filter_config

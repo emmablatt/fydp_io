@@ -579,7 +579,7 @@ __weak void HAL_IncTick(void)
  80005c4:	4770      	bx	lr
  80005c6:	bf00      	nop
  80005c8:	2400040c 	.word	0x2400040c
- 80005cc:	240024a4 	.word	0x240024a4
+ 80005cc:	240084a4 	.word	0x240084a4
 
 080005d0 <HAL_GetTick>:
   * @note This function is declared as __weak to be overwritten in case of other
@@ -599,7 +599,7 @@ __weak uint32_t HAL_GetTick(void)
  80005dc:	f85d 7b04 	ldr.w	r7, [sp], #4
  80005e0:	4770      	bx	lr
  80005e2:	bf00      	nop
- 80005e4:	240024a4 	.word	0x240024a4
+ 80005e4:	240084a4 	.word	0x240084a4
 
 080005e8 <__NVIC_SetPriorityGrouping>:
            In case of a conflict between priority grouping and available
@@ -20231,11 +20231,11 @@ int main(void)
  8007f92:	bf00      	nop
  8007f94:	e000ed00 	.word	0xe000ed00
  8007f98:	2400047c 	.word	0x2400047c
- 8007f9c:	240025a4 	.word	0x240025a4
- 8007fa0:	24002508 	.word	0x24002508
- 8007fa4:	24004640 	.word	0x24004640
+ 8007f9c:	2400249c 	.word	0x2400249c
+ 8007fa0:	24008508 	.word	0x24008508
+ 8007fa4:	24008640 	.word	0x24008640
  8007fa8:	240087f4 	.word	0x240087f4
- 8007fac:	24004774 	.word	0x24004774
+ 8007fac:	2400449c 	.word	0x2400449c
 
 08007fb0 <SystemClock_Config>:
 /**
@@ -20520,7 +20520,7 @@ static void MX_CRC_Init(void)
  8008146:	46bd      	mov	sp, r7
  8008148:	bd80      	pop	{r7, pc}
  800814a:	bf00      	nop
- 800814c:	24002580 	.word	0x24002580
+ 800814c:	24008580 	.word	0x24008580
  8008150:	58024c00 	.word	0x58024c00
  8008154:	58024400 	.word	0x58024400
 
@@ -20592,11 +20592,11 @@ static void MX_RAMECC_Init(void)
  800819e:	bf00      	nop
  80081a0:	bd80      	pop	{r7, pc}
  80081a2:	bf00      	nop
- 80081a4:	24004764 	.word	0x24004764
+ 80081a4:	24008764 	.word	0x24008764
  80081a8:	48023020 	.word	0x48023020
- 80081ac:	240046dc 	.word	0x240046dc
+ 80081ac:	240086dc 	.word	0x240086dc
  80081b0:	48023040 	.word	0x48023040
- 80081b4:	240024f8 	.word	0x240024f8
+ 80081b4:	240084f8 	.word	0x240084f8
  80081b8:	58027020 	.word	0x58027020
 
 080081bc <MX_SAI1_Init>:
@@ -20677,7 +20677,7 @@ static void MX_SAI1_Init(void)
 }
  8008218:	bf00      	nop
  800821a:	bd80      	pop	{r7, pc}
- 800821c:	240045a4 	.word	0x240045a4
+ 800821c:	240085a4 	.word	0x240085a4
  8008220:	40015824 	.word	0x40015824
  8008224:	0002ee00 	.word	0x0002ee00
 
@@ -20813,7 +20813,7 @@ static void MX_SAI4_Init(void)
  80082de:	bf00      	nop
  80082e0:	bd80      	pop	{r7, pc}
  80082e2:	bf00      	nop
- 80082e4:	24004640 	.word	0x24004640
+ 80082e4:	24008640 	.word	0x24008640
  80082e8:	58005404 	.word	0x58005404
 
 080082ec <MX_BDMA_Init>:
@@ -20975,7 +20975,7 @@ static void MX_DMA_Init(void)
  80083f0:	bd80      	pop	{r7, pc}
  80083f2:	bf00      	nop
  80083f4:	58024400 	.word	0x58024400
- 80083f8:	24002508 	.word	0x24002508
+ 80083f8:	24008508 	.word	0x24008508
  80083fc:	40020410 	.word	0x40020410
 
 08008400 <MX_GPIO_Init>:
@@ -21740,16 +21740,16 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
  80088c8:	46bd      	mov	sp, r7
  80088ca:	bd80      	pop	{r7, pc}
  80088cc:	40015824 	.word	0x40015824
- 80088d0:	2400249c 	.word	0x2400249c
+ 80088d0:	2400849c 	.word	0x2400849c
  80088d4:	58024400 	.word	0x58024400
  80088d8:	58021000 	.word	0x58021000
  80088dc:	58021400 	.word	0x58021400
  80088e0:	24008774 	.word	0x24008774
  80088e4:	40020028 	.word	0x40020028
  80088e8:	58005404 	.word	0x58005404
- 80088ec:	240024a0 	.word	0x240024a0
+ 80088ec:	240084a0 	.word	0x240084a0
  80088f0:	58020c00 	.word	0x58020c00
- 80088f4:	240046ec 	.word	0x240046ec
+ 80088f4:	240086ec 	.word	0x240086ec
  80088f8:	5802541c 	.word	0x5802541c
 
 080088fc <NMI_Handler>:
@@ -21979,7 +21979,7 @@ void DMA2_Stream0_IRQHandler(void)
 }
  8008988:	bf00      	nop
  800898a:	bd80      	pop	{r7, pc}
- 800898c:	24002508 	.word	0x24002508
+ 800898c:	24008508 	.word	0x24008508
 
 08008990 <I2C4_ER_IRQHandler>:
 
@@ -22003,7 +22003,7 @@ void I2C4_ER_IRQHandler(void)
  800899a:	bf00      	nop
  800899c:	bd80      	pop	{r7, pc}
  800899e:	bf00      	nop
- 80089a0:	240024ac 	.word	0x240024ac
+ 80089a0:	240084ac 	.word	0x240084ac
 
 080089a4 <DMAMUX1_OVR_IRQHandler>:
 
@@ -22052,7 +22052,7 @@ void DMAMUX2_OVR_IRQHandler(void)
  80089c2:	bf00      	nop
  80089c4:	bd80      	pop	{r7, pc}
  80089c6:	bf00      	nop
- 80089c8:	240046ec 	.word	0x240046ec
+ 80089c8:	240086ec 	.word	0x240086ec
 
 080089cc <BDMA_Channel1_IRQHandler>:
 
@@ -22077,7 +22077,7 @@ void BDMA_Channel1_IRQHandler(void)
 }
  80089dc:	bf00      	nop
  80089de:	bd80      	pop	{r7, pc}
- 80089e0:	240046ec 	.word	0x240046ec
+ 80089e0:	240086ec 	.word	0x240086ec
 
 080089e4 <HAL_SAI_RxCpltCallback>:
 
