@@ -46,8 +46,8 @@ uint16_t __attribute__((section(".RAM_D3")))  input_buffer[AUDIO_BUFFER_SIZE];
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define	NUM_BYTES  8192
-#define PLAY_BUFF_SIZE 1024
+//#define	NUM_BYTES  8192
+//#define PLAY_BUFF_SIZE 1024
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
 #define CODEC_I2C  0x34U
@@ -110,7 +110,7 @@ static int32_t WM8994_Probe(void);
 //uint8_t *pdm_buffer = (uint8_t*)SRAM2_BASE;
 //uint8_t input_buffer[AUDIO_BUFFER_SIZE];
 uint8_t pdm_buffer[AUDIO_BUFFER_SIZE] = {0};
-uint16_t pcm_buffer[AUDIO_BUFFER_SIZE] = {0};
+uint16_t audio_wav[AUDIO_BUFFER_SIZE] = {0};
 
 
 /* USER CODE END 0 */
@@ -170,8 +170,8 @@ int main(void)
   HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, input_buffer, pdm_buffer, NUM_BYTES);
   HAL_SAI_Receive_DMA(&hsai_BlockA4, input_buffer, NUM_BYTES);
 //  while(!hsai_BlockA4.Ack) {}
-  PDM_Filter(pdm_buffer, pcm_buffer, &PDM1_filter_handler);
-
+  PDM_Filter(pdm_buffer, audio_wav, &PDM1_filter_handler);
+  AudioPlay_demo();
 //  if(0 != AudioDrv->Play(AudioCompObj))
 //   {
 //     Error_Handler();
@@ -765,4 +765,6 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
 

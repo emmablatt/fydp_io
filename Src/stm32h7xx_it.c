@@ -317,7 +317,7 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
   */
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 {
-  UpdatePointer = PLAY_BUFF_SIZE/2;
+  UpdatePointer = NUM_BYTES/2;
 }
 
 /**

@@ -67,8 +67,8 @@ extern "C" {
 /** @defgroup STM32H735G_DISCO_AUDIO_Exported_Constants AUDIO Exported Constants
   * @{
   */
-#define	NUM_BYTES  4096
-#define PLAY_BUFF_SIZE 1024
+#define	NUM_BYTES  16384
+//#define PLAY_BUFF_SIZE 1024
 #define SRAM4_BASE 0x38000000
 #define SRAM2_BASE 0x30004000
 #define CODEC_I2C  0x34U
@@ -87,6 +87,9 @@ void Error_Handler(void);
 void RxAck(SAI_HandleTypeDef *hsai);
 void TxHalfSpeaker(SAI_HandleTypeDef *hsai);
 void TxFullSpeaker(SAI_HandleTypeDef *hsai);
+uint8_t AUDIO_Process(void);
+void AudioPlay_Demo(void);
+
 /* USER CODE BEGIN EFP */
 
 
@@ -94,6 +97,13 @@ void TxFullSpeaker(SAI_HandleTypeDef *hsai);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
+typedef enum {
+  AUDIO_ERROR_NONE = 0,
+  AUDIO_ERROR_NOTREADY,
+  AUDIO_ERROR_IO,
+  AUDIO_ERROR_EOF,
+}AUDIO_ErrorTypeDef;
+
 
 /* USER CODE END Private defines */
 
